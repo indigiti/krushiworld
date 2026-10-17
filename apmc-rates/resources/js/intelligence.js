@@ -83,6 +83,12 @@ function check(){
  for(const a of alerts){
   const matches=all.filter(r=>usable(r)&&r.market_id===a.market&&cropKey(r)===a.commodity&&String(r.variety||'')===a.variety&&String(r.grade||'')===a.grade&&String(r.unit).toLowerCase()===a.unit).sort((x,y)=>String(y.date).localeCompare(String(x.date)));
   const r=matches[0];if(!r)continue;
+  // Do not notify as if a historical quotation were a new target hit.
+  // Data.gov.in or Pune feeds can lag without warning; require a recent
+  // original report date, independently of when our collector ran.
+  const reportedAt=Date.parse(String(r.date)+'T23:59:59+05:30');
+  if(!Number.isFinite(reportedAt)||reportedAt>Date.now()+86400000||
+     Date.now()-reportedAt>3*86400000)continue;
   const yes=a.direction==='below'?Number(r.average)<=a.threshold:Number(r.average)>=a.threshold;
   const fingerprint=[r.date,r.average,r.source||''].join('|');
   if(yes&&a.lastSeen!==fingerprint){a.lastSeen=fingerprint;changed=true;fired.push(a.crop+' '+money(r.average)+' · '+r.date);}
