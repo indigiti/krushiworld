@@ -18,8 +18,9 @@ DirectoryIndex index.php
   RewriteRule ^admin/?$ index.php [L,QSA]
   # Stable versioned API contract, separate from legacy query aliases.
   RewriteRule ^api/v1/(latest|markets|query|summary|health|discover)/?$ index.php [L,QSA]
-  RewriteRule ^api/v1/intelligence/(history|compare|weather)/?$ index.php [L,QSA]
+  RewriteRule ^api/v1/intelligence/(history|compare|weather|insights|msp)/?$ index.php [L,QSA]
   RewriteRule ^api/v1/mandis/[a-z0-9-]{1,110}/rates/?$ index.php [L,QSA]
+  RewriteRule ^api/v1/mandis/[a-z0-9-]{1,110}/profile/?$ index.php [L,QSA]
 
   RewriteRule ^api/(latest|health|query|summary|market|markets|discover)$ index.php?api=$1 [L,QSA]
   RewriteRule ^openapi\.json$ index.php?seo=openapi [L,QSA]
