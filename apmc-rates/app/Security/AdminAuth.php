@@ -7,6 +7,7 @@ use RuntimeException;
 /** Login orchestration; modes are explicitly controlled by server environment. */
 final class AdminAuth {
     private ?AdminIdentity $identity=null;
+    public function __construct(?AdminIdentity $identity=null) {$this->identity=$identity;}
     public function mode(): string {
         $mode=strtolower(trim((string)(getenv('APMC_AUTH_MODE') ?: 'legacy')));
         return in_array($mode,['legacy','staging','production'],true)?$mode:'legacy';
