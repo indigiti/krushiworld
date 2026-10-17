@@ -1,0 +1,54 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__) . '/app/bootstrap.php';
+use KrushiPulse\Security\AdminAuth;
+use KrushiPulse\Security\AdminIdentity;
+function verify(bool $ok,string $what): void {if(!$ok){fwrite(STDERR,"AUTH FAIL: $what\n");exit(1);}}
+$file=tempnam(sys_get_temp_dir(),'kp-ident-');
+verify(is_string($file),'temporary SQLite path');
+register_shutdown_function(static fn()=>@unlink($file));
+putenv('APMC_AUTH_MODE=staging');
+putenv('APMC_AUTH_KEY='.str_repeat('c3',32));
+$db=new AdminIdentity($file);
+$auth=new AdminAuth($db);
+verify($auth->mode()==='staging','staging opt-in mode');
+verify(!$db->localReady(),'no local admin at bootstrap');
+verify(!$db->providerEnabled()===false,'GitHub enabled for stage before handover');
+$allow=$db->githubBootstrap('123456789',['123456789']);
+verify($allow!==null && $allow['role']==='super_admin','allowlisted github numeric identity');
+verify($db->githubBootstrap('987654321',['123456789'])===null,'deny non-allowlisted github ID');
+$blocked=false;
+try{$db->setProvider(false,(int)$allow['id']);}catch(RuntimeException){$blocked=true;}
+verify($blocked,'refuse GitHub disable before local verified');
+$secret=AdminAuth::totpNew();
+verify(strlen($secret)===32,'160-bit base32 MFA seed');
+$encrypted=$auth->seal($secret);
+verify(!str_contains($encrypted,$secret),'MFA seed encrypted at rest');
+verify($auth->open($encrypted)===$secret,'MFA key successfully decrypts');
+$id=$db->createLocal('ownerAdmin','Example-long-passphrase-1234',$encrypted,'super_admin',(int)$allow['id']);
+$user=$db->user($id);
+verify($user['status']==='pending_mfa','new local user pending verification');
+verify(password_verify('Example-long-passphrase-1234',$user['password_hash']),'Argon2id password verification');
+verify(str_starts_with($user['password_hash'],'$argon2id$'),'Argon2id used');
+$code=AdminAuth::totpStep($secret,intdiv(time(),30));
+verify($auth->verifyMfa($user,$code),'valid TOTP accepted');
+verify(!$auth->verifyMfa($user,$code),'TOTP step replay rejected');
+$never=false;try{$db->statusSet($id,'active',(int)$allow['id']);}catch(RuntimeException){$never=true;}
+verify($never,'pending MFA cannot be enabled manually');
+$db->markLocalVerified($id);
+verify($db->localReady(),'verified local Super Admin required for cutover');
+$tokens=$db->sessionCreate($id,'local');
+verify(($db->session($tokens['token'])['username']??'')==='ownerAdmin','revocable opaque individual session');
+$db->sessionDestroy($tokens['token']);
+verify($db->session($tokens['token'])===null,'logout revokes session');
+$db->sessionCreate((int)$allow['id'],'github');
+$db->setProvider(false,$id);
+verify(!$db->providerEnabled(),'GitHub switched off after local MFA');
+verify($db->users()[0]['github_id']==='123456789','GitHub identity retained as audited subject');
+verify(count($db->audit())>=4,'audit trail captures sensitive actions');
+putenv('APMC_AUTH_MODE=production');
+verify($auth->mode()==='production','production environmental override');
+verify(!$auth->githubAllowed(),'GitHub login disabled in production');
+putenv('APMC_AUTH_MODE=legacy');
+verify(!$auth->enabled(),'current token login preserved until explicitly migrated');
+echo "STAGING/PRODUCTION AUTH HANDOVER: PASS\n";
