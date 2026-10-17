@@ -172,9 +172,15 @@ TXT;
                 '/api/v1/mandis/{market}/profile' => [
                     'get' => [
                         'operationId' => 'getVerifiedMandiProfile',
-                        'summary' => 'Mandi metadata with only source-verified facilities, contacts and departmental hours',
+                        'summary' => 'Mandi profile with source-verified facilities and contacts',
                         'parameters' => [
-                            ['name'=>'market','in'=>'path','required'=>true,'schema'=>['type'=>'string','pattern'=>'^[a-z0-9-]{1,110}
+                            ['name'=>'market','in'=>'path','required'=>true,'schema'=>['type'=>'string','pattern'=>'^[a-z0-9-]{1,110}$']],
+                        ],
+                        'responses' => ['200' => ['description' => 'Verified profile data or unknown details'],
+                            '404' => ['description' => 'Unknown market']],
+                    ],
+                ],
+                '/api/latest' => [
                     'get' => [
                         'operationId' => 'getLatestSnapshot',
                         'summary' => 'Get latest cached market snapshot',
