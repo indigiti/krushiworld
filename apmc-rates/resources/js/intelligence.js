@@ -7,11 +7,11 @@ const el=(tag,cl='',value)=>{const n=document.createElement(tag);n.className=cl;
 let selected=null,days=30,requestId=0;
 function crop(r){return String((HI?r.name_hi||dict.commodities?.[r.name_en]?.hi:MR?r.name_mr:r.name_en)||r.name_en||r.commodity||'')}
 function cropKey(r){return String(r.commodity_key||r.name_en||'')}
-function market(r){return String((HI?r.market_name_hi:MR?r.market_name_mr:r.market_name_en)||r.market_name_en||r.market_id||'')}
+function market(r){return String(window.KrushiPulseMarketNameFor?.(r.market_id)||(HI?r.market_name_hi:MR?r.market_name_mr:r.market_name_en)||r.market_name_en||r.market_id||'')}
 function usable(r){return r&&/^[a-z0-9-]{1,112}$/.test(String(r.market_id||''))&&cropKey(r)&&r.date&&r.unit&&Number.isFinite(Number(r.average))}
 function read(){try{const a=JSON.parse(localStorage.getItem(store)||'[]');return Array.isArray(a)?a.filter(x=>x&&typeof x==='object'&&Number.isFinite(x.threshold)&&/^[a-z0-9-]{1,112}$/.test(x.market)).slice(0,30):[]}catch(_){return []}}
 function save(rows){try{localStorage.setItem(store,JSON.stringify(rows));return true}catch(_){return false}}
-function params(){const r=selected;return new URLSearchParams({market:String(r.market_id),commodity:cropKey(r),variety:String(r.variety||''),grade:String(r.grade||''),unit:String(r.unit).toLowerCase(),days:String(days)})}
+function params(){const r=selected;return new URLSearchParams({market:String(r.market_id),commodity:String(r.name_en||cropKey(r)),variety:String(r.variety||''),grade:String(r.grade||''),unit:String(r.unit).toLowerCase(),days:String(days)})}
 async function fetchData(method,p){
  const response=await fetch(base+'/api/v1/intelligence/'+method+'?'+p,{cache:'no-store',headers:{Accept:'application/json'}});
  if(!response.ok)throw Error('HTTP');
