@@ -36,6 +36,8 @@ jobs:
       - name: JavaScript syntax checks
         run: |
           for file in apmc-rates/public/build/*.js; do node --check "$file"; done
+      - name: Test crop emoji resolver
+        run: node --test apmc-rates/tests/commodity-icons.test.cjs
       - name: Check no tracked production snapshots
         run: |
           if git ls-files apmc-rates/storage | grep -Ev '(\.gitkeep|\.htaccess)$'; then
