@@ -82,6 +82,26 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
   </header>
 
 <?php if (!$authorized): ?>
+<?php if ($identityMode): ?>
+  <section class="admin-login-card" style="max-width:580px">
+    <h2 class="text-lg font-bold">Admin authentication</h2>
+    <p class="mt-1 text-sm text-muted">Secure individual accounts with MFA verification</p>
+    <?php if ($authNotice !== ''): ?><div class="admin-alert admin-alert-warning" role="alert"><?= apmc_escape($authNotice) ?></div><?php endif; ?>
+    <?php if ($githubEnabled): ?>
+      <p><a class="admin-primary-action" style="display:inline-block;margin:12px 0;text-decoration:none" href="<?= apmc_escape(apmc_absolute_url('/admin/?auth=github-start')) ?>">Sign in with GitHub (staging)</a></p>
+      <p class="text-xs text-muted">Access restricted to approved GitHub accounts. Disabled automatically in production.</p>
+    <?php endif; ?>
+    <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form">
+      <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+      <input type="hidden" name="auth_action" value="local_login">
+      <label class="admin-token-field">Username <input name="username" type="text" autocomplete="username" required maxlength="50"></label>
+      <label class="admin-token-field">Password <input name="password" type="password" autocomplete="current-password" minlength="14" required></label>
+      <label class="admin-token-field">Authenticator or recovery code <input name="totp" type="text" autocomplete="one-time-code" required maxlength="17"></label>
+      <button class="admin-primary-action" type="submit">Sign in securely</button>
+    </form>
+    <p class="text-xs text-muted mt-3">Local accounts require an authenticator code on their first login. Recovery codes are single-use.</p>
+  </section>
+<?php else: ?>
   <section class="admin-login-card">
     <div class="admin-login-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
@@ -98,8 +118,9 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
       <button class="admin-primary-action" type="submit" data-i18n="openConsole" <?= $adminDisabled ? 'disabled' : '' ?>>Open system console</button>
     </form>
   </section>
+<?php endif; ?>
 <?php else: ?>
-  <?php if ($defaultTokenInUse): ?>
+  <?php if ($defaultTokenInUse && !$identityMode): ?>
     <div class="admin-alert admin-alert-warning mb-4" role="alert"><b data-i18n="securityAction">Security action:</b> <span data-i18n="defaultTokenWarning">the package default admin token is still configured. Replace it before exposing this console publicly.</span></div>
   <?php endif; ?>
 
