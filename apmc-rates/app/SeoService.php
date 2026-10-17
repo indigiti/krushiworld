@@ -96,7 +96,7 @@ TXT;
         return [
             'name' => 'Pune APMC Market Data Interface',
             'version' => (string)apmc_config('version', '1.3.0'),
-            'description' => 'Read-only bilingual Pune APMC market-rate retrieval interface for applications, search systems and AI agents.',
+            'description' => 'Read-only English, Marathi and Hindi Pune APMC market-rate retrieval interface for applications, search systems and AI agents.',
             'languages' => ['en', 'mr', 'hi'],
             'openapi' => $base . '/openapi.json',
             'capabilities' => [
@@ -121,7 +121,7 @@ TXT;
             'info' => [
                 'title' => 'Pune APMC Market Intelligence Public API',
                 'version' => (string)apmc_config('version', '1.3.0'),
-                'description' => 'Read-only public API for bilingual Pune APMC market-rate retrieval. Administrative and collector actions are intentionally excluded.'
+                'description' => 'Read-only public API for English, Marathi and Hindi Pune APMC market-rate retrieval. Administrative and collector actions are intentionally excluded.'
             ],
             'servers' => [['url' => $server]],
             'paths' => [
@@ -159,7 +159,7 @@ TXT;
                             ['name' => 'q', 'in' => 'query', 'schema' => ['type' => 'string'], 'description' => 'Commodity, market or category text in English or Marathi'],
                             ['name' => 'market', 'in' => 'query', 'schema' => ['type' => 'string'], 'description' => 'Canonical market_id (main-market-yard, manjari, moshi, pimpri, khadki) or a compatible market/feed label'],
                             ['name' => 'category', 'in' => 'query', 'schema' => ['type' => 'string']],
-                            ['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr'], 'default' => 'en']],
+                            ['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr', 'hi'], 'default' => 'en']],
                             ['name' => 'limit', 'in' => 'query', 'schema' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 50, 'default' => 20]],
                         ],
                         'responses' => ['200' => ['description' => 'Matching market-rate records']],
@@ -176,7 +176,7 @@ TXT;
                     'get' => [
                         'operationId' => 'getMarketSummary',
                         'summary' => 'Get compact market status and pulse summary',
-                        'parameters' => [['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr'], 'default' => 'en']]],
+                        'parameters' => [['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr', 'hi'], 'default' => 'en']]],
                         'responses' => ['200' => ['description' => 'Compact market summary']],
                     ],
                 ],
