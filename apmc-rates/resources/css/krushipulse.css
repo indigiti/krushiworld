@@ -41,3 +41,13 @@
 .kp-market-permalink[hidden]{display:none}
 .kp-rate-market-link{font-size:inherit}
 @media(max-width:690px){.kp-route-context{padding:13px;gap:7px}.kp-route-context small{flex-basis:100%}}
+
+/* Trilingual, keyboard-accessible language picker (Marathi/Hindi/English). */
+.kp-language-menu{position:relative;flex-shrink:0;z-index:45}
+.kp-language-menu>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:5px}
+.kp-language-menu>summary::-webkit-details-marker{display:none}
+.kp-language-options{position:absolute;right:0;top:calc(100% + 9px);display:flex;flex-direction:column;min-width:145px;padding:6px;border:1px solid var(--stroke);border-radius:12px;background:var(--surface);box-shadow:0 14px 35px rgba(0,0,0,.16);z-index:50}
+.kp-language-options a{display:block;padding:10px 12px;border-radius:7px;color:var(--text);text-decoration:none;font-size:13px;font-weight:750}
+.kp-language-options a:hover,.kp-language-options a:focus-visible{background:var(--field);color:var(--primary2)}
+.kp-language-options a[aria-current=page]{background:var(--field);color:var(--primary2)}
+@media(max-width:690px){.kp-language-options{right:-8px;min-width:132px}.kp-language-menu .kp-lang-btn{white-space:nowrap}}
