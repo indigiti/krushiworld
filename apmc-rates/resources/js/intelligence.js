@@ -105,6 +105,7 @@ function saveAlert(){
 function show(r,scroll=true){
  if(!usable(r))return;
  selected={...r};$('kpTargetPrice').value=String(Math.round(Number(r.average)));net();refresh();
+ window.KrushiPulsePhase4SelectRate?.(r);
  if(scroll)$('intelligence')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 window.KrushiPulseShowInsights=show;
