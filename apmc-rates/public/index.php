@@ -35,6 +35,10 @@ $GLOBALS['apmc_route'] = $route;
 $view = $route['kind'] === 'admin' ? 'admin' : ($route['kind'] === 'legacy' ? (string)($_GET['view'] ?? 'home') : 'home');
 apmc_apply_security_headers($view === 'admin');
 
+if ($view === 'admin' && apmc_auth()->enabled()) {
+    // Authenticated GitHub/local flows are isolated from the legacy token endpoint.
+    \KrushiPulse\Security\AdminHttp::run(apmc_auth());
+} else {
 // Promote a valid one-time token to an HttpOnly SameSite cookie, then remove the
 // token from the browser address bar/history. This keeps legacy token URLs working
 // without continuing to expose the credential on every admin action.
@@ -58,6 +62,9 @@ if ($view === 'admin' && (string)($_POST['admin_logout'] ?? '') === '1') {
     apmc_set_admin_cookie(false);
     header('Location: ' . apmc_script_url() . '?view=admin', true, 303);
     exit;
+}
+
+
 }
 
 $seo = (string)($route['kind'] === 'seo' ? $route['name'] : ($route['kind'] === 'legacy' ? ($_GET['seo'] ?? '') : ''));
