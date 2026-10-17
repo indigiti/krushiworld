@@ -49,12 +49,12 @@
   },
   "मटार": {
     "en": "Peas",
-    "emoji": "🟢",
+    "emoji": "🫛",
     "mr": "मटार"
   },
   "मटर": {
     "en": "Peas",
-    "emoji": "🟢",
+    "emoji": "🫛",
     "mr": "मटर"
   },
   "घेवडा": {
@@ -482,7 +482,7 @@
   "डाळींब": {
     "en": "Pomegranate",
     "mr": "डाळींब",
-    "emoji": "🔴",
+    "emoji": "🍈",
     "aliases": [
       "Pomegranates"
     ]
@@ -490,7 +490,7 @@
   "डाळिंब": {
     "en": "Pomegranate",
     "mr": "डाळिंब",
-    "emoji": "🔴",
+    "emoji": "🍈",
     "aliases": [
       "Pomegranates"
     ]
@@ -506,7 +506,7 @@
   "चिकू": {
     "en": "Sapota",
     "mr": "चिकू",
-    "emoji": "🟤",
+    "emoji": "🍈",
     "aliases": [
       "Chikoo",
       "Sapodilla"
@@ -596,7 +596,7 @@
   "बोर": {
     "en": "Jujube",
     "mr": "बोर",
-    "emoji": "🟤",
+    "emoji": "🍈",
     "aliases": [
       "Ber"
     ]
