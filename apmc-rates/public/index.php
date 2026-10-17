@@ -71,7 +71,24 @@ if ($api !== '') {
     if ($api === 'latest') apmc_json_response(['ok' => true, 'data' => $repo->latest(), 'fallback_due' => $refresh->serverFallbackDue()]);
     if ($api === 'query') apmc_json_response(['ok' => true, 'data' => $queryService->query($_GET)]);
     if ($api === 'summary') apmc_json_response(['ok' => true, 'data' => $queryService->summary((string)($_GET['lang'] ?? 'en'))]);
-    if ($api === 'markets') { $latest = $repo->latest(); apmc_json_response(['ok' => true, 'data' => ['markets' => $latest['markets'] ?? [], 'count' => count((array)($latest['markets'] ?? []))]]); }
+    if ($api === 'markets') {
+        $latest = $repo->latest();
+        $markets = (array)($latest['markets'] ?? []);
+        $directory = apmc_json_read(APMC_ROOT . '/config/market_coordinates.json', []);
+        foreach ($markets as &$market) {
+            if (!is_array($market)) continue;
+            $id = (string)($market['market_id'] ?? '');
+            $geo = $directory[$id] ?? ($market['geo'] ?? null);
+            if (is_array($geo) && isset($geo['latitude'], $geo['longitude'])
+                && is_numeric($geo['latitude']) && is_numeric($geo['longitude'])
+                && is_finite((float)$geo['latitude']) && is_finite((float)$geo['longitude'])
+                && abs((float)$geo['latitude']) <= 90 && abs((float)$geo['longitude']) <= 180) {
+                $market['geo'] = ['latitude' => (float)$geo['latitude'], 'longitude' => (float)$geo['longitude'], 'precision' => 'approximate'];
+            } else $market['geo'] = null;
+        }
+        unset($market);
+        apmc_json_response(['ok' => true, 'data' => ['markets' => $markets, 'count' => count($markets)]]);
+    }
     if ($api === 'discover') apmc_json_response(['ok' => true, 'agent' => $seoService->agentManifest(), 'openapi' => apmc_absolute_url('/openapi.json')]);
     if ($api === 'health') {
         $runtime = $refresh->runtimeCapabilities();
