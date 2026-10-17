@@ -97,7 +97,7 @@ final class AdminIdentity {
     public function session(string $token): ?array {
         if (!preg_match('/^[a-f0-9]{64}$/D',$token)) return null;
         $hash=hash('sha256',$token);
-        $r=$this->one('SELECT s.*,u.username,u.role,u.status,u.local_verified_at,u.password_hash
+        $r=$this->one('SELECT s.*,u.username,u.role,u.status,u.local_verified_at,u.github_id
                        FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=?',[$hash]);
         if (!$r || $r['status']!=='active' || (int)$r['expires_at']<time() || (int)$r['last_seen']<time()-1800){
             $this->exec('DELETE FROM sessions WHERE token_hash=?',[$hash]);return null;
