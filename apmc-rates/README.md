@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.10.0
+# KrushiWorld KrushiPulse — APMC Rates v1.11.0
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -207,3 +207,7 @@ KrushiPulse now supports /en/, /mr/, /en/mandis/, /mr/mandis/{market-id}/ and /a
 ## v1.10.0 — Hindi third-language interface
 
 KrushiPulse adds /hi/ and /hi/mandis/{market-id}/ localized, shareable pages alongside /en/ and /mr/. The language switcher preserves the selected mandi. Hindi text covers the homepage, market filters, nearest-mandi browser permissions, saved crops, and admin UI. Over 280 known commodity labels and source-backed category/unit names have Hindi translations; national mandi/source names without a verified Hindi translation retain their official spelling. All report amounts, source dates and saved market IDs are unchanged. Sitemaps, canonical hreflang entries, APIs (`lang=hi`) and CI integration tests include Hindi. Deploy using the standard DigiOps release artifact. Hindi preference is preserved in the browser with the existing cookie and admin localStorage behavior.
+
+## v1.11.0 — National data & mandi discovery (Phase 1)
+
+This release hardens official AGMARKNET ingestion (secret-safe health status, reported-date freshness, incomplete pagination checks, last-good fallback) and adds an audited geocoded mandi expansion mechanism. GPS discovery uses only documented mandi coordinates, while PIN matching is limited to sourced mandi postal addresses. A manual mandi/district search and State/District selectors remain available nationwide, subject to actual AGMARKNET source coverage. The UI shows mapped-market coverage, last report date and import status without implying live rates or pretending that all mandis have verified coordinates. See [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md) for Cloudways activation and reviewed geocode CSV import instructions.
