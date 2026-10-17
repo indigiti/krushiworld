@@ -8,8 +8,8 @@
   let lang = 'en';
 
   function getSavedLanguage(){
-    try { return localStorage.getItem('apmc-language') === 'mr' ? 'mr' : 'en'; }
-    catch (_) { return I18N.default === 'mr' ? 'mr' : 'en'; }
+    try { const saved=localStorage.getItem('apmc-language');return ['en','mr','hi'].includes(saved)?saved:'en'; }
+    catch (_) { return ['en','mr','hi'].includes(I18N.default)?I18N.default:'en'; }
   }
   function t(key){ return I18N?.labels?.[lang]?.[key] ?? I18N?.labels?.en?.[key] ?? key; }
   function marketFromSlug(slug){
@@ -18,7 +18,7 @@
     return entry?.[lang] || entry?.en || canonical || slug;
   }
   function applyLanguage(next, persist = true){
-    lang = next === 'mr' ? 'mr' : 'en';
+    lang = ['en','mr','hi'].includes(next)?next:'en';
     document.documentElement.lang = lang;
     document.documentElement.dataset.lang = lang;
     if (persist) {
