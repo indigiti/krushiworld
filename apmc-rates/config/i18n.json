@@ -2206,7 +2206,9 @@
     "Waiting for location permission…": "लोकेशन की अनुमति का इंतज़ार…",
     "Location denied. Choose manually.": "लोकेशन की अनुमति नहीं मिली। खुद मंडी चुनें।",
     "Location unavailable. Choose manually.": "लोकेशन उपलब्ध नहीं। खुद मंडी चुनें।",
-    "Location cleared; your chosen mandi remains saved.": "लोकेशन हटा दी गई; चुनी हुई मंडी सुरक्षित रहेगी।"
+    "Location cleared; your chosen mandi remains saved.": "लोकेशन हटा दी गई; चुनी हुई मंडी सुरक्षित रहेगी।",
+    "Choose language": "भाषा चुनें",
+    "Switch language": "भाषा बदलें"
   },
   "states_hi": {
     "Andhra Pradesh": "आंध्र प्रदेश",
