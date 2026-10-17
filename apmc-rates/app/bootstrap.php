@@ -49,7 +49,7 @@ function apmc_i18n(): array {
     static $i18n = null;
     if ($i18n === null) {
         $i18n = apmc_json_read(APMC_ROOT . '/config/i18n.json', [
-            'default' => 'en', 'supported' => ['en', 'mr'], 'labels' => [],
+            'default' => 'en', 'supported' => ['en', 'mr', 'hi'], 'labels' => [],
             'markets' => [], 'market_slugs' => [], 'categories' => [], 'units' => [], 'commodities' => [],
         ]);
     }
@@ -234,9 +234,9 @@ function apmc_cosponsor_settings(): array {
 
 function apmc_page_language(): string {
     $query = strtolower((string)($_GET['lang'] ?? ''));
-    if (in_array($query, ['en', 'mr'], true)) return $query;
+    if (in_array($query, ['en', 'mr', 'hi'], true)) return $query;
     $cookie = strtolower((string)($_COOKIE['apmc_language'] ?? ''));
-    return in_array($cookie, ['en', 'mr'], true) ? $cookie : 'mr';
+    return in_array($cookie, ['en', 'mr', 'hi'], true) ? $cookie : 'mr';
 }
 
 function apmc_admin_csrf_token(): string {
