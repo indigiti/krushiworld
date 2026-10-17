@@ -1,0 +1,217 @@
+{
+  "source": "Government of India Press Information Bureau",
+  "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3",
+  "note": "Official Kharif 2026-27 MSP references only. Grades apply exactly; do not imply guarantee of procurement or an MSP for another season. No MSP for most horticulture crops.",
+  "entries": [
+    {
+      "commodity": "Paddy",
+      "aliases": [
+        "Paddy Common"
+      ],
+      "grade": "Common",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 2441,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Paddy",
+      "aliases": [
+        "Paddy Grade A"
+      ],
+      "grade": "Grade A",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 2461,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Jowar",
+      "aliases": [
+        "Sorghum Hybrid"
+      ],
+      "grade": "Hybrid",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 4023,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Jowar",
+      "aliases": [
+        "Sorghum Maldandi"
+      ],
+      "grade": "Maldandi",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 4073,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Bajra",
+      "aliases": [
+        "Pearl Millet"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 2900,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Ragi",
+      "aliases": [
+        "Finger Millet"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 5205,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Maize",
+      "aliases": [
+        "Corn"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 2410,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Tur / Arhar",
+      "aliases": [
+        "Pigeon Pea",
+        "Tur",
+        "Arhar",
+        "Pigeon Peas"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8450,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Moong",
+      "aliases": [
+        "Green Gram"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8780,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Urad",
+      "aliases": [
+        "Black Gram"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8200,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Groundnut",
+      "aliases": [
+        "Groundnut Pods",
+        "Peanut"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 7517,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Sunflower Seed",
+      "aliases": [
+        "Sunflower"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8343,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Soybean (Yellow)",
+      "aliases": [
+        "Soybean",
+        "Soyabean"
+      ],
+      "grade": "Yellow",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 5708,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Sesamum",
+      "aliases": [
+        "Sesame",
+        "Sesame Seed"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 10346,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Nigerseed",
+      "aliases": [
+        "Niger Seed"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 10052,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Cotton",
+      "aliases": [
+        "Cotton Medium Staple"
+      ],
+      "grade": "Medium Staple",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8267,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Cotton",
+      "aliases": [
+        "Cotton Long Staple"
+      ],
+      "grade": "Long Staple",
+      "marketing_season": "2026-27",
+      "season_type": "Kharif",
+      "msp_inr_per_quintal": 8667,
+      "announced_at": "2026-05-13",
+      "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    }
+  ]
+}
