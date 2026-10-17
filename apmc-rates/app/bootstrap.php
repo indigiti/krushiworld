@@ -15,6 +15,7 @@ date_default_timezone_set($config['timezone'] ?? 'Asia/Kolkata');
 
 require_once __DIR__ . '/DataNormalizer.php';
 require_once __DIR__ . '/RateRepository.php';
+require_once __DIR__ . '/NationalMarketRepository.php';
 require_once __DIR__ . '/RefreshService.php';
 require_once __DIR__ . '/WebCollector.php';
 require_once __DIR__ . '/PublicQueryService.php';
