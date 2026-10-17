@@ -15,6 +15,7 @@ assertRelease(($metadata['persistentPaths'] ?? []) === ['storage/'], 'Storage pe
 $required = [
     'public/index.php', 'public/api.php', 'public/.htaccess',
     'public/build/krushipulse.css', 'public/build/krushipulse.js',
+    'public/build/commodity-icons.js',
     'public/build/nearest-mandi.js',
     'private/app/bootstrap.php', 'private/app/NationalMarketRepository.php', 'private/app/views/home.php',
     'private/config/app.php', 'private/config/i18n.json', 'private/config/market_coordinates.json',
