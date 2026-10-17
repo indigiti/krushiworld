@@ -26,6 +26,7 @@ final class RouteResolver {
             return ['kind' => 'mandi', 'lang' => $m[1], 'market' => $m[2]];
         }
         if (preg_match('~^/admin/?$~D', $path)) return ['kind' => 'admin'];
+        if (preg_match('~^/api/v1/intelligence/(history|compare)/?$~D', $path, $m)) return ['kind' => 'api', 'api' => 'v1-' . $m[1]];
         if (preg_match('~^/api/v1/(latest|markets|query|summary|health|discover)/?$~D', $path, $m)) {
             return ['kind' => 'api', 'api' => $m[1]];
         }
