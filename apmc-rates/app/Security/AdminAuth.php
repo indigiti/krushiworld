@@ -10,7 +10,7 @@ final class AdminAuth {
     public function __construct(?AdminIdentity $identity=null) {$this->identity=$identity;}
     public function mode(): string {
         $mode=strtolower(trim((string)(getenv('APMC_AUTH_MODE') ?: 'legacy')));
-        return in_array($mode,['legacy','staging','production'],true)?$mode:'legacy';
+        return in_array($mode,['legacy','staging','production'],true)?$mode:'disabled';
     }
     public function enabled(): bool { return $this->mode()!=='legacy'; }
     public function store(): AdminIdentity {
@@ -19,7 +19,7 @@ final class AdminAuth {
     }
     public function githubAllowed(): bool {
         return $this->mode()==='staging'
-            && ctype_alnum((string)(getenv('APMC_GITHUB_CLIENT_ID')?:''))
+            && (bool)preg_match('/^[a-zA-Z0-9._-]{5,150}$/D',(string)(getenv('APMC_GITHUB_CLIENT_ID')?:''))
             && trim((string)getenv('APMC_GITHUB_CLIENT_SECRET'))!==''
             && trim((string)getenv('APMC_GITHUB_ADMIN_IDS'))!==''
             && $this->store()->providerEnabled();
@@ -40,13 +40,16 @@ final class AdminAuth {
         return $token!=='' && hash_equals($this->csrf(),$token);
     }
     public function user(): ?array {
-        if(!$this->enabled())return null;
+        if(!$this->enabled() || $this->mode()==='disabled')return null;
         $token=(string)($_COOKIE['kp_admin_auth']??'');
         if($token==='')return null;
         try {
             $session=$this->store()->session($token);
-            if ($session && $session['provider']==='github'
-                && ($this->mode()!=='staging' || !$this->store()->providerEnabled())) return null;
+            if ($session && $session['provider']==='github') {
+                $allowed=array_filter(array_map('trim',explode(',',(string)getenv('APMC_GITHUB_ADMIN_IDS'))),'ctype_digit');
+                if ($this->mode()!=='staging' || !$this->githubAllowed()
+                    || !in_array((string)$session['github_id'],$allowed,true)) return null;
+            }
             return $session;
         }catch(\Throwable){return null;}
     }
@@ -182,7 +185,7 @@ final class AdminAuth {
     }
     public function localLogin(string $username,string $password,string $otp): bool {
         $host=(string)($_SERVER['HTTP_HOST']??'');
-        if(!$this->enabled() || (!apmc_request_is_https() && !in_array($host,['127.0.0.1','localhost','127.0.0.1:18739'],true)))return false;
+        if(!in_array($this->mode(),['staging','production'],true) || (!apmc_request_is_https() && !in_array($host,['127.0.0.1','localhost','127.0.0.1:18739'],true)))return false;
         $id='local:'.strtolower($username);
         $db=$this->store();
         if(!$db->rateLimit($id))return false;
