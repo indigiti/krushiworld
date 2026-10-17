@@ -19,10 +19,10 @@ class HindiLocalizationTests(unittest.TestCase):
         self.assertIn('hi',self.data['labels'])
         self.assertIn('hi',self.data['markets']['Main Market Yard'])
         self.assertIn('hi',self.data['categories']['Vegetables'])
-        pairs=re.findall(r"\\$ui\\(\\s*'((?:\\\\'|[^'])*)'\\s*,\\s*'((?:\\\\'|[^'])*)'\\s*\\)",self.home)
+        pairs=re.findall(r"\$ui\(\s*'([^']*)'\s*,\s*'([^']*)'\s*\)",self.home)
         runtime=[]
         for js in (self.js,self.near):
-            runtime += re.findall(r"\\bt\\(\\s*'((?:\\\\'|[^'])*)'\\s*,\\s*'((?:\\\\'|[^'])*)'\\s*\\)",js)
+            runtime += re.findall(r"\bt\(\s*'([^']*)'\s*,\s*'([^']*)'\s*\)",js)
         all_english={en for _,en in pairs+runtime}
         missing=all_english-set(self.data['ui_hi'])
         self.assertFalse(missing, 'Missing Hindi copy: '+str(sorted(missing)))
