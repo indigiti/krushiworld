@@ -138,7 +138,7 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
   <section class="admin-section mt-4">
     <div class="admin-section-head">
       <div><h2 class="font-bold" data-i18n="webOperations">Web operations</h2><p class="mt-1 text-xs text-muted" data-i18n="webOperationsHelp">Actions are POST-only and run against the existing collector. Public cached data remains available while a refresh runs.</p></div>
-      <div class="flex flex-wrap gap-2"><button class="admin-action" data-action="force" data-i18n="checkNow">Check now</button><button class="admin-action" data-action="retry" data-i18n="retryMissing">Retry missing</button><button class="admin-action" data-action="rebuild" data-i18n="rebuildIndexes">Rebuild indexes</button><button class="admin-action" data-action="backfill7" data-i18n="backfill7">Backfill 7 days</button></div>
+      <?php if (!$identityMode || apmc_auth()->canOperate()): ?><div class="flex flex-wrap gap-2"><button class="admin-action" data-action="force" data-i18n="checkNow">Check now</button><button class="admin-action" data-action="retry" data-i18n="retryMissing">Retry missing</button><button class="admin-action" data-action="rebuild" data-i18n="rebuildIndexes">Rebuild indexes</button><button class="admin-action" data-action="backfill7" data-i18n="backfill7">Backfill 7 days</button></div><?php else: ?><p class="text-xs text-muted">Read-only role: collector operations are restricted.</p><?php endif; ?>
     </div>
     <div id="actionResult" class="admin-action-result hidden" role="status" aria-live="polite"></div>
   </section>
