@@ -21,7 +21,8 @@ $required = [
     'private/app/Http/RouteResolver.php', 'private/app/Http/PublicApiController.php',
     'private/app/Application/MarketDirectoryService.php', 'private/app/Application/MarketRatesService.php',
     'private/config/app.php', 'private/config/i18n.json', 'private/config/market_coordinates.json',
-    'private/collector/refresh.py', 'private/collector/national.py', 'private/collector/config.json',
+    'private/config/national_market_coordinates.json', 'private/config/postal_market_references.json',
+    'private/collector/refresh.py', 'private/collector/national.py', 'private/collector/import_market_geocodes.py', 'private/collector/config.json',
     'private/collector/commodity_map.json', 'private/bin/server-refresh.sh',
     'private/VERSION', 'private/build/release.json',
 ];
