@@ -42,6 +42,7 @@ jobs:
       - name: JavaScript syntax checks
         run: |
           for file in apmc-rates/public/build/*.js; do node --check "$file"; done
+          node --check tools/visual-audit.cjs
       - name: Test crop emoji resolver
         run: node --test apmc-rates/tests/commodity-icons.test.cjs
       - name: Market label regression in all three languages
@@ -78,6 +79,43 @@ jobs:
           path: release/
           if-no-files-found: error
           include-hidden-files: true
+          retention-days: 14
+
+  visual-audit:
+    name: Desktop and mobile browser visual audit
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, curl, sqlite3
+      - uses: actions/download-artifact@v4
+        with:
+          name: digiops-release
+          path: release/
+      - name: Prepare headless Chromium assertions
+        run: |
+          npm install --prefix /tmp/krushipulse-visual --no-audit --no-fund --no-save playwright-core@1.56.1
+          node --check tools/visual-audit.cjs
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium
+      - name: Screenshot and UI interaction checks at four viewport sizes
+        env:
+          NODE_PATH: /tmp/krushipulse-visual/node_modules
+          VISUAL_AUDIT_OUTPUT: visual-audit-screenshots
+        run: node tools/visual-audit.cjs
+      - name: Upload visual audit screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: krushipulse-visual-audit
+          path: visual-audit-screenshots/
+          if-no-files-found: ignore
           retention-days: 14
 
   artifact-verification:
