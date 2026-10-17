@@ -24,6 +24,7 @@ $jsonLd = json_encode($seoService->jsonLd($pageLang), JSON_UNESCAPED_UNICODE | J
 <link rel="stylesheet" href="<?= apmc_escape(apmc_asset('krushipulse.css')) ?>">
 <script nonce="<?= apmc_escape($nonce) ?>">window.APMC_BOOT=<?= $boot ?: '{}' ?>;window.APMC_API=<?= json_encode(apmc_script_url().'?api=latest') ?>;window.APMC_BOOTSTRAP_API=<?= json_encode(apmc_script_url().'?api=bootstrap') ?>;window.APMC_FALLBACK_DUE=<?= $refresh->serverFallbackDue() ? 'true' : 'false' ?>;window.APMC_I18N=<?= $i18n ?: '{}' ?>;</script>
 <script type="application/ld+json" nonce="<?= apmc_escape($nonce) ?>"><?= $jsonLd ?: '{}' ?></script>
+<script defer src="<?= apmc_escape(apmc_asset('commodity-icons.js')) ?>"></script>
 <script defer src="<?= apmc_escape(apmc_asset('krushipulse.js')) ?>"></script>
 <script defer src="<?= apmc_escape(apmc_asset('nearest-mandi.js')) ?>"></script>
 </head>
