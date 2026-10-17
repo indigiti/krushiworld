@@ -20,9 +20,9 @@ final class RouteResolver {
         if ($path === '' || $path === '/' || $path === '/index.php') return ['kind' => 'legacy'];
         // Reject encoded path separators, ambiguity and traversal before matching routes.
         if (str_contains($path, '%') || str_contains($path, '//') || str_contains($path, '..')) return ['kind' => 'not_found'];
-        if (preg_match('~^/(en|mr)/?$~D', $path, $m)) return ['kind' => 'home', 'lang' => $m[1]];
-        if (preg_match('~^/(en|mr)/mandis/?$~D', $path, $m)) return ['kind' => 'directory', 'lang' => $m[1]];
-        if (preg_match('~^/(en|mr)/mandis/([a-z0-9-]{1,110})/?$~D', $path, $m)) {
+        if (preg_match('~^/(en|mr|hi)/?$~D', $path, $m)) return ['kind' => 'home', 'lang' => $m[1]];
+        if (preg_match('~^/(en|mr|hi)/mandis/?$~D', $path, $m)) return ['kind' => 'directory', 'lang' => $m[1]];
+        if (preg_match('~^/(en|mr|hi)/mandis/([a-z0-9-]{1,110})/?$~D', $path, $m)) {
             return ['kind' => 'mandi', 'lang' => $m[1], 'market' => $m[2]];
         }
         if (preg_match('~^/admin/?$~D', $path)) return ['kind' => 'admin'];
