@@ -25,7 +25,7 @@ DEST = ROOT / "storage" / "national"
 RESOURCE = "9ef84268-d588-465a-a308-a864a43d0070"
 ENDPOINT = "https://api.data.gov.in/resource/" + RESOURCE
 PAGE_SIZE = 1000
-MAX_ROWS = 100000
+MAX_ROWS = 250000
 
 
 def load(path: Path, fallback):
@@ -129,6 +129,8 @@ def retrieve(api_key: str) -> list[dict]:
         if not isinstance(data, dict) or not isinstance(data.get("records"), list):
             raise ValueError("AGMARKNET returned an invalid data structure")
         batch = data["records"]
+        if expected is not None and int(data.get("total", expected)) != expected:
+            raise RuntimeError("AGMARKNET total changed during pagination")
         if expected is None:
             expected = int(data.get("total", len(batch)))
             if expected > MAX_ROWS:
@@ -183,6 +185,7 @@ def build(rows: list[dict], previous: list[dict]) -> tuple[dict, dict]:
 
 
 def run(force: bool = False) -> int:
+    """Import on the existing server cron. Never expose credentials in diagnostics."""
     key = os.getenv("APMC_DATA_GOV_IN_API_KEY", "").strip()
     if not key:
         print("National AGMARKNET feed not configured (APMC_DATA_GOV_IN_API_KEY missing).")
@@ -193,30 +196,55 @@ def run(force: bool = False) -> int:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             return 0
+        from time import time
         snapshot_file = DEST / "current.json"
         attempt_file = DEST / "last_attempt.json"
-        interval_hours = max(1, min(24, int(os.getenv("APMC_NATIONAL_INTERVAL_HOURS", "6"))))
-        if not force and attempt_file.exists():
-            from time import time
-            # Failed runs back off at least one hour to avoid API hammering.
-            if time() - attempt_file.stat().st_mtime < 3600:
-                return 0
-        if not force and snapshot_file.exists():
-            from time import time
-            if time() - snapshot_file.stat().st_mtime < interval_hours * 3600:
-                return 0
-        write_atomic(attempt_file, {"attempted_at": datetime.now(timezone.utc).isoformat()})
+        health_file = DEST / "health.json"
+        try:
+            interval_hours = max(1, min(24, int(os.getenv("APMC_NATIONAL_INTERVAL_HOURS", "6"))))
+        except ValueError:
+            interval_hours = 6
+        if not force and attempt_file.exists() and time() - attempt_file.stat().st_mtime < 3600:
+            return 0
+        if not force and snapshot_file.exists() and time() - snapshot_file.stat().st_mtime < interval_hours * 3600:
+            return 0
+        attempted = datetime.now(timezone.utc).isoformat()
+        prior_health = load(health_file, {})
+        previous_snapshot = load(snapshot_file, {})
+        write_atomic(attempt_file, {"attempted_at": attempted})
         try:
             raw_rows = retrieve(key)
             older = load(DEST / "directory.json", {}).get("markets", [])
             snapshot, directory = build(raw_rows, older)
+            previous_count = int((previous_snapshot.get("meta") or {}).get("records", 0))
+            new_count = int(snapshot["meta"]["records"])
+            # Guard against silently replacing full national coverage with a
+            # truncated feed that happens to claim a smaller "total".
+            if previous_count >= 100 and new_count < previous_count * 0.25:
+                raise RuntimeError("unexpected_record_drop")
             write_atomic(snapshot_file, snapshot)
             write_atomic(DEST / "directory.json", directory)
-            print(f"AGMARKNET: {snapshot['meta']['records']} records, {len(directory['markets'])} known markets")
+            write_atomic(health_file, {
+                "last_attempt_at": attempted,
+                "last_success_at": attempted,
+                "last_result": "success",
+                "records": new_count,
+                "markets": len(directory["markets"]),
+            })
+            print(f"AGMARKNET: {new_count} reported prices, {len(directory['markets'])} known markets")
             return 0
         except Exception as exc:
-            # Do not include API key or request URL in errors.
-            print("AGMARKNET refresh failed (last verified rates kept): " + str(exc)[:180], file=sys.stderr)
+            # A public API key is a secret. HTTP errors may embed the request
+            # URL (including the key), so never stringify an exception.
+            cause = type(exc).__name__
+            detail = "unexpected_record_drop" if str(exc) == "unexpected_record_drop" else cause
+            write_atomic(health_file, {
+                "last_attempt_at": attempted,
+                "last_success_at": prior_health.get("last_success_at"),
+                "last_result": "failed",
+                "failure_type": detail[:48],
+            })
+            print("AGMARKNET refresh failed; last verified rates kept [" + detail + "]", file=sys.stderr)
             return 1
 
 
