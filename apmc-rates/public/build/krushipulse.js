@@ -58,6 +58,23 @@ function setMarketScope(id){
  if(!m)return;
  state.stateFilter=m.state||'Maharashtra';state.districtFilter=m.district||'Pune';
 }
+function selectMarketFromFinder(id){
+ const market=marketRows().find(m=>m.key===id);
+ if(!market)return false;
+ setMarketScope(id);
+ state.market=id;
+ prefs.market=id;
+ state.category='all';
+ state.pageSize=35;
+ persist();
+ renderSelectors();
+ handleNational();
+ return true;
+}
+// The nearby/PIN finder switches across state and district filters without
+// reaching into mutable dashboard internals.
+window.KrushiPulseSelectMarket=selectMarketFromFinder;
+
 function handleNational(){
  const request=++state.marketRequest;
  state.nationalRecords=[];
