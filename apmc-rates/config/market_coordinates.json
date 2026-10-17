@@ -1,0 +1,27 @@
+{
+  "main-market-yard": {
+    "latitude": 18.481876,
+    "longitude": 73.870052,
+    "precision": "approximate"
+  },
+  "manjari": {
+    "latitude": 18.5029897,
+    "longitude": 73.9712483,
+    "precision": "locality"
+  },
+  "moshi": {
+    "latitude": 18.6793699,
+    "longitude": 73.8491808,
+    "precision": "locality"
+  },
+  "pimpri": {
+    "latitude": 18.6134,
+    "longitude": 73.8029,
+    "precision": "locality"
+  },
+  "khadki": {
+    "latitude": 18.5682,
+    "longitude": 73.8508,
+    "precision": "locality"
+  }
+}
