@@ -8,8 +8,31 @@ $refresh = new RefreshService($repo);
 $webCollector = new WebCollector($repo);
 $queryService = new PublicQueryService($repo);
 $seoService = new SeoService($repo);
+$marketDirectory = new \KrushiPulse\Application\MarketDirectoryService($repo, $national);
+$marketRates = new \KrushiPulse\Application\MarketRatesService($repo, $national, $marketDirectory);
+$route = \KrushiPulse\Http\RouteResolver::resolve(
+    (string)($_SERVER['REQUEST_URI'] ?? '/'),
+    apmc_script_url(),
+);
+if ($route['kind'] === 'not_found') {
+    http_response_code(404);
+    header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
+    exit('Page not found');
+}
+if (isset($route['lang'])) $_GET['lang'] = $route['lang'];
+if ($route['kind'] === 'mandi') {
+    $routeMarket = $marketDirectory->find((string)$route['market']);
+    if ($routeMarket === null) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=utf-8');
+        exit('Unknown mandi');
+    }
+    $route['market_data'] = $routeMarket;
+}
+$GLOBALS['apmc_route'] = $route;
 
-$view = (string) ($_GET['view'] ?? 'home');
+$view = $route['kind'] === 'admin' ? 'admin' : (string) ($_GET['view'] ?? 'home');
 apmc_apply_security_headers($view === 'admin');
 
 // Promote a valid one-time token to an HttpOnly SameSite cookie, then remove the
@@ -37,7 +60,7 @@ if ($view === 'admin' && (string)($_POST['admin_logout'] ?? '') === '1') {
     exit;
 }
 
-$seo = (string) ($_GET['seo'] ?? '');
+$seo = (string)($route['kind'] === 'seo' ? $route['name'] : ($_GET['seo'] ?? ''));
 if ($seo !== '') {
     if ($seo === 'robots') {
         header('Content-Type: text/plain; charset=utf-8');
@@ -67,149 +90,12 @@ if ($seo !== '') {
     http_response_code(404); exit('Not found');
 }
 
-$api = (string) ($_GET['api'] ?? '');
+$api = (string)($route['kind'] === 'api' ? $route['api'] : ($_GET['api'] ?? ''));
 if ($api !== '') {
-    if ($api === 'latest') apmc_json_response(['ok' => true, 'data' => $repo->latest(), 'fallback_due' => $refresh->serverFallbackDue()]);
-    if ($api === 'query') apmc_json_response(['ok' => true, 'data' => $queryService->query($_GET)]);
-    if ($api === 'summary') apmc_json_response(['ok' => true, 'data' => $queryService->summary((string)($_GET['lang'] ?? 'en'))]);
-    if ($api === 'markets') {
-        $latest = $repo->latest();
-        $merged = [];
-        $directory = apmc_json_read(APMC_ROOT . '/config/market_coordinates.json', []);
-        // A directory must not disappear when a mandi has no fresh report.
-        foreach ((array)(apmc_json_read(APMC_ROOT . '/collector/config.json', [])['markets'] ?? []) as $feed) {
-            if (!is_array($feed)) continue;
-            $id = (string)($feed['market_id'] ?? '');
-            if ($id === '') continue;
-            $merged[$id] = [
-                'market_id' => $id, 'slug' => $id,
-                'name' => $feed['market'] ?? $id,
-                'name_en' => $feed['market'] ?? $id,
-                'name_mr' => $feed['market_mr'] ?? $feed['market'] ?? $id,
-                'state' => 'Maharashtra', 'district' => 'Pune',
-                'source' => 'Pune APMC', 'records' => 0, 'date' => null,
-            ];
-        }
-        foreach ((array)($latest['markets'] ?? []) as $market) {
-            if (!is_array($market)) continue;
-            $id = (string)($market['market_id'] ?? '');
-            if ($id !== '') {
-                $merged[$id] = array_merge($merged[$id] ?? [], $market);
-                $merged[$id]['state'] = 'Maharashtra';
-                $merged[$id]['district'] = 'Pune';
-                $merged[$id]['source'] = 'Pune APMC';
-            }
-        }
-        foreach ($national->directory() as $market) {
-            $id = (string)($market['market_id'] ?? '');
-            if ($id !== '' && str_starts_with($id, 'agmarknet-')) $merged[$id] = $market;
-        }
-        foreach ($merged as &$market) {
-            $id = (string)($market['market_id'] ?? '');
-            $geo = $directory[$id] ?? ($market['geo'] ?? null);
-            if (is_array($geo) && isset($geo['latitude'], $geo['longitude'])
-                && is_numeric($geo['latitude']) && is_numeric($geo['longitude'])
-                && is_finite((float)$geo['latitude']) && is_finite((float)$geo['longitude'])
-                && abs((float)$geo['latitude']) <= 90 && abs((float)$geo['longitude']) <= 180) {
-                $market['geo'] = [
-                    'latitude' => (float)$geo['latitude'],
-                    'longitude' => (float)$geo['longitude'],
-                    'precision' => in_array($geo['precision'] ?? '', ['surveyed', 'locality', 'approximate'], true)
-                        ? $geo['precision'] : 'approximate',
-                ];
-            } else $market['geo'] = null;
-        }
-        unset($market);
-        $markets = array_values($merged);
-        usort($markets, static fn($a, $b) =>
-            strcmp((string)($a['state'] ?? ''), (string)($b['state'] ?? ''))
-            ?: strcmp((string)($a['district'] ?? ''), (string)($b['district'] ?? ''))
-            ?: strcmp((string)($a['name_en'] ?? ''), (string)($b['name_en'] ?? ''))
-        );
-        apmc_json_response(['ok' => true, 'data' => [
-            'markets' => $markets, 'count' => count($markets),
-            'national' => $national->state(),
-        ]]);
-    }
-    if ($api === 'national') {
-        $id = (string)($_GET['market'] ?? '');
-        try {
-            apmc_json_response(['ok' => true, 'data' =>
-                $national->marketRates($id, (int)($_GET['limit'] ?? 1500))]);
-        } catch (InvalidArgumentException $ex) {
-            apmc_json_response(['ok' => false, 'error' => $ex->getMessage()], 400);
-        }
-    }
-    if ($api === 'discover') apmc_json_response(['ok' => true, 'agent' => $seoService->agentManifest(), 'openapi' => apmc_absolute_url('/openapi.json')]);
-    if ($api === 'health') {
-        $runtime = $refresh->runtimeCapabilities();
-        if (!apmc_admin_authorized()) {
-            $latest = $repo->latest();
-            apmc_json_response(['ok' => true, 'health' => [
-                'status' => (string)($latest['meta']['status'] ?? 'warming'),
-                'as_of' => $latest['meta']['serving_date'] ?? null,
-                'records' => (int)($latest['meta']['records'] ?? 0),
-                'markets_available' => (int)($latest['meta']['markets_available'] ?? 0),
-                'markets_expected' => (int)($latest['meta']['markets_expected'] ?? 19),
-            ]]);
-        }
-        apmc_json_response(['ok' => true, 'health' => $repo->health(), 'manifest' => $repo->manifest(), 'refresh_runtime' => $runtime, 'web_collector' => $webCollector->capabilities()]);
-    }
-    if ($api === 'market') apmc_json_response(['ok' => true, 'data' => $repo->market((string)($_GET['slug'] ?? ''))]);
-
-    // Public, fixed-source, one-feed-at-a-time recovery endpoint. It accepts no URL
-    // or market argument, is lock protected, and exists specifically for hosts where
-    // PHP process execution is disabled.
-    if ($api === 'bootstrap') {
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') apmc_json_response(['ok' => false, 'error' => 'POST required'], 405);
-        $fetchSite = strtolower((string)($_SERVER['HTTP_SEC_FETCH_SITE'] ?? ''));
-        $origin = strtolower(rtrim((string)($_SERVER['HTTP_ORIGIN'] ?? ''), '/'));
-        $expectedOrigin = strtolower(apmc_origin());
-        if ($fetchSite !== 'same-origin' && ($origin === '' || $expectedOrigin === '' || !hash_equals($expectedOrigin, $origin))) {
-            apmc_json_response(['ok' => false, 'error' => 'Same-origin browser request required'], 403);
-        }
-        $fallback = $refresh->fallbackStatus();
-        if (!(bool)($fallback['due'] ?? false)) {
-            apmc_json_response([
-                'ok' => true,
-                'fallback_due' => false,
-                'result' => ['triggered' => false, 'reason' => 'server_scheduler_healthy'],
-                'data' => $repo->latest(),
-                'health' => $repo->health(),
-            ]);
-        }
-        $result = $webCollector->step(false);
-        apmc_json_response(['ok' => true, 'fallback_due' => true, 'result' => $result, 'data' => $repo->latest(), 'health' => $repo->health()]);
-    }
-
-    if (in_array($api, ['refresh', 'admin-action'], true)) {
-        if (!apmc_admin_authorized()) apmc_json_response(['ok' => false, 'error' => 'Unauthorized'], 403);
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
-            apmc_json_response(['ok' => false, 'error' => 'POST required'], 405);
-        }
-        if (!apmc_same_origin_request() || !apmc_admin_csrf_valid()) apmc_json_response(['ok' => false, 'error' => 'CSRF validation failed'], 403);
-        $action = (string) ($_POST['action'] ?? 'force');
-        $args = match ($action) {
-            'retry' => ['--check', '--retry-errors', '--trigger', 'admin'],
-            'rebuild' => ['--rebuild', '--trigger', 'admin'],
-            'backfill7' => ['--backfill-days', '7', '--trigger', 'admin'],
-            'backfill30' => ['--backfill-days', '30', '--trigger', 'admin'],
-            default => ['--force', '--trigger', 'admin'],
-        };
-        $result = $refresh->spawn($args);
-        if (!(bool)($result['triggered'] ?? false) && in_array($action, ['force', 'retry'], true)) {
-            $web = $webCollector->step($action === 'force');
-            $result['web_fallback'] = $web;
-            if ((bool)($web['triggered'] ?? false)) {
-                $result['triggered'] = true;
-                $result['method'] = 'php_web';
-                $result['reason'] = 'process_runtime_unavailable_web_fallback_started';
-            }
-        }
-        apmc_json_response(['ok' => true, 'result' => $result]);
-    }
-
-    apmc_json_response(['ok' => false, 'error' => 'Unknown API route'], 404);
+    \KrushiPulse\Http\PublicApiController::dispatch(
+        $api, $route, $repo, $national, $refresh, $webCollector,
+        $queryService, $seoService, $marketDirectory, $marketRates,
+    );
 }
 
 // The HTML shell is runtime state, not a static document. Prevent an intermediary
