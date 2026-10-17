@@ -1,7 +1,7 @@
 {
   "source": "Government of India Press Information Bureau",
   "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3",
-  "note": "Official Kharif 2026-27 MSP references only. Grades apply exactly; do not imply guarantee of procurement or an MSP for another season. No MSP for most horticulture crops.",
+  "note": "Official Kharif and Rabi 2026-27 MSP per quintal, with crop/grade and marketing-season provenance. Procurement eligibility and timings vary; horticultural crops without a published MSP are not assigned one.",
   "entries": [
     {
       "commodity": "Paddy",
@@ -212,6 +212,79 @@
       "msp_inr_per_quintal": 8667,
       "announced_at": "2026-05-13",
       "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260617&lang=2&reg=3"
+    },
+    {
+      "commodity": "Wheat",
+      "aliases": [
+        "Gehun"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 2585,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
+    },
+    {
+      "commodity": "Barley",
+      "aliases": [],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 2150,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
+    },
+    {
+      "commodity": "Gram",
+      "aliases": [
+        "Chickpea",
+        "Bengal Gram",
+        "Chana"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 5875,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
+    },
+    {
+      "commodity": "Masur (Lentil)",
+      "aliases": [
+        "Lentil",
+        "Lentils",
+        "Masur"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 7000,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
+    },
+    {
+      "commodity": "Rapeseed/Mustard",
+      "aliases": [
+        "Mustard",
+        "Rapeseed"
+      ],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 6200,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
+    },
+    {
+      "commodity": "Safflower",
+      "aliases": [],
+      "grade": "",
+      "marketing_season": "2026-27",
+      "season_type": "Rabi",
+      "msp_inr_per_quintal": 6540,
+      "announced_at": "2025-10-01",
+      "source_url": "https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=276863"
     }
   ]
 }
