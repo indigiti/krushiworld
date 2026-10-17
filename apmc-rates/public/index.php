@@ -3,6 +3,7 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/app/bootstrap.php';
 
 $repo = new RateRepository();
+$national = new NationalMarketRepository();
 $refresh = new RefreshService($repo);
 $webCollector = new WebCollector($repo);
 $queryService = new PublicQueryService($repo);
@@ -73,21 +74,71 @@ if ($api !== '') {
     if ($api === 'summary') apmc_json_response(['ok' => true, 'data' => $queryService->summary((string)($_GET['lang'] ?? 'en'))]);
     if ($api === 'markets') {
         $latest = $repo->latest();
-        $markets = (array)($latest['markets'] ?? []);
+        $merged = [];
         $directory = apmc_json_read(APMC_ROOT . '/config/market_coordinates.json', []);
-        foreach ($markets as &$market) {
+        // A directory must not disappear when a mandi has no fresh report.
+        foreach ((array)(apmc_json_read(APMC_ROOT . '/collector/config.json', [])['markets'] ?? []) as $feed) {
+            if (!is_array($feed)) continue;
+            $id = (string)($feed['market_id'] ?? '');
+            if ($id === '') continue;
+            $merged[$id] = [
+                'market_id' => $id, 'slug' => $id,
+                'name' => $feed['market'] ?? $id,
+                'name_en' => $feed['market'] ?? $id,
+                'name_mr' => $feed['market_mr'] ?? $feed['market'] ?? $id,
+                'state' => 'Maharashtra', 'district' => 'Pune',
+                'source' => 'Pune APMC', 'records' => 0, 'date' => null,
+            ];
+        }
+        foreach ((array)($latest['markets'] ?? []) as $market) {
             if (!is_array($market)) continue;
+            $id = (string)($market['market_id'] ?? '');
+            if ($id !== '') {
+                $merged[$id] = array_merge($merged[$id] ?? [], $market);
+                $merged[$id]['state'] = 'Maharashtra';
+                $merged[$id]['district'] = 'Pune';
+                $merged[$id]['source'] = 'Pune APMC';
+            }
+        }
+        foreach ($national->directory() as $market) {
+            $id = (string)($market['market_id'] ?? '');
+            if ($id !== '' && str_starts_with($id, 'agmarknet-')) $merged[$id] = $market;
+        }
+        foreach ($merged as &$market) {
             $id = (string)($market['market_id'] ?? '');
             $geo = $directory[$id] ?? ($market['geo'] ?? null);
             if (is_array($geo) && isset($geo['latitude'], $geo['longitude'])
                 && is_numeric($geo['latitude']) && is_numeric($geo['longitude'])
                 && is_finite((float)$geo['latitude']) && is_finite((float)$geo['longitude'])
                 && abs((float)$geo['latitude']) <= 90 && abs((float)$geo['longitude']) <= 180) {
-                $market['geo'] = ['latitude' => (float)$geo['latitude'], 'longitude' => (float)$geo['longitude'], 'precision' => 'approximate'];
+                $market['geo'] = [
+                    'latitude' => (float)$geo['latitude'],
+                    'longitude' => (float)$geo['longitude'],
+                    'precision' => in_array($geo['precision'] ?? '', ['surveyed', 'locality', 'approximate'], true)
+                        ? $geo['precision'] : 'approximate',
+                ];
             } else $market['geo'] = null;
         }
         unset($market);
-        apmc_json_response(['ok' => true, 'data' => ['markets' => $markets, 'count' => count($markets)]]);
+        $markets = array_values($merged);
+        usort($markets, static fn($a, $b) =>
+            strcmp((string)($a['state'] ?? ''), (string)($b['state'] ?? ''))
+            ?: strcmp((string)($a['district'] ?? ''), (string)($b['district'] ?? ''))
+            ?: strcmp((string)($a['name_en'] ?? ''), (string)($b['name_en'] ?? ''))
+        );
+        apmc_json_response(['ok' => true, 'data' => [
+            'markets' => $markets, 'count' => count($markets),
+            'national' => $national->state(),
+        ]]);
+    }
+    if ($api === 'national') {
+        $id = (string)($_GET['market'] ?? '');
+        try {
+            apmc_json_response(['ok' => true, 'data' =>
+                $national->marketRates($id, (int)($_GET['limit'] ?? 1500))]);
+        } catch (InvalidArgumentException $ex) {
+            apmc_json_response(['ok' => false, 'error' => $ex->getMessage()], 400);
+        }
     }
     if ($api === 'discover') apmc_json_response(['ok' => true, 'agent' => $seoService->agentManifest(), 'openapi' => apmc_absolute_url('/openapi.json')]);
     if ($api === 'health') {
