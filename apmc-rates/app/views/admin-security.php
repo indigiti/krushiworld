@@ -8,6 +8,13 @@ if (!$identityMode || !$authorized) return;
     <p class="text-xs text-muted">Identity: <?= apmc_escape((string)$authUser['username']) ?> · <?= apmc_escape((string)$authUser['role']) ?> · <?= apmc_escape((string)$authUser['provider']) ?></p></div>
   </div>
   <?php if ($authNotice !== ''): ?><div class="admin-alert admin-alert-warning" role="status"><?= apmc_escape($authNotice) ?></div><?php endif; ?>
+  <?php if (is_array($authRecovery)): ?>
+    <article class="admin-card" style="border:2px solid #8b7100;margin:12px 0">
+      <h3 class="font-bold">New one-time recovery codes</h3>
+      <p class="text-xs text-muted">Save these securely; old codes are now revoked. They will not be shown again.</p>
+      <pre style="white-space:pre-wrap"><?= apmc_escape(implode("\n",$authRecovery)) ?></pre>
+    </article>
+  <?php endif; ?>
   <?php if (is_array($authEnrollment)): ?>
     <article class="admin-card" style="border:2px solid #8b7100;margin:12px 0">
       <h3 class="font-bold">One-time authenticator enrollment for <?= apmc_escape($authEnrollment['username']) ?></h3>
@@ -16,6 +23,29 @@ if (!$identityMode || !$authorized) return;
       <p>Setup URI: <code style="overflow-wrap:anywhere"><?= apmc_escape($authEnrollment['uri']) ?></code></p>
       <p>One-use recovery codes:</p>
       <pre style="white-space:pre-wrap"><?= apmc_escape(implode("\n",$authEnrollment['recovery'])) ?></pre>
+    </article>
+  <?php endif; ?>
+  <?php if (($authUser['provider'] ?? '') === 'local'): ?>
+    <article class="admin-card" style="margin-bottom:12px">
+      <h3 class="font-bold">My local account security</h3>
+      <p class="text-xs text-muted">Changing your password revokes all sessions. Recovery rotation invalidates all prior recovery codes. Both require a fresh authenticator code.</p>
+      <div class="grid gap-3 md:grid-cols-2">
+        <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form">
+          <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+          <input type="hidden" name="auth_action" value="change_password">
+          <label>Current password <input name="current_password" type="password" required autocomplete="current-password"></label>
+          <label>Fresh authenticator code <input name="fresh_otp" type="text" required inputmode="numeric" maxlength="6"></label>
+          <label>New password (14+ characters) <input name="new_password" type="password" required minlength="14" autocomplete="new-password"></label>
+          <button type="submit" class="small-action">Change password and log out</button>
+        </form>
+        <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form">
+          <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+          <input type="hidden" name="auth_action" value="rotate_recovery">
+          <label>Current password <input name="current_password" type="password" required autocomplete="current-password"></label>
+          <label>Fresh authenticator code <input name="fresh_otp" type="text" required inputmode="numeric" maxlength="6"></label>
+          <button type="submit" class="small-action">Replace recovery codes</button>
+        </form>
+      </div>
     </article>
   <?php endif; ?>
   <div class="grid gap-3 md:grid-cols-2">
