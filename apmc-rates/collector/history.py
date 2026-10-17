@@ -12,7 +12,7 @@ import math
 import os
 import sqlite3
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -106,15 +106,56 @@ def archive(pune: Path, national: Path, db_path: Path) -> dict:
     finally:
         conn.close()
 
+def backfill_pune(days: int, db_path: Path, daily_root: Path = STORAGE / "daily") -> int:
+    """Read existing archived Pune feed snapshots. Never invent missing dates."""
+    if days not in (30, 90, 180):
+        raise ValueError("backfill must be 30, 90 or 180 days")
+    threshold = date.today() - timedelta(days=days)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(db_path, timeout=15)
+    try:
+        conn.executescript(SCHEMA)
+        inserted = 0
+        with conn:
+            for path in sorted(daily_root.glob("*/*/*/*.json")):
+                try:
+                    day = date.fromisoformat(path.parts[-4] + "-" + path.parts[-3] + "-" + path.parts[-2])
+                except ValueError:
+                    continue
+                if day < threshold or day > date.today():
+                    continue
+                rows = read_json(path).get("records", [])
+                if not isinstance(rows, list):
+                    continue
+                valid = [a for x in rows if (a := normalized(x, "Pune APMC")) is not None]
+                if not valid:
+                    continue
+                conn.executemany("""
+                INSERT INTO prices (source,market_id,commodity_key,commodity_name,
+                    variety,grade,unit,report_date,min_price,max_price,modal_price)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(source,market_id,commodity_key,variety,grade,unit,report_date)
+                DO UPDATE SET min_price=excluded.min_price,max_price=excluded.max_price,
+                              modal_price=excluded.modal_price
+                """, valid)
+                inserted += len(valid)
+        return inserted
+    finally:
+        conn.close()
+
+
 def main() -> int:
     cli = argparse.ArgumentParser()
     cli.add_argument("--pune", type=Path, default=STORAGE / "current/all.json")
     cli.add_argument("--national", type=Path, default=STORAGE / "national/current.json")
     cli.add_argument("--db", type=Path, default=STORAGE / "history/rates.sqlite")
+    cli.add_argument("--backfill-days", type=int, choices=(30,90,180), default=0)
     args = cli.parse_args()
     try:
         result = archive(args.pune, args.national, args.db)
-        print(f"KrushiPulse history: {result['stored']} verified price observations")
+        if args.backfill_days:
+            result["backfill_rows"] = backfill_pune(args.backfill_days, args.db)
+        print(f"KrushiPulse history: {result['stored']} verified price observations" + (f", scanned {result.get('backfill_rows', 0)} historical Pune reports" if args.backfill_days else ""))
         return 0
     except (OSError, sqlite3.Error, ValueError) as exc:
         print(f"History archival unavailable [{type(exc).__name__}]; existing rates kept", file=sys.stderr)
