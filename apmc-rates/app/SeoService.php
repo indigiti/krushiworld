@@ -5,7 +5,7 @@ final class SeoService {
     public function __construct(private RateRepository $repo) {}
 
     public function canonical(string $lang): string {
-        $lang = $lang === 'mr' ? 'mr' : 'en';
+        $lang = in_array($lang, ['en', 'mr', 'hi'], true) ? $lang : 'en';
         $route = (array)($GLOBALS['apmc_route'] ?? []);
         if (($route['kind'] ?? '') === 'mandi' && !empty($route['market'])) {
             return apmc_absolute_url('/' . $lang . '/mandis/' . rawurlencode((string)$route['market']) . '/');
@@ -18,18 +18,20 @@ final class SeoService {
         $latest = $this->repo->latest();
         $modified = (string)($latest['meta']['serving_date'] ?? date('Y-m-d'));
         $esc = static fn(string $v): string => htmlspecialchars($v, ENT_XML1 | ENT_QUOTES, 'UTF-8');
-        $alternate = static function(string $en, string $mr) use ($esc): string {
+        $alternate = static function(string $en, string $mr, string $hi) use ($esc): string {
             return '<xhtml:link rel="alternate" hreflang="en-IN" href="' . $esc($en) . '"/>'
                 . '<xhtml:link rel="alternate" hreflang="mr-IN" href="' . $esc($mr) . '"/>'
+                . '<xhtml:link rel="alternate" hreflang="hi-IN" href="' . $esc($hi) . '"/>'
                 . '<xhtml:link rel="alternate" hreflang="x-default" href="' . $esc($en) . '"/>';
         };
         $rows = [];
         $append = static function(string $path, string $date) use (&$rows, $alternate, $esc): void {
             $en = apmc_absolute_url('/en/' . $path);
             $mr = apmc_absolute_url('/mr/' . $path);
-            foreach ([$en, $mr] as $url) {
+            $hi = apmc_absolute_url('/hi/' . $path);
+            foreach ([$en, $mr, $hi] as $url) {
                 $rows[] = '  <url><loc>' . $esc($url) . '</loc>'
-                    . $alternate($en, $mr) . '<lastmod>' . $esc($date)
+                    . $alternate($en, $mr, $hi) . '<lastmod>' . $esc($date)
                     . '</lastmod><changefreq>daily</changefreq></url>';
             }
         };
@@ -66,6 +68,7 @@ Public, cached wholesale market-rate intelligence for Pune APMC markets and sour
 ## Primary pages
 - English: {$base}/en/
 - Marathi: {$base}/mr/
+- Hindi: {$base}/hi/
 - Mandi directory: {$base}/en/mandis/
 - Mandi pages: {$base}/en/mandis/{market-id}/
 
@@ -94,7 +97,7 @@ TXT;
             'name' => 'Pune APMC Market Data Interface',
             'version' => (string)apmc_config('version', '1.3.0'),
             'description' => 'Read-only bilingual Pune APMC market-rate retrieval interface for applications, search systems and AI agents.',
-            'languages' => ['en', 'mr'],
+            'languages' => ['en', 'mr', 'hi'],
             'openapi' => $base . '/openapi.json',
             'capabilities' => [
                 ['id' => 'latest-market-snapshot', 'method' => 'GET', 'url' => $base . '/api/latest'],
@@ -206,9 +209,7 @@ TXT;
         $meta = (array)($data['meta'] ?? []);
         $canonical = $this->canonical($lang);
         $base = rtrim(apmc_absolute_url('/'), '/');
-        $description = $lang === 'mr'
-            ? 'पुणे एपीएमसीमधील दैनंदिन घाऊक शेतमाल बाजारभाव, आवक आणि बाजार हालचालींची द्विभाषिक माहिती.'
-            : 'Bilingual daily wholesale commodity rates, arrivals and market movement intelligence for Pune APMC markets.';
+        $description = ['mr' => 'पुणे एपीएमसीमधील दैनंदिन घाऊक शेतमाल बाजारभाव, आवक आणि बाजार हालचालींची माहिती.', 'hi' => 'पुणे एपीएमसी मंडियों में दैनिक थोक कृषि उपज भाव, आवक और बाजार की जानकारी।', 'en' => 'Daily wholesale commodity rates, arrivals and market movement intelligence for Pune APMC markets.'][$lang] ?? 'Daily wholesale commodity rates.';
         return [
             '@context' => 'https://schema.org',
             '@graph' => [
@@ -216,23 +217,23 @@ TXT;
                     '@type' => 'WebSite',
                     '@id' => $base . '/#website',
                     'url' => $base . '/',
-                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी बाजार' : 'Pune APMC Market Intelligence',
+                    'name' => ['mr' => 'पुणे एपीएमसी बाजार', 'hi' => 'पुणे एपीएमसी मंडी भाव', 'en' => 'Pune APMC Market Intelligence'][$lang] ?? 'Pune APMC Market Intelligence',
                     'description' => $description,
-                    'inLanguage' => ['en-IN', 'mr-IN'],
+                    'inLanguage' => ['en-IN', 'mr-IN', 'hi-IN'],
                 ],
                 [
                     '@type' => 'WebPage',
                     '@id' => $canonical . '#webpage',
                     'url' => $canonical,
-                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी बाजारभाव' : 'Pune APMC Market Rates',
+                    'name' => ['mr' => 'पुणे एपीएमसी बाजारभाव', 'hi' => 'पुणे एपीएमसी मंडी भाव', 'en' => 'Pune APMC Market Rates'][$lang] ?? 'Pune APMC Market Rates',
                     'description' => $description,
                     'isPartOf' => ['@id' => $base . '/#website'],
-                    'inLanguage' => $lang === 'mr' ? 'mr-IN' : 'en-IN',
+                    'inLanguage' => ['mr' => 'mr-IN', 'hi' => 'hi-IN', 'en' => 'en-IN'][$lang] ?? 'en-IN',
                 ],
                 [
                     '@type' => 'Dataset',
                     '@id' => $base . '/#dataset',
-                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी दैनंदिन बाजारभाव डेटा' : 'Pune APMC Daily Market Rates Dataset',
+                    'name' => ['mr' => 'पुणे एपीएमसी दैनंदिन बाजारभाव डेटा', 'hi' => 'पुणे एपीएमसी दैनिक मंडी भाव डेटा', 'en' => 'Pune APMC Daily Market Rates Dataset'][$lang] ?? 'Pune APMC Daily Market Rates Dataset',
                     'description' => $description,
                     'url' => $canonical,
                     'inLanguage' => ['en-IN', 'mr-IN'],
