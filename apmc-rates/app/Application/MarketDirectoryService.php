@@ -17,6 +17,12 @@ final class MarketDirectoryService {
         $merged = [];
         $config = apmc_json_read(APMC_ROOT . '/collector/config.json', []);
         $directory = apmc_json_read(APMC_ROOT . '/config/market_coordinates.json', []);
+        // Independently audited geocodes may be supplied for national AGMARKNET
+        // IDs. Never infer market coordinates from a district or PIN centroid.
+        $nationalGeocodes = apmc_json_read(APMC_ROOT . '/config/national_market_coordinates.json', []);
+        $postalReferences = apmc_json_read(APMC_ROOT . '/config/postal_market_references.json', []);
+        $overrides = (array)($nationalGeocodes['markets'] ?? []);
+        $postalMarkets = (array)($postalReferences['markets'] ?? []);
         foreach ((array)($config['markets'] ?? []) as $feed) {
             if (!is_array($feed)) continue;
             $id = (string)($feed['market_id'] ?? '');
@@ -50,7 +56,12 @@ final class MarketDirectoryService {
                 $market['name_hi'] = (string)$localizedMarkets[$nameEn]['hi'];
             }
             $id = (string)($market['market_id'] ?? '');
-            $geo = $directory[$id] ?? ($market['geo'] ?? null);
+            $geo = $directory[$id] ?? (str_starts_with($id, 'agmarknet-') ? ($overrides[$id] ?? null) : null);
+            // Every postal code is explicit, source-backed and market-specific;
+            // no invented region centre or PIN-to-GPS resolution.
+            $postal = $postalMarkets[$id] ?? ($overrides[$id] ?? null);
+            $code = is_array($postal) ? (string)($postal['pincode'] ?? '') : '';
+            $market['pincode'] = preg_match('/^[1-9][0-9]{5}$/D', $code) ? $code : null;
             if (is_array($geo) && isset($geo['latitude'], $geo['longitude'])
                 && is_numeric($geo['latitude']) && is_numeric($geo['longitude'])
                 && is_finite((float)$geo['latitude']) && is_finite((float)$geo['longitude'])
@@ -60,6 +71,8 @@ final class MarketDirectoryService {
                     'longitude' => (float)$geo['longitude'],
                     'precision' => in_array($geo['precision'] ?? '', ['surveyed', 'locality', 'approximate'], true)
                         ? $geo['precision'] : 'approximate',
+                    'source' => is_string($geo['source'] ?? null) && strlen((string)$geo['source']) <= 350
+                        ? $geo['source'] : null,
                 ];
             } else $market['geo'] = null;
         }
@@ -83,9 +96,33 @@ final class MarketDirectoryService {
 
     public function summary(): array {
         $markets = $this->all();
+        $mapped = 0;
+        $reporting = 0;
+        $postal = 0;
+        $states = [];
+        $latest = null;
+        foreach ($markets as $market) {
+            if (is_array($market['geo'] ?? null)) $mapped++;
+            if (!empty($market['pincode'])) $postal++;
+            if ((int)($market['records'] ?? 0) > 0) $reporting++;
+            if (is_string($market['state'] ?? null) && $market['state'] !== '') $states[$market['state']] = true;
+            $date = (string)($market['date'] ?? '');
+            if (preg_match('/^\\d{4}-\\d{2}-\\d{2}$/D', $date) && ($latest === null || $date > $latest)) $latest = $date;
+        }
         return [
             'markets' => $markets,
             'count' => count($markets),
+            'coverage' => [
+                'total' => count($markets),
+                'with_coordinates' => $mapped,
+                'without_coordinates' => count($markets) - $mapped,
+                'with_postal_reference' => $postal,
+                'with_published_rates' => $reporting,
+                'without_current_report' => count($markets) - $reporting,
+                'states' => count($states),
+                'latest_report_date' => $latest,
+                'distance_type' => 'straight_line_approximate',
+            ],
             'national' => $this->national->state(),
         ];
     }
