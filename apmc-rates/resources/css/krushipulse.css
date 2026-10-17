@@ -30,3 +30,14 @@
 /* Accessible, balanced commodity emoji styling in table and crop picker. */
 .kp-cell-crop .kp-crop-emoji{display:inline-flex;align-items:center;justify-content:center;flex:0 0 28px;min-width:28px;font-size:21px;line-height:1.2}
 .kp-crop-choice .kp-choice-emoji{display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px;min-width:24px;font-size:21px;line-height:1.2;white-space:normal;overflow:visible}
+
+/* Language-aware mandi permalink and verified-rate route context. */
+.kp-route-context{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:22px 0 -13px;padding:14px 18px;border:1px solid var(--stroke);background:var(--surface);border-radius:15px}
+.kp-route-context>span{font-size:16px;font-weight:800;color:var(--primary2)}
+.kp-route-context small{font-size:12px;color:var(--sub);flex:1}
+.kp-route-context a,.kp-market-permalink,.kp-rate-market-link{color:var(--primary2);font-weight:800;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.kp-route-context a,.kp-market-permalink{font-size:12px}
+.kp-market-permalink{display:inline-block;margin:8px 0 12px}
+.kp-market-permalink[hidden]{display:none}
+.kp-rate-market-link{font-size:inherit}
+@media(max-width:690px){.kp-route-context{padding:13px;gap:7px}.kp-route-context small{flex-basis:100%}}
