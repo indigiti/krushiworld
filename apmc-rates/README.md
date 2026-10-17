@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v2.0.1
+# KrushiWorld KrushiPulse — APMC Rates v2.0.2
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -227,3 +227,7 @@ The storefront now has an optional Marathi/Hindi/English voice-to-search interfa
 ## v2.0.1 — Market label accuracy and cache refresh
 
 The Market column and favorites always resolve the physical APMC/AGMARKNET market from its canonical market ID and market-specific fields (never the crop's `name_en`). Pune snapshot normalization falls back to verified `market_id` where legacy feed slugs are unavailable. Production/source JavaScript parity, all 19 configured feeds across 5 locations, Hindi/Marathi/English labels, and the fallback for unknown market labels are covered by new CI tests. The PHP asset version and PWA service-worker cache were advanced to invalidate cached old JavaScript after deployment. See `tests/market-name.test.cjs` and `tests/test_market_names.php`.
+
+## v2.0.2 — Full code/responsive visual audit
+
+Corrected an unqualified PHP exception catch in national API validation (bad market IDs now return 400), indexed the physical mandi directory for efficient row lookups, and guarded browser-local price thresholds from triggering on historical (>3 day old) reports. A headless Chrome regression job now captures English desktop (1440 px), Marathi tablet (768 px), Hindi mobile (390 px) and English narrow mobile (360 px) screenshots, and checks physical market names, UI interactions, no page-level horizontal overflow and mobile rates card fit. The mobile quotations view now displays all nine original data fields in accessible cards rather than requiring horizontal scrolling. The PWA service worker and asset version are bumped to 2.0.2 to invalidate old front-end cache. See `AUDIT_2026-10-17.md` for pre/post findings and production-only limitations.
