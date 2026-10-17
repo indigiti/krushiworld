@@ -3,7 +3,11 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const path=require('node:path');
 const fs=require('node:fs');
-const icon=require('../public/build/commodity-icons.js');
+const vm=require('node:vm');
+// package.json uses type:module; execute the plain browser script as loaded by HTML.
+const browser={};browser.window=browser;
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../public/build/commodity-icons.js'),'utf8'),browser);
+const icon=browser.KrushiPulseCommodityIcon;
 
 test('recognizable national commodity emoji names',()=>{
   const cases={
