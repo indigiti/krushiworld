@@ -9,6 +9,9 @@ function assertRoute(bool $ok, string $label): void {
 }
 $cases = [
     ['/krushiworld/mr/', '/krushiworld/index.php', 'home', 'mr'],
+    ['/krushiworld/hi/', '/krushiworld/index.php', 'home', 'hi'],
+    ['/krushiworld/hi/mandis/', '/krushiworld/index.php', 'directory', 'hi'],
+    ['/krushiworld/hi/mandis/main-market-yard/', '/krushiworld/index.php', 'mandi', 'hi'],
     ['/krushiworld/en/', '/krushiworld/index.php', 'home', 'en'],
     ['/krushiworld/en/mandis/', '/krushiworld/index.php', 'directory', 'en'],
     ['/krushiworld/mr/mandis/main-market-yard/', '/krushiworld/index.php', 'mandi', 'mr'],
@@ -45,6 +48,7 @@ $_SERVER['SCRIPT_NAME'] = '/krushiworld/index.php';
 $canonical = new SeoService(new RateRepository());
 $GLOBALS['apmc_route'] = ['kind' => 'mandi', 'market' => 'main-market-yard'];
 assertRoute(str_ends_with($canonical->canonical('mr'), '/krushiworld/mr/mandis/main-market-yard/'), 'language preserves deep link');
+assertRoute(str_ends_with($canonical->canonical('hi'), '/krushiworld/hi/mandis/main-market-yard/'), 'Hindi preserves market permalink');
 $GLOBALS['apmc_route'] = ['kind' => 'directory'];
 assertRoute(str_ends_with($canonical->canonical('en'), '/krushiworld/en/mandis/'), 'directory canonical');
 $GLOBALS['apmc_route'] = ['kind' => 'legacy'];
