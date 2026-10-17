@@ -42,7 +42,12 @@ final class AdminAuth {
         if(!$this->enabled())return null;
         $token=(string)($_COOKIE['kp_admin_auth']??'');
         if($token==='')return null;
-        try {return $this->store()->session($token);}catch(\Throwable){return null;}
+        try {
+            $session=$this->store()->session($token);
+            if ($session && $session['provider']==='github'
+                && ($this->mode()!=='staging' || !$this->store()->providerEnabled())) return null;
+            return $session;
+        }catch(\Throwable){return null;}
     }
     public function superAdmin(): bool {return ($this->user()['role']??'')==='super_admin';}
     public function canOperate(): bool {return in_array($this->user()['role']??'',['operator','admin','super_admin'],true);}
@@ -53,6 +58,9 @@ final class AdminAuth {
         $_COOKIE['kp_admin_auth']=$token;
     }
     public function signIn(int $id,string $provider): void {
+        $host=(string)($_SERVER['HTTP_HOST']??'');
+        if(!apmc_request_is_https() && !in_array($host,['127.0.0.1','localhost','127.0.0.1:18739'],true))
+            throw new RuntimeException('HTTPS required for individual administrator login');
         $this->browserSession();
         session_regenerate_id(true);$_SESSION['kp_csrf']=bin2hex(random_bytes(32));
         $prior=(string)($_COOKIE['kp_admin_auth']??'');
@@ -172,7 +180,8 @@ final class AdminAuth {
         return false;
     }
     public function localLogin(string $username,string $password,string $otp): bool {
-        if(!$this->enabled())return false;
+        $host=(string)($_SERVER['HTTP_HOST']??'');
+        if(!$this->enabled() || (!apmc_request_is_https() && !in_array($host,['127.0.0.1','localhost','127.0.0.1:18739'],true)))return false;
         $id='local:'.strtolower($username);
         $db=$this->store();
         if(!$db->rateLimit($id))return false;
