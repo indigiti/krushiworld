@@ -1,0 +1,12 @@
+# Runtime snapshots and private health logs, never deployed from public git
+/storage/*
+!/storage/.htaccess
+!/storage/.gitkeep
+**/__pycache__/
+*.pyc
+node_modules/
+.env
+.env.*
+!/.env.example
+*.lock
+.DS_Store

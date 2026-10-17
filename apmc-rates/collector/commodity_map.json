@@ -1,0 +1,770 @@
+{
+  "टोमॅटो": {
+    "en": "Tomato",
+    "emoji": "🍅",
+    "mr": "टोमॅटो",
+    "aliases": [
+      "Tomatoes"
+    ]
+  },
+  "कांदा": {
+    "en": "Onion",
+    "emoji": "🧅",
+    "mr": "कांदा",
+    "aliases": [
+      "Onions"
+    ]
+  },
+  "बटाटा": {
+    "en": "Potato",
+    "emoji": "🥔",
+    "mr": "बटाटा",
+    "aliases": [
+      "Potatoes"
+    ]
+  },
+  "लसूण": {
+    "en": "Garlic",
+    "emoji": "🧄",
+    "mr": "लसूण"
+  },
+  "आले": {
+    "en": "Ginger",
+    "emoji": "🫚",
+    "mr": "आले"
+  },
+  "भेंडी": {
+    "en": "Okra",
+    "emoji": "🌿",
+    "mr": "भेंडी",
+    "aliases": [
+      "Lady Finger",
+      "Okra"
+    ]
+  },
+  "गवार": {
+    "en": "Cluster Beans",
+    "emoji": "🫘",
+    "mr": "गवार"
+  },
+  "मटार": {
+    "en": "Peas",
+    "emoji": "🟢",
+    "mr": "मटार"
+  },
+  "मटर": {
+    "en": "Peas",
+    "emoji": "🟢",
+    "mr": "मटर"
+  },
+  "घेवडा": {
+    "en": "Beans",
+    "emoji": "🫘",
+    "mr": "घेवडा"
+  },
+  "दोडका": {
+    "en": "Ridge Gourd",
+    "emoji": "🥒",
+    "mr": "दोडका"
+  },
+  "मिरची": {
+    "en": "Chilli",
+    "emoji": "🌶️",
+    "mr": "मिरची",
+    "aliases": [
+      "Green Chilli",
+      "Chili"
+    ]
+  },
+  "काकडी": {
+    "en": "Cucumber",
+    "emoji": "🥒",
+    "mr": "काकडी"
+  },
+  "कारली": {
+    "en": "Bitter Gourd",
+    "emoji": "🌿",
+    "mr": "कारली"
+  },
+  "गाजर": {
+    "en": "Carrot",
+    "emoji": "🥕",
+    "mr": "गाजर"
+  },
+  "पापडी": {
+    "en": "Papdi Beans",
+    "emoji": "🫘",
+    "mr": "पापडी"
+  },
+  "पडवळ": {
+    "en": "Snake Gourd",
+    "emoji": "🌿",
+    "mr": "पडवळ"
+  },
+  "फलॉवर": {
+    "en": "Cauliflower",
+    "emoji": "🥦",
+    "mr": "फलॉवर",
+    "aliases": [
+      "Cauliflower"
+    ]
+  },
+  "कोबी": {
+    "en": "Cabbage",
+    "emoji": "🥬",
+    "mr": "कोबी",
+    "aliases": [
+      "Cabbage"
+    ]
+  },
+  "वांगी": {
+    "en": "Brinjal",
+    "emoji": "🍆",
+    "mr": "वांगी",
+    "aliases": [
+      "Eggplant",
+      "Aubergine"
+    ]
+  },
+  "ढोबळी": {
+    "en": "Capsicum",
+    "emoji": "🫑",
+    "mr": "ढोबळी"
+  },
+  "ढोबळी मिरची": {
+    "en": "Capsicum",
+    "emoji": "🫑",
+    "mr": "ढोबळी मिरची",
+    "aliases": [
+      "Bell Pepper",
+      "Capsicum"
+    ]
+  },
+  "सुरण": {
+    "en": "Elephant Foot Yam",
+    "emoji": "🌱",
+    "mr": "सुरण"
+  },
+  "तोंडली": {
+    "en": "Ivy Gourd",
+    "emoji": "🌿",
+    "mr": "तोंडली"
+  },
+  "बीट": {
+    "en": "Beetroot",
+    "emoji": "🫜",
+    "mr": "बीट"
+  },
+  "कडीपत्ता": {
+    "en": "Curry Leaves",
+    "emoji": "🌿",
+    "mr": "कडीपत्ता"
+  },
+  "कोहळा": {
+    "en": "Ash Gourd",
+    "emoji": "🎃",
+    "mr": "कोहळा"
+  },
+  "आरवी": {
+    "en": "Colocasia",
+    "emoji": "🌱",
+    "mr": "आरवी"
+  },
+  "पावटा": {
+    "en": "Broad Beans",
+    "emoji": "🫘",
+    "mr": "पावटा"
+  },
+  "घेासावळी": {
+    "en": "Sponge Gourd",
+    "emoji": "🌿",
+    "mr": "घेासावळी"
+  },
+  "घोसावळी": {
+    "en": "Sponge Gourd",
+    "emoji": "🌿",
+    "mr": "घोसावळी"
+  },
+  "वालवर": {
+    "en": "Field Beans",
+    "emoji": "🫘",
+    "mr": "वालवर"
+  },
+  "शेवगा": {
+    "en": "Drumstick",
+    "emoji": "🌿",
+    "mr": "शेवगा",
+    "aliases": [
+      "Drumstick",
+      "Moringa Pods"
+    ]
+  },
+  "परवर": {
+    "en": "Pointed Gourd",
+    "emoji": "🌿",
+    "mr": "परवर"
+  },
+  "भावनगरी": {
+    "en": "Bhavnagari Chilli",
+    "emoji": "🌶️",
+    "mr": "भावनगरी"
+  },
+  "ढेमसा": {
+    "en": "Tinda",
+    "emoji": "🌿",
+    "mr": "ढेमसा"
+  },
+  "कैरी": {
+    "en": "Raw Mango",
+    "emoji": "🥭",
+    "mr": "कैरी"
+  },
+  "चवळी": {
+    "en": "Cowpea",
+    "emoji": "🫘",
+    "mr": "चवळी"
+  },
+  "करटूले": {
+    "en": "Spiny Gourd",
+    "emoji": "🌿",
+    "mr": "करटूले"
+  },
+  "दु.भोपळा": {
+    "en": "Bottle Gourd",
+    "emoji": "🌿",
+    "mr": "दु.भोपळा"
+  },
+  "डांगर (भोपळा )": {
+    "en": "Pumpkin",
+    "emoji": "🎃",
+    "mr": "डांगर (भोपळा )"
+  },
+  "भुशेंगा": {
+    "en": "Groundnut Pods",
+    "emoji": "🥜",
+    "mr": "भुशेंगा"
+  },
+  "कोथिंबीर": {
+    "en": "Coriander Leaves",
+    "mr": "कोथिंबीर",
+    "emoji": "🌿",
+    "aliases": [
+      "Coriander",
+      "Cilantro",
+      "Kothimbir"
+    ]
+  },
+  "मेथी": {
+    "en": "Fenugreek Leaves",
+    "mr": "मेथी",
+    "emoji": "🌿",
+    "aliases": [
+      "Fenugreek",
+      "Methi"
+    ]
+  },
+  "शेपू": {
+    "en": "Dill Leaves",
+    "mr": "शेपू",
+    "emoji": "🌿",
+    "aliases": [
+      "Dill",
+      "Shepu"
+    ]
+  },
+  "कांदापात": {
+    "en": "Spring Onion",
+    "mr": "कांदापात",
+    "emoji": "🌿",
+    "aliases": [
+      "Green Onion",
+      "Scallion",
+      "Onion Leaves"
+    ]
+  },
+  "पालक": {
+    "en": "Spinach",
+    "mr": "पालक",
+    "emoji": "🥬",
+    "aliases": [
+      "Palak"
+    ]
+  },
+  "मूळा": {
+    "en": "Radish",
+    "mr": "मूळा",
+    "emoji": "🌱",
+    "aliases": [
+      "Mula"
+    ]
+  },
+  "चवळई": {
+    "en": "Amaranth Greens",
+    "mr": "चवळई",
+    "emoji": "🌿",
+    "aliases": [
+      "Chawlai",
+      "Amaranth Leaves"
+    ]
+  },
+  "करडई": {
+    "en": "Safflower Greens",
+    "mr": "करडई",
+    "emoji": "🌿",
+    "aliases": [
+      "Safflower Leaves"
+    ]
+  },
+  "राजगिरा": {
+    "en": "Rajgira Greens",
+    "mr": "राजगिरा",
+    "emoji": "🌿",
+    "aliases": [
+      "Amaranth Greens",
+      "Rajgira Leaves"
+    ]
+  },
+  "आळू": {
+    "en": "Colocasia Leaves",
+    "mr": "आळू",
+    "emoji": "🌿",
+    "aliases": [
+      "Taro Leaves",
+      "Alu Leaves"
+    ]
+  },
+  "पुदिना": {
+    "en": "Mint Leaves",
+    "mr": "पुदिना",
+    "emoji": "🌿",
+    "aliases": [
+      "Mint",
+      "Pudina"
+    ]
+  },
+  "चुका": {
+    "en": "Sorrel Leaves",
+    "mr": "चुका",
+    "emoji": "🌿",
+    "aliases": [
+      "Sorrel",
+      "Chuka"
+    ]
+  },
+  "चाकवत": {
+    "en": "Bathua Greens",
+    "mr": "चाकवत",
+    "emoji": "🌿",
+    "aliases": [
+      "Bathua",
+      "Lambs Quarters"
+    ]
+  },
+  "अंबाडी": {
+    "en": "Roselle Leaves",
+    "mr": "अंबाडी",
+    "emoji": "🌿",
+    "aliases": [
+      "Roselle Greens",
+      "Ambadi"
+    ]
+  },
+  "नारळ": {
+    "en": "Coconut",
+    "mr": "नारळ",
+    "emoji": "🥥",
+    "aliases": [
+      "Coconuts"
+    ]
+  },
+  "गवती चहा": {
+    "en": "Lemongrass",
+    "mr": "गवती चहा",
+    "emoji": "🌿",
+    "aliases": [
+      "Lemon Grass"
+    ]
+  },
+  "दुधी भोपळा": {
+    "en": "Bottle Gourd",
+    "mr": "दुधी भोपळा",
+    "emoji": "🌿",
+    "aliases": [
+      "Lauki",
+      "Dudhi"
+    ]
+  },
+  "दुधीभोपळा": {
+    "en": "Bottle Gourd",
+    "mr": "दुधीभोपळा",
+    "emoji": "🌿",
+    "aliases": [
+      "Lauki",
+      "Dudhi"
+    ]
+  },
+  "फ्लॉवर": {
+    "en": "Cauliflower",
+    "mr": "फ्लॉवर",
+    "emoji": "🥦",
+    "aliases": [
+      "Flower",
+      "Cauliflower"
+    ]
+  },
+  "भुईमूग शेंग": {
+    "en": "Groundnut Pods",
+    "mr": "भुईमूग शेंग",
+    "emoji": "🥜",
+    "aliases": [
+      "Peanut Pods",
+      "Groundnut"
+    ]
+  },
+  "भुईमुग शेंग": {
+    "en": "Groundnut Pods",
+    "mr": "भुईमुग शेंग",
+    "emoji": "🥜",
+    "aliases": [
+      "Peanut Pods",
+      "Groundnut"
+    ]
+  },
+  "मका": {
+    "en": "Maize",
+    "mr": "मका",
+    "emoji": "🌽",
+    "aliases": [
+      "Corn"
+    ]
+  },
+  "स्वीट कॉर्न": {
+    "en": "Sweet Corn",
+    "mr": "स्वीट कॉर्न",
+    "emoji": "🌽",
+    "aliases": [
+      "Sweetcorn"
+    ]
+  },
+  "लिंबू": {
+    "en": "Lemon",
+    "mr": "लिंबू",
+    "emoji": "🍋",
+    "aliases": [
+      "Lemons"
+    ]
+  },
+  "सफरचंद": {
+    "en": "Apple",
+    "mr": "सफरचंद",
+    "emoji": "🍎",
+    "aliases": [
+      "Apples"
+    ]
+  },
+  "मोसंबी": {
+    "en": "Sweet Lime",
+    "mr": "मोसंबी",
+    "emoji": "🍊",
+    "aliases": [
+      "Mosambi",
+      "Sweet Lemon"
+    ]
+  },
+  "संत्रा": {
+    "en": "Orange",
+    "mr": "संत्रा",
+    "emoji": "🍊",
+    "aliases": [
+      "Oranges"
+    ]
+  },
+  "डाळींब": {
+    "en": "Pomegranate",
+    "mr": "डाळींब",
+    "emoji": "🔴",
+    "aliases": [
+      "Pomegranates"
+    ]
+  },
+  "डाळिंब": {
+    "en": "Pomegranate",
+    "mr": "डाळिंब",
+    "emoji": "🔴",
+    "aliases": [
+      "Pomegranates"
+    ]
+  },
+  "पपई": {
+    "en": "Papaya",
+    "mr": "पपई",
+    "emoji": "🍈",
+    "aliases": [
+      "Papayas"
+    ]
+  },
+  "चिकू": {
+    "en": "Sapota",
+    "mr": "चिकू",
+    "emoji": "🟤",
+    "aliases": [
+      "Chikoo",
+      "Sapodilla"
+    ]
+  },
+  "सिताफळ": {
+    "en": "Custard Apple",
+    "mr": "सिताफळ",
+    "emoji": "🍈",
+    "aliases": [
+      "Sitaphal"
+    ]
+  },
+  "सीताफळ": {
+    "en": "Custard Apple",
+    "mr": "सीताफळ",
+    "emoji": "🍈",
+    "aliases": [
+      "Sitaphal"
+    ]
+  },
+  "द्राक्ष": {
+    "en": "Grapes",
+    "mr": "द्राक्ष",
+    "emoji": "🍇",
+    "aliases": [
+      "Grape"
+    ]
+  },
+  "आंबा": {
+    "en": "Mango",
+    "mr": "आंबा",
+    "emoji": "🥭",
+    "aliases": [
+      "Mangoes"
+    ]
+  },
+  "केळी": {
+    "en": "Banana",
+    "mr": "केळी",
+    "emoji": "🍌",
+    "aliases": [
+      "Bananas"
+    ]
+  },
+  "कच्ची केळी": {
+    "en": "Raw Banana",
+    "mr": "कच्ची केळी",
+    "emoji": "🍌",
+    "aliases": [
+      "Green Banana",
+      "Raw Plantain"
+    ]
+  },
+  "पेरू": {
+    "en": "Guava",
+    "mr": "पेरू",
+    "emoji": "🍈",
+    "aliases": [
+      "Guavas"
+    ]
+  },
+  "कलिंगड": {
+    "en": "Watermelon",
+    "mr": "कलिंगड",
+    "emoji": "🍉",
+    "aliases": [
+      "Watermelons"
+    ]
+  },
+  "खरबूज": {
+    "en": "Muskmelon",
+    "mr": "खरबूज",
+    "emoji": "🍈",
+    "aliases": [
+      "Musk Melon"
+    ]
+  },
+  "अननस": {
+    "en": "Pineapple",
+    "mr": "अननस",
+    "emoji": "🍍",
+    "aliases": [
+      "Pineapples"
+    ]
+  },
+  "बोर": {
+    "en": "Jujube",
+    "mr": "बोर",
+    "emoji": "🟤",
+    "aliases": [
+      "Ber"
+    ]
+  },
+  "विड्याची पाने (पाटी)": {
+    "en": "Betel Leaves",
+    "mr": "विड्याची पाने (पाटी)",
+    "emoji": "🌿",
+    "aliases": [
+      "Betel Leaf",
+      "Paan Leaves"
+    ]
+  },
+  "विड्याची पाने": {
+    "en": "Betel Leaves",
+    "mr": "विड्याची पाने",
+    "emoji": "🌿",
+    "aliases": [
+      "Betel Leaf",
+      "Paan Leaves"
+    ]
+  },
+  "तांदुळ (बासमती)": {
+    "en": "Basmati Rice",
+    "mr": "तांदुळ (बासमती)",
+    "emoji": "🌾",
+    "aliases": [
+      "Basmati"
+    ]
+  },
+  "तांदुळ (बासमती दुबार)": {
+    "en": "Basmati Dubar Rice",
+    "mr": "तांदुळ (बासमती दुबार)",
+    "emoji": "🌾",
+    "aliases": [
+      "Basmati Dubar"
+    ]
+  },
+  "तांदुळ (बासमती मोगरा)": {
+    "en": "Basmati Mogra Rice",
+    "mr": "तांदुळ (बासमती मोगरा)",
+    "emoji": "🌾",
+    "aliases": [
+      "Basmati Mogra"
+    ]
+  },
+  "तांदुळ (बासमती कणी)": {
+    "en": "Basmati Broken Rice",
+    "mr": "तांदुळ (बासमती कणी)",
+    "emoji": "🌾",
+    "aliases": [
+      "Basmati Kani",
+      "Broken Basmati Rice"
+    ]
+  },
+  "तांदुळ (आंबेमोहर)": {
+    "en": "Ambemohar Rice",
+    "mr": "तांदुळ (आंबेमोहर)",
+    "emoji": "🌾",
+    "aliases": [
+      "Ambemohar"
+    ]
+  },
+  "गहू": {
+    "en": "Wheat",
+    "mr": "गहू",
+    "emoji": "🌾",
+    "aliases": [
+      "Wheat Grain"
+    ]
+  },
+  "ज्वारी": {
+    "en": "Sorghum",
+    "mr": "ज्वारी",
+    "emoji": "🌾",
+    "aliases": [
+      "Jowar"
+    ]
+  },
+  "बाजरी": {
+    "en": "Pearl Millet",
+    "mr": "बाजरी",
+    "emoji": "🌾",
+    "aliases": [
+      "Bajra"
+    ]
+  },
+  "हरभरा": {
+    "en": "Chickpea",
+    "mr": "हरभरा",
+    "emoji": "🫘",
+    "aliases": [
+      "Gram",
+      "Chana"
+    ]
+  },
+  "तूर": {
+    "en": "Pigeon Pea",
+    "mr": "तूर",
+    "emoji": "🫘",
+    "aliases": [
+      "Tur",
+      "Arhar"
+    ]
+  },
+  "मूग": {
+    "en": "Green Gram",
+    "mr": "मूग",
+    "emoji": "🫘",
+    "aliases": [
+      "Moong",
+      "Mung Bean"
+    ]
+  },
+  "उडीद": {
+    "en": "Black Gram",
+    "mr": "उडीद",
+    "emoji": "🫘",
+    "aliases": [
+      "Urad"
+    ]
+  },
+  "मसूर": {
+    "en": "Lentil",
+    "mr": "मसूर",
+    "emoji": "🫘",
+    "aliases": [
+      "Masoor"
+    ]
+  },
+  "झेंडू": {
+    "en": "Marigold",
+    "mr": "झेंडू",
+    "emoji": "🌼",
+    "aliases": [
+      "Marigold Flowers"
+    ]
+  },
+  "गुलाब": {
+    "en": "Rose",
+    "mr": "गुलाब",
+    "emoji": "🌹",
+    "aliases": [
+      "Roses"
+    ]
+  },
+  "शेवंती": {
+    "en": "Chrysanthemum",
+    "mr": "शेवंती",
+    "emoji": "🌼",
+    "aliases": [
+      "Chrysanthemum Flowers"
+    ]
+  },
+  "अॅस्टर": {
+    "en": "Aster",
+    "mr": "अॅस्टर",
+    "emoji": "🌸",
+    "aliases": [
+      "Aster Flowers"
+    ]
+  },
+  "ग्लॅडिओलस": {
+    "en": "Gladiolus",
+    "mr": "ग्लॅडिओलस",
+    "emoji": "🌸",
+    "aliases": [
+      "Gladiolus Flowers"
+    ]
+  }
+}

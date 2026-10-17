@@ -1,9 +1,13 @@
 # KrushiWorld
 
-KrushiWorld is organized into independent agriculture-information modules.
+KrushiWorld is an agriculture information project. The **KrushiPulse** APMC market-rates application lives in [`apmc-rates/`](apmc-rates/).
 
-## Modules
+## KrushiPulse APMC v1.6.0
 
-- [`apmc-rates/`](apmc-rates/) — Daily APMC / mandi wholesale market prices, beginning with the official Pune APMC markets, with historical archives and a PHP frontend/API.
+- Marathi/English personalized mandi dashboard and crop watchlist
+- Harvest, Midnight and Saffron themes
+- Official Pune APMC daily market-price collection (19 configured feeds)
+- JSON query, history, SEO and administration endpoints
+- No fabricated live prices; published dates and units are displayed
 
-Each module includes its own setup and operating instructions. Never present old prices as today's quotes; always show the original source date and unit.
+**Start:** `apmc-rates/index.php` (portable wrapper) or point your webroot to `apmc-rates/public/` (preferred). See [`apmc-rates/KRUSHIWORLD_INTEGRATION.md`](apmc-rates/KRUSHIWORLD_INTEGRATION.md) for secure hosting, environment variables and cron configuration. Live collector access and deployment must be verified on your host before launch.

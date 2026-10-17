@@ -1,0 +1,1604 @@
+{
+  "default": "mr",
+  "supported": [
+    "en",
+    "mr"
+  ],
+  "labels": {
+    "en": {
+      "appName": "Pune APMC Market",
+      "subtitle": "Daily wholesale market intelligence",
+      "language": "Language",
+      "english": "English",
+      "marathi": "Marathi",
+      "toggleTheme": "Toggle light and dark theme",
+      "systemStatus": "System status",
+      "todayMarket": "Today’s market",
+      "dailyMarketRates": "Daily Market Rates",
+      "location": "Pune, Maharashtra",
+      "searchLabel": "Search commodities or markets",
+      "searchPlaceholder": "Search tomato, onion, potato…",
+      "marketFilter": "Filter by market",
+      "allMarkets": "All markets",
+      "marketPulse": "Market pulse",
+      "pricesUp": "Prices up",
+      "pricesDown": "Prices down",
+      "unchanged": "Unchanged",
+      "totalArrivals": "Total arrivals",
+      "vsPrevious": "vs previous saved session",
+      "stableCommodities": "stable commodities",
+      "reportedToday": "reported units today",
+      "featuredCommodities": "Featured commodities",
+      "featuredNote": "High-interest rates and latest movements",
+      "all": "All",
+      "min": "Min",
+      "max": "Max",
+      "arrival": "Arrival",
+      "savedTrend": "7-day saved trend",
+      "warmingEmpty": "Live rates are warming up. Server refresh is primary; page recovery activates automatically if needed.",
+      "allDailyRates": "All daily rates",
+      "matchingRecords": "matching records",
+      "resetFilters": "Reset filters",
+      "commodity": "Commodity",
+      "average": "Average",
+      "move": "Move",
+      "showing": "Showing",
+      "of": "of",
+      "loadMore": "Load more",
+      "source": "Source: Agricultural Produce Market Committee, Pune · Cached public market data",
+      "runtimeFooter": "Server-scheduled refresh · page fallback · No database",
+      "waitingSnapshot": "Waiting for first live snapshot",
+      "latestAvailable": "Latest available",
+      "checkingSource": "Checking official source…",
+      "feedNeedRetry": "feed needs retry · cached data safe",
+      "feedsNeedRetry": "feeds need retry · cached data safe",
+      "feedAwaiting": "feed awaiting newer rates",
+      "feedsAwaiting": "feeds awaiting newer rates",
+      "sourceCurrent": "Official source cache is current",
+      "activeFresh": "Active & Fresh",
+      "activePartial": "Active · Partial",
+      "warmingUp": "Warming Up",
+      "ratesAcross": "rates across",
+      "feeds": "feeds",
+      "new": "New",
+      "newSavedRate": "New saved rate",
+      "unchangedTrend": "Unchanged",
+      "marketPage": "Market page",
+      "dataEngine": "APMC Data Engine",
+      "adminSubtitle": "System health, collector runtime and flat-file storage.",
+      "signOut": "Sign out",
+      "adminAccess": "Admin access",
+      "adminAccessHelp": "Enter the configured admin token. A secure HttpOnly session cookie is used after login, so the token does not remain in the address bar.",
+      "tokenRejected": "The token was not accepted. Check APMC_ADMIN_TOKEN or config/app.php.",
+      "adminToken": "Admin token",
+      "enterToken": "Enter token",
+      "openConsole": "Open system console",
+      "securityAction": "Security action:",
+      "defaultTokenWarning": "the package default admin token is still configured. Replace it before exposing this console publicly.",
+      "engine": "Engine",
+      "collectorStorageState": "Collector and storage state",
+      "lastSourceCheck": "Last source check",
+      "requestRefresh": "Server cron primary · page fallback on failure",
+      "lastDataChange": "Last data change",
+      "hashSnapshot": "Hash-verified snapshot",
+      "coverage": "Coverage",
+      "configuredFeeds": "Configured market feeds",
+      "webOperations": "Web operations",
+      "webOperationsHelp": "Actions are POST-only and run against the existing collector. Public cached data remains available while a refresh runs.",
+      "checkNow": "Check now",
+      "retryMissing": "Retry missing",
+      "rebuildIndexes": "Rebuild indexes",
+      "backfill7": "Backfill 7 days",
+      "processLaunch": "Process launch",
+      "storage": "Storage",
+      "collectorErrors": "Collector errors",
+      "runtimeChain": "exec / popen / proc_open fallback chain",
+      "atomicStorage": "Atomic JSON snapshots and exports",
+      "currentFeedErrors": "Current feed errors retained in health state",
+      "marketFeeds": "Market feeds",
+      "marketFeedsHelp": "Each feed retains its last valid snapshot if the source becomes unavailable.",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "writable": "Writable",
+      "checkPermissions": "Check permissions",
+      "never": "Never",
+      "noDate": "No date",
+      "noCurrentError": "No current error",
+      "starting": "Starting…",
+      "startingCollector": "Starting collector action…",
+      "collectorNotStarted": "Collector was not started:",
+      "runtimeUnavailable": "runtime unavailable",
+      "cachedSafe": "Cached public data remains available.",
+      "actionStarted": "Action started in the background. Existing public data remains available while it runs.",
+      "couldNotStart": "Could not start action:",
+      "unknownError": "Unknown error",
+      "healthy": "HEALTHY",
+      "degraded": "DEGRADED",
+      "warming": "WARMING",
+      "error": "ERROR",
+      "ok": "OK",
+      "unknown": "UNKNOWN",
+      "visualBuild": "Bilingual visual/runtime build",
+      "retrySource": "Retry source",
+      "webFallback": "Web-native fallback",
+      "incrementalPhp": "Incremental PHP collector",
+      "sourceRecovery": "Works when PHP process launch is disabled",
+      "startupRecovery": "Startup recovery",
+      "adminDisabled": "Admin access is disabled until APMC_ADMIN_TOKEN is configured in the server environment.",
+      "marketTicker": "Market tape",
+      "sponsoredBy": "Sponsored by",
+      "latestMarketValues": "Latest market values",
+      "coSponsoredBy": "Co-sponsored by",
+      "no_new_data": "NO NEW DATA"
+    },
+    "mr": {
+      "appName": "पुणे एपीएमसी बाजार",
+      "subtitle": "दैनंदिन घाऊक बाजार माहिती",
+      "language": "भाषा",
+      "english": "English",
+      "marathi": "मराठी",
+      "toggleTheme": "लाइट आणि डार्क थीम बदला",
+      "systemStatus": "सिस्टम स्थिती",
+      "todayMarket": "आजचा बाजार",
+      "dailyMarketRates": "दैनंदिन बाजारभाव",
+      "location": "पुणे, महाराष्ट्र",
+      "searchLabel": "शेतमाल किंवा बाजार शोधा",
+      "searchPlaceholder": "टोमॅटो, कांदा, बटाटा शोधा…",
+      "marketFilter": "बाजार निवडा",
+      "allMarkets": "सर्व बाजार",
+      "marketPulse": "बाजार स्थिती",
+      "pricesUp": "भाव वाढले",
+      "pricesDown": "भाव कमी झाले",
+      "unchanged": "बदल नाही",
+      "totalArrivals": "एकूण आवक",
+      "vsPrevious": "मागील जतन केलेल्या सत्राच्या तुलनेत",
+      "stableCommodities": "स्थिर शेतमाल",
+      "reportedToday": "आज नोंदवलेली आवक",
+      "featuredCommodities": "महत्त्वाचे शेतमाल",
+      "featuredNote": "निवडक बाजारभाव आणि अलीकडील बदल",
+      "all": "सर्व",
+      "min": "किमान",
+      "max": "कमाल",
+      "arrival": "आवक",
+      "savedTrend": "७ दिवसांचा जतन केलेला कल",
+      "warmingEmpty": "लाईव्ह बाजारभाव तयार होत आहेत. सर्व्हर रिफ्रेश मुख्य आहे; गरज पडल्यास पेज रिकव्हरी आपोआप सुरू होते.",
+      "allDailyRates": "सर्व दैनंदिन बाजारभाव",
+      "matchingRecords": "जुळणाऱ्या नोंदी",
+      "resetFilters": "फिल्टर रीसेट करा",
+      "commodity": "शेतमाल",
+      "average": "सरासरी",
+      "move": "बदल",
+      "showing": "दाखवत आहे",
+      "of": "पैकी",
+      "loadMore": "आणखी दाखवा",
+      "source": "स्त्रोत: कृषी उत्पन्न बाजार समिती, पुणे · कॅश केलेली सार्वजनिक बाजार माहिती",
+      "runtimeFooter": "सर्व्हर-शेड्यूल रिफ्रेश · पेज फॉलबॅक · डेटाबेस नाही",
+      "waitingSnapshot": "पहिल्या थेट नोंदीची प्रतीक्षा",
+      "latestAvailable": "नवीनतम उपलब्ध",
+      "checkingSource": "अधिकृत स्त्रोत तपासत आहे…",
+      "feedNeedRetry": "फीड पुन्हा तपासणे आवश्यक · कॅश डेटा सुरक्षित",
+      "feedsNeedRetry": "फीड पुन्हा तपासणे आवश्यक · कॅश डेटा सुरक्षित",
+      "feedAwaiting": "फीडवर नवीन भावांची प्रतीक्षा",
+      "feedsAwaiting": "फीडवर नवीन भावांची प्रतीक्षा",
+      "sourceCurrent": "अधिकृत स्त्रोताची कॅश अद्ययावत आहे",
+      "activeFresh": "सक्रिय व अद्ययावत",
+      "activePartial": "सक्रिय · अंशतः",
+      "warmingUp": "डेटा तयार होत आहे",
+      "ratesAcross": "दर",
+      "feeds": "फीडमध्ये",
+      "new": "नवीन",
+      "newSavedRate": "नवीन जतन केलेला दर",
+      "unchangedTrend": "बदल नाही",
+      "marketPage": "बाजार पृष्ठ",
+      "dataEngine": "एपीएमसी डेटा इंजिन",
+      "adminSubtitle": "सिस्टम हेल्थ, कलेक्टर रनटाइम आणि फ्लॅट-फाइल स्टोरेज.",
+      "signOut": "साइन आउट",
+      "adminAccess": "अॅडमिन प्रवेश",
+      "adminAccessHelp": "कॉन्फिगर केलेला अॅडमिन टोकन प्रविष्ट करा. लॉगिननंतर सुरक्षित HttpOnly सेशन कुकी वापरली जाते, त्यामुळे टोकन अॅड्रेस बारमध्ये राहत नाही.",
+      "tokenRejected": "टोकन स्वीकारला गेला नाही. APMC_ADMIN_TOKEN किंवा config/app.php तपासा.",
+      "adminToken": "अॅडमिन टोकन",
+      "enterToken": "टोकन प्रविष्ट करा",
+      "openConsole": "सिस्टम कन्सोल उघडा",
+      "securityAction": "सुरक्षा कृती:",
+      "defaultTokenWarning": "पॅकेजचा डीफॉल्ट अॅडमिन टोकन अजूनही वापरात आहे. कन्सोल सार्वजनिक करण्यापूर्वी तो बदला.",
+      "engine": "इंजिन",
+      "collectorStorageState": "कलेक्टर आणि स्टोरेज स्थिती",
+      "lastSourceCheck": "शेवटची स्त्रोत तपासणी",
+      "requestRefresh": "सर्व्हर क्रॉन मुख्य · बिघाड झाल्यास पेज फॉलबॅक",
+      "lastDataChange": "शेवटचा डेटा बदल",
+      "hashSnapshot": "हॅश-पडताळलेला स्नॅपशॉट",
+      "coverage": "कव्हरेज",
+      "configuredFeeds": "कॉन्फिगर केलेले बाजार फीड",
+      "webOperations": "वेब ऑपरेशन्स",
+      "webOperationsHelp": "कृती फक्त POST द्वारे चालतात आणि विद्यमान कलेक्टर वापरतात. रिफ्रेश सुरू असताना सार्वजनिक कॅश डेटा उपलब्ध राहतो.",
+      "checkNow": "आता तपासा",
+      "retryMissing": "गहाळ पुन्हा प्रयत्न",
+      "rebuildIndexes": "इंडेक्स पुन्हा तयार करा",
+      "backfill7": "७ दिवस बॅकफिल",
+      "processLaunch": "प्रोसेस लाँच",
+      "storage": "स्टोरेज",
+      "collectorErrors": "कलेक्टर त्रुटी",
+      "runtimeChain": "exec / popen / proc_open फॉलबॅक साखळी",
+      "atomicStorage": "अॅटोमिक JSON स्नॅपशॉट आणि एक्सपोर्ट",
+      "currentFeedErrors": "सध्याच्या फीड त्रुटी हेल्थ स्थितीत जतन",
+      "marketFeeds": "बाजार फीड",
+      "marketFeedsHelp": "स्त्रोत उपलब्ध नसल्यास प्रत्येक फीड शेवटचा वैध स्नॅपशॉट राखतो.",
+      "available": "उपलब्ध",
+      "unavailable": "अनुपलब्ध",
+      "writable": "लेखनयोग्य",
+      "checkPermissions": "परवानग्या तपासा",
+      "never": "कधीही नाही",
+      "noDate": "तारीख नाही",
+      "noCurrentError": "सध्याची त्रुटी नाही",
+      "starting": "सुरू करत आहे…",
+      "startingCollector": "कलेक्टर कृती सुरू करत आहे…",
+      "collectorNotStarted": "कलेक्टर सुरू झाला नाही:",
+      "runtimeUnavailable": "रनटाइम अनुपलब्ध",
+      "cachedSafe": "कॅश सार्वजनिक डेटा उपलब्ध आहे.",
+      "actionStarted": "कृती पार्श्वभूमीत सुरू झाली. ती चालू असताना विद्यमान सार्वजनिक डेटा उपलब्ध राहतो.",
+      "couldNotStart": "कृती सुरू करता आली नाही:",
+      "unknownError": "अज्ञात त्रुटी",
+      "healthy": "सुदृढ",
+      "degraded": "अंशतः",
+      "warming": "तयार होत आहे",
+      "error": "त्रुटी",
+      "ok": "ठीक",
+      "unknown": "अज्ञात",
+      "visualBuild": "द्विभाषिक व्हिज्युअल/रनटाइम बिल्ड",
+      "retrySource": "स्त्रोत पुन्हा तपासा",
+      "webFallback": "वेब-नेटिव्ह फॉलबॅक",
+      "incrementalPhp": "इन्क्रिमेंटल PHP कलेक्टर",
+      "sourceRecovery": "PHP प्रोसेस लाँच बंद असतानाही कार्यरत",
+      "startupRecovery": "स्टार्टअप रिकव्हरी",
+      "adminDisabled": "सर्व्हर वातावरणात APMC_ADMIN_TOKEN कॉन्फिगर करेपर्यंत अॅडमिन प्रवेश बंद आहे.",
+      "marketTicker": "बाजार पट्टी",
+      "sponsoredBy": "प्रायोजक",
+      "latestMarketValues": "ताजे बाजारभाव",
+      "coSponsoredBy": "सह-प्रायोजक",
+      "no_new_data": "नवीन डेटा नाही"
+    }
+  },
+  "markets": {
+    "Main Market Yard": {
+      "en": "Main Market Yard",
+      "mr": "मुख्य बाजार आवार"
+    },
+    "Manjari": {
+      "en": "Manjari",
+      "mr": "मांजरी"
+    },
+    "Moshi": {
+      "en": "Moshi",
+      "mr": "मोशी"
+    },
+    "Pimpri": {
+      "en": "Pimpri",
+      "mr": "पिंपरी"
+    },
+    "Khadki": {
+      "en": "Khadki",
+      "mr": "खडकी"
+    }
+  },
+  "market_slugs": {
+    "main-fruit": "Main Market Yard",
+    "main-gul-bhusar-dhanya": "Main Market Yard",
+    "main-ful": "Main Market Yard",
+    "keli-paan": "Main Market Yard",
+    "main-chinese": "Main Market Yard",
+    "main-leafy-veg": "Main Market Yard",
+    "main-kanda": "Main Market Yard",
+    "main-gul-bhusar-dry-fruits": "Main Market Yard",
+    "main-veg": "Main Market Yard",
+    "manjari-fruit": "Manjari",
+    "manjari-leafy-veg": "Manjari",
+    "manjari-onion": "Manjari",
+    "manjari-veg": "Manjari",
+    "moshi-fruit": "Moshi",
+    "moshi-onion": "Moshi",
+    "moshi-veg": "Moshi",
+    "pimpari-ful": "Pimpri",
+    "pimpari-veg": "Pimpri",
+    "khadki-veg": "Khadki"
+  },
+  "categories": {
+    "Fruits": {
+      "en": "Fruits",
+      "mr": "फळे"
+    },
+    "Grains": {
+      "en": "Grains",
+      "mr": "धान्य"
+    },
+    "Flowers": {
+      "en": "Flowers",
+      "mr": "फुले"
+    },
+    "Banana & Betel Leaf": {
+      "en": "Banana & Betel Leaf",
+      "mr": "केळी व पान"
+    },
+    "Chinese Vegetables": {
+      "en": "Chinese Vegetables",
+      "mr": "चायनीज भाज्या"
+    },
+    "Leafy Vegetables": {
+      "en": "Leafy Vegetables",
+      "mr": "पालेभाज्या"
+    },
+    "Onion & Potato": {
+      "en": "Onion & Potato",
+      "mr": "कांदा व बटाटा"
+    },
+    "Dry Fruits": {
+      "en": "Dry Fruits",
+      "mr": "सुकामेवा"
+    },
+    "Vegetables": {
+      "en": "Vegetables",
+      "mr": "भाजीपाला"
+    },
+    "Onion": {
+      "en": "Onion",
+      "mr": "कांदा"
+    }
+  },
+  "units": {
+    "क्विंटल": {
+      "en": "qtl",
+      "mr": "क्विं."
+    },
+    "क्विंटल ": {
+      "en": "qtl",
+      "mr": "क्विं."
+    },
+    "Quintal": {
+      "en": "qtl",
+      "mr": "क्विं."
+    },
+    "quintal": {
+      "en": "qtl",
+      "mr": "क्विं."
+    },
+    "किलो": {
+      "en": "kg",
+      "mr": "किलो"
+    },
+    "Kg": {
+      "en": "kg",
+      "mr": "किलो"
+    },
+    "KG": {
+      "en": "kg",
+      "mr": "किलो"
+    },
+    "Kilogram": {
+      "en": "kg",
+      "mr": "किलो"
+    },
+    "शेकडा": {
+      "en": "100",
+      "mr": "शेकडा"
+    },
+    "शेकडा ": {
+      "en": "100",
+      "mr": "शेकडा"
+    },
+    "Hundred": {
+      "en": "100",
+      "mr": "शेकडा"
+    },
+    "डझन": {
+      "en": "dozen",
+      "mr": "डझन"
+    },
+    "Dozen": {
+      "en": "dozen",
+      "mr": "डझन"
+    },
+    "नग": {
+      "en": "pcs",
+      "mr": "नग"
+    },
+    "Nos": {
+      "en": "pcs",
+      "mr": "नग"
+    },
+    "Pieces": {
+      "en": "pcs",
+      "mr": "नग"
+    },
+    "गड्डी": {
+      "en": "bundle",
+      "mr": "गड्डी"
+    },
+    "Bundle": {
+      "en": "bundle",
+      "mr": "गड्डी"
+    },
+    "जुडी": {
+      "en": "bunch",
+      "mr": "जुडी"
+    },
+    "Bunch": {
+      "en": "bunch",
+      "mr": "जुडी"
+    },
+    "पेटी": {
+      "en": "crate",
+      "mr": "पेटी"
+    },
+    "Crate": {
+      "en": "crate",
+      "mr": "पेटी"
+    }
+  },
+  "commodities": {
+    "टोमॅटो": {
+      "en": "Tomato",
+      "mr": "टोमॅटो"
+    },
+    "Tomato": {
+      "en": "Tomato",
+      "mr": "टोमॅटो"
+    },
+    "Tomatoes": {
+      "en": "Tomato",
+      "mr": "टोमॅटो"
+    },
+    "कांदा": {
+      "en": "Onion",
+      "mr": "कांदा"
+    },
+    "Onion": {
+      "en": "Onion",
+      "mr": "कांदा"
+    },
+    "Onions": {
+      "en": "Onion",
+      "mr": "कांदा"
+    },
+    "बटाटा": {
+      "en": "Potato",
+      "mr": "बटाटा"
+    },
+    "Potato": {
+      "en": "Potato",
+      "mr": "बटाटा"
+    },
+    "Potatoes": {
+      "en": "Potato",
+      "mr": "बटाटा"
+    },
+    "लसूण": {
+      "en": "Garlic",
+      "mr": "लसूण"
+    },
+    "Garlic": {
+      "en": "Garlic",
+      "mr": "लसूण"
+    },
+    "आले": {
+      "en": "Ginger",
+      "mr": "आले"
+    },
+    "Ginger": {
+      "en": "Ginger",
+      "mr": "आले"
+    },
+    "भेंडी": {
+      "en": "Okra",
+      "mr": "भेंडी"
+    },
+    "Okra": {
+      "en": "Okra",
+      "mr": "भेंडी"
+    },
+    "Lady Finger": {
+      "en": "Okra",
+      "mr": "भेंडी"
+    },
+    "गवार": {
+      "en": "Cluster Beans",
+      "mr": "गवार"
+    },
+    "Cluster Beans": {
+      "en": "Cluster Beans",
+      "mr": "गवार"
+    },
+    "मटार": {
+      "en": "Peas",
+      "mr": "मटार"
+    },
+    "Peas": {
+      "en": "Peas",
+      "mr": "मटर"
+    },
+    "मटर": {
+      "en": "Peas",
+      "mr": "मटर"
+    },
+    "घेवडा": {
+      "en": "Beans",
+      "mr": "घेवडा"
+    },
+    "Beans": {
+      "en": "Beans",
+      "mr": "घेवडा"
+    },
+    "दोडका": {
+      "en": "Ridge Gourd",
+      "mr": "दोडका"
+    },
+    "Ridge Gourd": {
+      "en": "Ridge Gourd",
+      "mr": "दोडका"
+    },
+    "मिरची": {
+      "en": "Chilli",
+      "mr": "मिरची"
+    },
+    "Chilli": {
+      "en": "Chilli",
+      "mr": "मिरची"
+    },
+    "Green Chilli": {
+      "en": "Chilli",
+      "mr": "मिरची"
+    },
+    "Chili": {
+      "en": "Chilli",
+      "mr": "मिरची"
+    },
+    "काकडी": {
+      "en": "Cucumber",
+      "mr": "काकडी"
+    },
+    "Cucumber": {
+      "en": "Cucumber",
+      "mr": "काकडी"
+    },
+    "कारली": {
+      "en": "Bitter Gourd",
+      "mr": "कारली"
+    },
+    "Bitter Gourd": {
+      "en": "Bitter Gourd",
+      "mr": "कारली"
+    },
+    "गाजर": {
+      "en": "Carrot",
+      "mr": "गाजर"
+    },
+    "Carrot": {
+      "en": "Carrot",
+      "mr": "गाजर"
+    },
+    "पापडी": {
+      "en": "Papdi Beans",
+      "mr": "पापडी"
+    },
+    "Papdi Beans": {
+      "en": "Papdi Beans",
+      "mr": "पापडी"
+    },
+    "पडवळ": {
+      "en": "Snake Gourd",
+      "mr": "पडवळ"
+    },
+    "Snake Gourd": {
+      "en": "Snake Gourd",
+      "mr": "पडवळ"
+    },
+    "फलॉवर": {
+      "en": "Cauliflower",
+      "mr": "फलॉवर"
+    },
+    "Cauliflower": {
+      "en": "Cauliflower",
+      "mr": "फ्लॉवर"
+    },
+    "कोबी": {
+      "en": "Cabbage",
+      "mr": "कोबी"
+    },
+    "Cabbage": {
+      "en": "Cabbage",
+      "mr": "कोबी"
+    },
+    "वांगी": {
+      "en": "Brinjal",
+      "mr": "वांगी"
+    },
+    "Brinjal": {
+      "en": "Brinjal",
+      "mr": "वांगी"
+    },
+    "Eggplant": {
+      "en": "Brinjal",
+      "mr": "वांगी"
+    },
+    "Aubergine": {
+      "en": "Brinjal",
+      "mr": "वांगी"
+    },
+    "ढोबळी": {
+      "en": "Capsicum",
+      "mr": "ढोबळी"
+    },
+    "Capsicum": {
+      "en": "Capsicum",
+      "mr": "ढोबळी मिरची"
+    },
+    "ढोबळी मिरची": {
+      "en": "Capsicum",
+      "mr": "ढोबळी मिरची"
+    },
+    "Bell Pepper": {
+      "en": "Capsicum",
+      "mr": "ढोबळी मिरची"
+    },
+    "सुरण": {
+      "en": "Elephant Foot Yam",
+      "mr": "सुरण"
+    },
+    "Elephant Foot Yam": {
+      "en": "Elephant Foot Yam",
+      "mr": "सुरण"
+    },
+    "तोंडली": {
+      "en": "Ivy Gourd",
+      "mr": "तोंडली"
+    },
+    "Ivy Gourd": {
+      "en": "Ivy Gourd",
+      "mr": "तोंडली"
+    },
+    "बीट": {
+      "en": "Beetroot",
+      "mr": "बीट"
+    },
+    "Beetroot": {
+      "en": "Beetroot",
+      "mr": "बीट"
+    },
+    "कडीपत्ता": {
+      "en": "Curry Leaves",
+      "mr": "कडीपत्ता"
+    },
+    "Curry Leaves": {
+      "en": "Curry Leaves",
+      "mr": "कडीपत्ता"
+    },
+    "कोहळा": {
+      "en": "Ash Gourd",
+      "mr": "कोहळा"
+    },
+    "Ash Gourd": {
+      "en": "Ash Gourd",
+      "mr": "कोहळा"
+    },
+    "आरवी": {
+      "en": "Colocasia",
+      "mr": "आरवी"
+    },
+    "Colocasia": {
+      "en": "Colocasia",
+      "mr": "आरवी"
+    },
+    "पावटा": {
+      "en": "Broad Beans",
+      "mr": "पावटा"
+    },
+    "Broad Beans": {
+      "en": "Broad Beans",
+      "mr": "पावटा"
+    },
+    "घेासावळी": {
+      "en": "Sponge Gourd",
+      "mr": "घेासावळी"
+    },
+    "Sponge Gourd": {
+      "en": "Sponge Gourd",
+      "mr": "घोसावळी"
+    },
+    "घोसावळी": {
+      "en": "Sponge Gourd",
+      "mr": "घोसावळी"
+    },
+    "वालवर": {
+      "en": "Field Beans",
+      "mr": "वालवर"
+    },
+    "Field Beans": {
+      "en": "Field Beans",
+      "mr": "वालवर"
+    },
+    "शेवगा": {
+      "en": "Drumstick",
+      "mr": "शेवगा"
+    },
+    "Drumstick": {
+      "en": "Drumstick",
+      "mr": "शेवगा"
+    },
+    "Moringa Pods": {
+      "en": "Drumstick",
+      "mr": "शेवगा"
+    },
+    "परवर": {
+      "en": "Pointed Gourd",
+      "mr": "परवर"
+    },
+    "Pointed Gourd": {
+      "en": "Pointed Gourd",
+      "mr": "परवर"
+    },
+    "भावनगरी": {
+      "en": "Bhavnagari Chilli",
+      "mr": "भावनगरी"
+    },
+    "Bhavnagari Chilli": {
+      "en": "Bhavnagari Chilli",
+      "mr": "भावनगरी"
+    },
+    "ढेमसा": {
+      "en": "Tinda",
+      "mr": "ढेमसा"
+    },
+    "Tinda": {
+      "en": "Tinda",
+      "mr": "ढेमसा"
+    },
+    "कैरी": {
+      "en": "Raw Mango",
+      "mr": "कैरी"
+    },
+    "Raw Mango": {
+      "en": "Raw Mango",
+      "mr": "कैरी"
+    },
+    "चवळी": {
+      "en": "Cowpea",
+      "mr": "चवळी"
+    },
+    "Cowpea": {
+      "en": "Cowpea",
+      "mr": "चवळी"
+    },
+    "करटूले": {
+      "en": "Spiny Gourd",
+      "mr": "करटूले"
+    },
+    "Spiny Gourd": {
+      "en": "Spiny Gourd",
+      "mr": "करटूले"
+    },
+    "दु.भोपळा": {
+      "en": "Bottle Gourd",
+      "mr": "दु.भोपळा"
+    },
+    "Bottle Gourd": {
+      "en": "Bottle Gourd",
+      "mr": "दुधीभोपळा"
+    },
+    "डांगर (भोपळा )": {
+      "en": "Pumpkin",
+      "mr": "डांगर (भोपळा )"
+    },
+    "Pumpkin": {
+      "en": "Pumpkin",
+      "mr": "डांगर (भोपळा )"
+    },
+    "भुशेंगा": {
+      "en": "Groundnut Pods",
+      "mr": "भुशेंगा"
+    },
+    "Groundnut Pods": {
+      "en": "Groundnut Pods",
+      "mr": "भुईमुग शेंग"
+    },
+    "कोथिंबीर": {
+      "en": "Coriander Leaves",
+      "mr": "कोथिंबीर"
+    },
+    "Coriander Leaves": {
+      "en": "Coriander Leaves",
+      "mr": "कोथिंबीर"
+    },
+    "Coriander": {
+      "en": "Coriander Leaves",
+      "mr": "कोथिंबीर"
+    },
+    "Cilantro": {
+      "en": "Coriander Leaves",
+      "mr": "कोथिंबीर"
+    },
+    "Kothimbir": {
+      "en": "Coriander Leaves",
+      "mr": "कोथिंबीर"
+    },
+    "मेथी": {
+      "en": "Fenugreek Leaves",
+      "mr": "मेथी"
+    },
+    "Fenugreek Leaves": {
+      "en": "Fenugreek Leaves",
+      "mr": "मेथी"
+    },
+    "Fenugreek": {
+      "en": "Fenugreek Leaves",
+      "mr": "मेथी"
+    },
+    "Methi": {
+      "en": "Fenugreek Leaves",
+      "mr": "मेथी"
+    },
+    "शेपू": {
+      "en": "Dill Leaves",
+      "mr": "शेपू"
+    },
+    "Dill Leaves": {
+      "en": "Dill Leaves",
+      "mr": "शेपू"
+    },
+    "Dill": {
+      "en": "Dill Leaves",
+      "mr": "शेपू"
+    },
+    "Shepu": {
+      "en": "Dill Leaves",
+      "mr": "शेपू"
+    },
+    "कांदापात": {
+      "en": "Spring Onion",
+      "mr": "कांदापात"
+    },
+    "Spring Onion": {
+      "en": "Spring Onion",
+      "mr": "कांदापात"
+    },
+    "Green Onion": {
+      "en": "Spring Onion",
+      "mr": "कांदापात"
+    },
+    "Scallion": {
+      "en": "Spring Onion",
+      "mr": "कांदापात"
+    },
+    "Onion Leaves": {
+      "en": "Spring Onion",
+      "mr": "कांदापात"
+    },
+    "पालक": {
+      "en": "Spinach",
+      "mr": "पालक"
+    },
+    "Spinach": {
+      "en": "Spinach",
+      "mr": "पालक"
+    },
+    "Palak": {
+      "en": "Spinach",
+      "mr": "पालक"
+    },
+    "मूळा": {
+      "en": "Radish",
+      "mr": "मूळा"
+    },
+    "Radish": {
+      "en": "Radish",
+      "mr": "मूळा"
+    },
+    "Mula": {
+      "en": "Radish",
+      "mr": "मूळा"
+    },
+    "चवळई": {
+      "en": "Amaranth Greens",
+      "mr": "चवळई"
+    },
+    "Amaranth Greens": {
+      "en": "Rajgira Greens",
+      "mr": "राजगिरा"
+    },
+    "Chawlai": {
+      "en": "Amaranth Greens",
+      "mr": "चवळई"
+    },
+    "Amaranth Leaves": {
+      "en": "Amaranth Greens",
+      "mr": "चवळई"
+    },
+    "करडई": {
+      "en": "Safflower Greens",
+      "mr": "करडई"
+    },
+    "Safflower Greens": {
+      "en": "Safflower Greens",
+      "mr": "करडई"
+    },
+    "Safflower Leaves": {
+      "en": "Safflower Greens",
+      "mr": "करडई"
+    },
+    "राजगिरा": {
+      "en": "Rajgira Greens",
+      "mr": "राजगिरा"
+    },
+    "Rajgira Greens": {
+      "en": "Rajgira Greens",
+      "mr": "राजगिरा"
+    },
+    "Rajgira Leaves": {
+      "en": "Rajgira Greens",
+      "mr": "राजगिरा"
+    },
+    "आळू": {
+      "en": "Colocasia Leaves",
+      "mr": "आळू"
+    },
+    "Colocasia Leaves": {
+      "en": "Colocasia Leaves",
+      "mr": "आळू"
+    },
+    "Taro Leaves": {
+      "en": "Colocasia Leaves",
+      "mr": "आळू"
+    },
+    "Alu Leaves": {
+      "en": "Colocasia Leaves",
+      "mr": "आळू"
+    },
+    "पुदिना": {
+      "en": "Mint Leaves",
+      "mr": "पुदिना"
+    },
+    "Mint Leaves": {
+      "en": "Mint Leaves",
+      "mr": "पुदिना"
+    },
+    "Mint": {
+      "en": "Mint Leaves",
+      "mr": "पुदिना"
+    },
+    "Pudina": {
+      "en": "Mint Leaves",
+      "mr": "पुदिना"
+    },
+    "चुका": {
+      "en": "Sorrel Leaves",
+      "mr": "चुका"
+    },
+    "Sorrel Leaves": {
+      "en": "Sorrel Leaves",
+      "mr": "चुका"
+    },
+    "Sorrel": {
+      "en": "Sorrel Leaves",
+      "mr": "चुका"
+    },
+    "Chuka": {
+      "en": "Sorrel Leaves",
+      "mr": "चुका"
+    },
+    "चाकवत": {
+      "en": "Bathua Greens",
+      "mr": "चाकवत"
+    },
+    "Bathua Greens": {
+      "en": "Bathua Greens",
+      "mr": "चाकवत"
+    },
+    "Bathua": {
+      "en": "Bathua Greens",
+      "mr": "चाकवत"
+    },
+    "Lambs Quarters": {
+      "en": "Bathua Greens",
+      "mr": "चाकवत"
+    },
+    "अंबाडी": {
+      "en": "Roselle Leaves",
+      "mr": "अंबाडी"
+    },
+    "Roselle Leaves": {
+      "en": "Roselle Leaves",
+      "mr": "अंबाडी"
+    },
+    "Roselle Greens": {
+      "en": "Roselle Leaves",
+      "mr": "अंबाडी"
+    },
+    "Ambadi": {
+      "en": "Roselle Leaves",
+      "mr": "अंबाडी"
+    },
+    "नारळ": {
+      "en": "Coconut",
+      "mr": "नारळ"
+    },
+    "Coconut": {
+      "en": "Coconut",
+      "mr": "नारळ"
+    },
+    "Coconuts": {
+      "en": "Coconut",
+      "mr": "नारळ"
+    },
+    "गवती चहा": {
+      "en": "Lemongrass",
+      "mr": "गवती चहा"
+    },
+    "Lemongrass": {
+      "en": "Lemongrass",
+      "mr": "गवती चहा"
+    },
+    "Lemon Grass": {
+      "en": "Lemongrass",
+      "mr": "गवती चहा"
+    },
+    "दुधी भोपळा": {
+      "en": "Bottle Gourd",
+      "mr": "दुधी भोपळा"
+    },
+    "Lauki": {
+      "en": "Bottle Gourd",
+      "mr": "दुधीभोपळा"
+    },
+    "Dudhi": {
+      "en": "Bottle Gourd",
+      "mr": "दुधीभोपळा"
+    },
+    "दुधीभोपळा": {
+      "en": "Bottle Gourd",
+      "mr": "दुधीभोपळा"
+    },
+    "फ्लॉवर": {
+      "en": "Cauliflower",
+      "mr": "फ्लॉवर"
+    },
+    "Flower": {
+      "en": "Cauliflower",
+      "mr": "फ्लॉवर"
+    },
+    "भुईमूग शेंग": {
+      "en": "Groundnut Pods",
+      "mr": "भुईमूग शेंग"
+    },
+    "Peanut Pods": {
+      "en": "Groundnut Pods",
+      "mr": "भुईमुग शेंग"
+    },
+    "Groundnut": {
+      "en": "Groundnut Pods",
+      "mr": "भुईमुग शेंग"
+    },
+    "भुईमुग शेंग": {
+      "en": "Groundnut Pods",
+      "mr": "भुईमुग शेंग"
+    },
+    "मका": {
+      "en": "Maize",
+      "mr": "मका"
+    },
+    "Maize": {
+      "en": "Maize",
+      "mr": "मका"
+    },
+    "Corn": {
+      "en": "Maize",
+      "mr": "मका"
+    },
+    "स्वीट कॉर्न": {
+      "en": "Sweet Corn",
+      "mr": "स्वीट कॉर्न"
+    },
+    "Sweet Corn": {
+      "en": "Sweet Corn",
+      "mr": "स्वीट कॉर्न"
+    },
+    "Sweetcorn": {
+      "en": "Sweet Corn",
+      "mr": "स्वीट कॉर्न"
+    },
+    "लिंबू": {
+      "en": "Lemon",
+      "mr": "लिंबू"
+    },
+    "Lemon": {
+      "en": "Lemon",
+      "mr": "लिंबू"
+    },
+    "Lemons": {
+      "en": "Lemon",
+      "mr": "लिंबू"
+    },
+    "सफरचंद": {
+      "en": "Apple",
+      "mr": "सफरचंद"
+    },
+    "Apple": {
+      "en": "Apple",
+      "mr": "सफरचंद"
+    },
+    "Apples": {
+      "en": "Apple",
+      "mr": "सफरचंद"
+    },
+    "मोसंबी": {
+      "en": "Sweet Lime",
+      "mr": "मोसंबी"
+    },
+    "Sweet Lime": {
+      "en": "Sweet Lime",
+      "mr": "मोसंबी"
+    },
+    "Mosambi": {
+      "en": "Sweet Lime",
+      "mr": "मोसंबी"
+    },
+    "Sweet Lemon": {
+      "en": "Sweet Lime",
+      "mr": "मोसंबी"
+    },
+    "संत्रा": {
+      "en": "Orange",
+      "mr": "संत्रा"
+    },
+    "Orange": {
+      "en": "Orange",
+      "mr": "संत्रा"
+    },
+    "Oranges": {
+      "en": "Orange",
+      "mr": "संत्रा"
+    },
+    "डाळींब": {
+      "en": "Pomegranate",
+      "mr": "डाळींब"
+    },
+    "Pomegranate": {
+      "en": "Pomegranate",
+      "mr": "डाळिंब"
+    },
+    "Pomegranates": {
+      "en": "Pomegranate",
+      "mr": "डाळिंब"
+    },
+    "डाळिंब": {
+      "en": "Pomegranate",
+      "mr": "डाळिंब"
+    },
+    "पपई": {
+      "en": "Papaya",
+      "mr": "पपई"
+    },
+    "Papaya": {
+      "en": "Papaya",
+      "mr": "पपई"
+    },
+    "Papayas": {
+      "en": "Papaya",
+      "mr": "पपई"
+    },
+    "चिकू": {
+      "en": "Sapota",
+      "mr": "चिकू"
+    },
+    "Sapota": {
+      "en": "Sapota",
+      "mr": "चिकू"
+    },
+    "Chikoo": {
+      "en": "Sapota",
+      "mr": "चिकू"
+    },
+    "Sapodilla": {
+      "en": "Sapota",
+      "mr": "चिकू"
+    },
+    "सिताफळ": {
+      "en": "Custard Apple",
+      "mr": "सिताफळ"
+    },
+    "Custard Apple": {
+      "en": "Custard Apple",
+      "mr": "सीताफळ"
+    },
+    "Sitaphal": {
+      "en": "Custard Apple",
+      "mr": "सीताफळ"
+    },
+    "सीताफळ": {
+      "en": "Custard Apple",
+      "mr": "सीताफळ"
+    },
+    "द्राक्ष": {
+      "en": "Grapes",
+      "mr": "द्राक्ष"
+    },
+    "Grapes": {
+      "en": "Grapes",
+      "mr": "द्राक्ष"
+    },
+    "Grape": {
+      "en": "Grapes",
+      "mr": "द्राक्ष"
+    },
+    "आंबा": {
+      "en": "Mango",
+      "mr": "आंबा"
+    },
+    "Mango": {
+      "en": "Mango",
+      "mr": "आंबा"
+    },
+    "Mangoes": {
+      "en": "Mango",
+      "mr": "आंबा"
+    },
+    "केळी": {
+      "en": "Banana",
+      "mr": "केळी"
+    },
+    "Banana": {
+      "en": "Banana",
+      "mr": "केळी"
+    },
+    "Bananas": {
+      "en": "Banana",
+      "mr": "केळी"
+    },
+    "कच्ची केळी": {
+      "en": "Raw Banana",
+      "mr": "कच्ची केळी"
+    },
+    "Raw Banana": {
+      "en": "Raw Banana",
+      "mr": "कच्ची केळी"
+    },
+    "Green Banana": {
+      "en": "Raw Banana",
+      "mr": "कच्ची केळी"
+    },
+    "Raw Plantain": {
+      "en": "Raw Banana",
+      "mr": "कच्ची केळी"
+    },
+    "पेरू": {
+      "en": "Guava",
+      "mr": "पेरू"
+    },
+    "Guava": {
+      "en": "Guava",
+      "mr": "पेरू"
+    },
+    "Guavas": {
+      "en": "Guava",
+      "mr": "पेरू"
+    },
+    "कलिंगड": {
+      "en": "Watermelon",
+      "mr": "कलिंगड"
+    },
+    "Watermelon": {
+      "en": "Watermelon",
+      "mr": "कलिंगड"
+    },
+    "Watermelons": {
+      "en": "Watermelon",
+      "mr": "कलिंगड"
+    },
+    "खरबूज": {
+      "en": "Muskmelon",
+      "mr": "खरबूज"
+    },
+    "Muskmelon": {
+      "en": "Muskmelon",
+      "mr": "खरबूज"
+    },
+    "Musk Melon": {
+      "en": "Muskmelon",
+      "mr": "खरबूज"
+    },
+    "अननस": {
+      "en": "Pineapple",
+      "mr": "अननस"
+    },
+    "Pineapple": {
+      "en": "Pineapple",
+      "mr": "अननस"
+    },
+    "Pineapples": {
+      "en": "Pineapple",
+      "mr": "अननस"
+    },
+    "बोर": {
+      "en": "Jujube",
+      "mr": "बोर"
+    },
+    "Jujube": {
+      "en": "Jujube",
+      "mr": "बोर"
+    },
+    "Ber": {
+      "en": "Jujube",
+      "mr": "बोर"
+    },
+    "विड्याची पाने (पाटी)": {
+      "en": "Betel Leaves",
+      "mr": "विड्याची पाने (पाटी)"
+    },
+    "Betel Leaves": {
+      "en": "Betel Leaves",
+      "mr": "विड्याची पाने"
+    },
+    "Betel Leaf": {
+      "en": "Betel Leaves",
+      "mr": "विड्याची पाने"
+    },
+    "Paan Leaves": {
+      "en": "Betel Leaves",
+      "mr": "विड्याची पाने"
+    },
+    "विड्याची पाने": {
+      "en": "Betel Leaves",
+      "mr": "विड्याची पाने"
+    },
+    "तांदुळ (बासमती)": {
+      "en": "Basmati Rice",
+      "mr": "तांदुळ (बासमती)"
+    },
+    "Basmati Rice": {
+      "en": "Basmati Rice",
+      "mr": "तांदुळ (बासमती)"
+    },
+    "Basmati": {
+      "en": "Basmati Rice",
+      "mr": "तांदुळ (बासमती)"
+    },
+    "तांदुळ (बासमती दुबार)": {
+      "en": "Basmati Dubar Rice",
+      "mr": "तांदुळ (बासमती दुबार)"
+    },
+    "Basmati Dubar Rice": {
+      "en": "Basmati Dubar Rice",
+      "mr": "तांदुळ (बासमती दुबार)"
+    },
+    "Basmati Dubar": {
+      "en": "Basmati Dubar Rice",
+      "mr": "तांदुळ (बासमती दुबार)"
+    },
+    "तांदुळ (बासमती मोगरा)": {
+      "en": "Basmati Mogra Rice",
+      "mr": "तांदुळ (बासमती मोगरा)"
+    },
+    "Basmati Mogra Rice": {
+      "en": "Basmati Mogra Rice",
+      "mr": "तांदुळ (बासमती मोगरा)"
+    },
+    "Basmati Mogra": {
+      "en": "Basmati Mogra Rice",
+      "mr": "तांदुळ (बासमती मोगरा)"
+    },
+    "तांदुळ (बासमती कणी)": {
+      "en": "Basmati Broken Rice",
+      "mr": "तांदुळ (बासमती कणी)"
+    },
+    "Basmati Broken Rice": {
+      "en": "Basmati Broken Rice",
+      "mr": "तांदुळ (बासमती कणी)"
+    },
+    "Basmati Kani": {
+      "en": "Basmati Broken Rice",
+      "mr": "तांदुळ (बासमती कणी)"
+    },
+    "Broken Basmati Rice": {
+      "en": "Basmati Broken Rice",
+      "mr": "तांदुळ (बासमती कणी)"
+    },
+    "तांदुळ (आंबेमोहर)": {
+      "en": "Ambemohar Rice",
+      "mr": "तांदुळ (आंबेमोहर)"
+    },
+    "Ambemohar Rice": {
+      "en": "Ambemohar Rice",
+      "mr": "तांदुळ (आंबेमोहर)"
+    },
+    "Ambemohar": {
+      "en": "Ambemohar Rice",
+      "mr": "तांदुळ (आंबेमोहर)"
+    },
+    "गहू": {
+      "en": "Wheat",
+      "mr": "गहू"
+    },
+    "Wheat": {
+      "en": "Wheat",
+      "mr": "गहू"
+    },
+    "Wheat Grain": {
+      "en": "Wheat",
+      "mr": "गहू"
+    },
+    "ज्वारी": {
+      "en": "Sorghum",
+      "mr": "ज्वारी"
+    },
+    "Sorghum": {
+      "en": "Sorghum",
+      "mr": "ज्वारी"
+    },
+    "Jowar": {
+      "en": "Sorghum",
+      "mr": "ज्वारी"
+    },
+    "बाजरी": {
+      "en": "Pearl Millet",
+      "mr": "बाजरी"
+    },
+    "Pearl Millet": {
+      "en": "Pearl Millet",
+      "mr": "बाजरी"
+    },
+    "Bajra": {
+      "en": "Pearl Millet",
+      "mr": "बाजरी"
+    },
+    "हरभरा": {
+      "en": "Chickpea",
+      "mr": "हरभरा"
+    },
+    "Chickpea": {
+      "en": "Chickpea",
+      "mr": "हरभरा"
+    },
+    "Gram": {
+      "en": "Chickpea",
+      "mr": "हरभरा"
+    },
+    "Chana": {
+      "en": "Chickpea",
+      "mr": "हरभरा"
+    },
+    "तूर": {
+      "en": "Pigeon Pea",
+      "mr": "तूर"
+    },
+    "Pigeon Pea": {
+      "en": "Pigeon Pea",
+      "mr": "तूर"
+    },
+    "Tur": {
+      "en": "Pigeon Pea",
+      "mr": "तूर"
+    },
+    "Arhar": {
+      "en": "Pigeon Pea",
+      "mr": "तूर"
+    },
+    "मूग": {
+      "en": "Green Gram",
+      "mr": "मूग"
+    },
+    "Green Gram": {
+      "en": "Green Gram",
+      "mr": "मूग"
+    },
+    "Moong": {
+      "en": "Green Gram",
+      "mr": "मूग"
+    },
+    "Mung Bean": {
+      "en": "Green Gram",
+      "mr": "मूग"
+    },
+    "उडीद": {
+      "en": "Black Gram",
+      "mr": "उडीद"
+    },
+    "Black Gram": {
+      "en": "Black Gram",
+      "mr": "उडीद"
+    },
+    "Urad": {
+      "en": "Black Gram",
+      "mr": "उडीद"
+    },
+    "मसूर": {
+      "en": "Lentil",
+      "mr": "मसूर"
+    },
+    "Lentil": {
+      "en": "Lentil",
+      "mr": "मसूर"
+    },
+    "Masoor": {
+      "en": "Lentil",
+      "mr": "मसूर"
+    },
+    "झेंडू": {
+      "en": "Marigold",
+      "mr": "झेंडू"
+    },
+    "Marigold": {
+      "en": "Marigold",
+      "mr": "झेंडू"
+    },
+    "Marigold Flowers": {
+      "en": "Marigold",
+      "mr": "झेंडू"
+    },
+    "गुलाब": {
+      "en": "Rose",
+      "mr": "गुलाब"
+    },
+    "Rose": {
+      "en": "Rose",
+      "mr": "गुलाब"
+    },
+    "Roses": {
+      "en": "Rose",
+      "mr": "गुलाब"
+    },
+    "शेवंती": {
+      "en": "Chrysanthemum",
+      "mr": "शेवंती"
+    },
+    "Chrysanthemum": {
+      "en": "Chrysanthemum",
+      "mr": "शेवंती"
+    },
+    "Chrysanthemum Flowers": {
+      "en": "Chrysanthemum",
+      "mr": "शेवंती"
+    },
+    "अॅस्टर": {
+      "en": "Aster",
+      "mr": "अॅस्टर"
+    },
+    "Aster": {
+      "en": "Aster",
+      "mr": "अॅस्टर"
+    },
+    "Aster Flowers": {
+      "en": "Aster",
+      "mr": "अॅस्टर"
+    },
+    "ग्लॅडिओलस": {
+      "en": "Gladiolus",
+      "mr": "ग्लॅडिओलस"
+    },
+    "Gladiolus": {
+      "en": "Gladiolus",
+      "mr": "ग्लॅडिओलस"
+    },
+    "Gladiolus Flowers": {
+      "en": "Gladiolus",
+      "mr": "ग्लॅडिओलस"
+    }
+  },
+  "market_ids": {
+    "main-market-yard": {
+      "en": "Main Market Yard",
+      "mr": "मुख्य बाजार आवार"
+    },
+    "manjari": {
+      "en": "Manjari",
+      "mr": "मांजरी"
+    },
+    "moshi": {
+      "en": "Moshi",
+      "mr": "मोशी"
+    },
+    "pimpri": {
+      "en": "Pimpri",
+      "mr": "पिंपरी"
+    },
+    "khadki": {
+      "en": "Khadki",
+      "mr": "खडकी"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+Options -Indexes
+DirectoryIndex index.php
+<FilesMatch "^(\.env|.*\.log|.*\.lock|config\.json|commodity_map\.json)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^api/(latest|health|query|summary|market|markets|discover)$ index.php?api=$1 [L,QSA]
+  RewriteRule ^openapi\.json$ index.php?seo=openapi [L,QSA]
+  RewriteRule ^sitemap\.xml$ index.php?seo=sitemap [L,QSA]
+  RewriteRule ^robots\.txt$ index.php?seo=robots [L,QSA]
+  RewriteRule ^llms\.txt$ index.php?seo=llms [L,QSA]
+  RewriteRule ^\.well-known/apmc-data-agent\.json$ index.php?seo=agent-manifest [L,QSA]
+</IfModule>

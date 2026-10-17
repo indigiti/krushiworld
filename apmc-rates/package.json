@@ -1,0 +1,18 @@
+{
+  "name": "apmc-pune-data-engine-ui",
+  "private": true,
+  "version": "1.6.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@alpinejs/csp": "^3.17.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "tailwindcss": "^4.1.10",
+    "vite": "^8.3.0"
+  }
+}

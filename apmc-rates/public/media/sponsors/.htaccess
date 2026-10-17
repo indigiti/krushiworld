@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "\.(?!webp$).+$">
+  Require all denied
+</FilesMatch>

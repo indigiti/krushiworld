@@ -1,0 +1,186 @@
+{
+  "source_base": "https://apmcpune.in",
+  "user_agent": "APMC-Pune-Data-Engine/1.4.0 (+server-cron; page-fallback; en-mr)",
+  "timeout_seconds": 15,
+  "retries": 2,
+  "markets": [
+    {
+      "slug": "main-fruit",
+      "market": "Main Market Yard",
+      "category": "Fruits",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "फळे",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-fruit"
+    },
+    {
+      "slug": "main-gul-bhusar-dhanya",
+      "market": "Main Market Yard",
+      "category": "Grains",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "धान्य",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-gul-bhusar-dhanya"
+    },
+    {
+      "slug": "main-ful",
+      "market": "Main Market Yard",
+      "category": "Flowers",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "फुले",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-ful"
+    },
+    {
+      "slug": "keli-paan",
+      "market": "Main Market Yard",
+      "category": "Banana & Betel Leaf",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "केळी व पान",
+      "market_id": "main-market-yard",
+      "feed_slug": "keli-paan"
+    },
+    {
+      "slug": "main-chinese",
+      "market": "Main Market Yard",
+      "category": "Chinese Vegetables",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "चायनीज भाज्या",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-chinese"
+    },
+    {
+      "slug": "main-leafy-veg",
+      "market": "Main Market Yard",
+      "category": "Leafy Vegetables",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "पालेभाज्या",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-leafy-veg"
+    },
+    {
+      "slug": "main-kanda",
+      "market": "Main Market Yard",
+      "category": "Onion & Potato",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "कांदा व बटाटा",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-kanda"
+    },
+    {
+      "slug": "main-gul-bhusar-dry-fruits",
+      "market": "Main Market Yard",
+      "category": "Dry Fruits",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "सुकामेवा",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-gul-bhusar-dry-fruits"
+    },
+    {
+      "slug": "main-veg",
+      "market": "Main Market Yard",
+      "category": "Vegetables",
+      "market_mr": "मुख्य बाजार आवार",
+      "category_mr": "भाजीपाला",
+      "market_id": "main-market-yard",
+      "feed_slug": "main-veg"
+    },
+    {
+      "slug": "manjari-fruit",
+      "market": "Manjari",
+      "category": "Fruits",
+      "market_mr": "मांजरी",
+      "category_mr": "फळे",
+      "market_id": "manjari",
+      "feed_slug": "manjari-fruit"
+    },
+    {
+      "slug": "manjari-leafy-veg",
+      "market": "Manjari",
+      "category": "Leafy Vegetables",
+      "market_mr": "मांजरी",
+      "category_mr": "पालेभाज्या",
+      "market_id": "manjari",
+      "feed_slug": "manjari-leafy-veg"
+    },
+    {
+      "slug": "manjari-onion",
+      "market": "Manjari",
+      "category": "Onion",
+      "market_mr": "मांजरी",
+      "category_mr": "कांदा",
+      "market_id": "manjari",
+      "feed_slug": "manjari-onion"
+    },
+    {
+      "slug": "manjari-veg",
+      "market": "Manjari",
+      "category": "Vegetables",
+      "market_mr": "मांजरी",
+      "category_mr": "भाजीपाला",
+      "market_id": "manjari",
+      "feed_slug": "manjari-veg"
+    },
+    {
+      "slug": "moshi-fruit",
+      "market": "Moshi",
+      "category": "Fruits",
+      "market_mr": "मोशी",
+      "category_mr": "फळे",
+      "market_id": "moshi",
+      "feed_slug": "moshi-fruit"
+    },
+    {
+      "slug": "moshi-onion",
+      "market": "Moshi",
+      "category": "Onion",
+      "market_mr": "मोशी",
+      "category_mr": "कांदा",
+      "market_id": "moshi",
+      "feed_slug": "moshi-onion"
+    },
+    {
+      "slug": "moshi-veg",
+      "market": "Moshi",
+      "category": "Vegetables",
+      "market_mr": "मोशी",
+      "category_mr": "भाजीपाला",
+      "market_id": "moshi",
+      "feed_slug": "moshi-veg"
+    },
+    {
+      "slug": "pimpari-ful",
+      "market": "Pimpri",
+      "category": "Flowers",
+      "market_mr": "पिंपरी",
+      "category_mr": "फुले",
+      "market_id": "pimpri",
+      "feed_slug": "pimpari-ful"
+    },
+    {
+      "slug": "pimpari-veg",
+      "market": "Pimpri",
+      "category": "Vegetables",
+      "market_mr": "पिंपरी",
+      "category_mr": "भाजीपाला",
+      "market_id": "pimpri",
+      "feed_slug": "pimpari-veg"
+    },
+    {
+      "slug": "khadki-veg",
+      "market": "Khadki",
+      "category": "Vegetables",
+      "market_mr": "खडकी",
+      "category_mr": "भाजीपाला",
+      "market_id": "khadki",
+      "feed_slug": "khadki-veg"
+    }
+  ],
+  "date_probe_limit": 14,
+  "schedule": {
+    "overnight_seconds": 3600,
+    "morning_seconds": 900,
+    "active_seconds": 300,
+    "evening_seconds": 600
+  }
+}

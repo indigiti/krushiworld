@@ -1,0 +1,2 @@
+# No third-party Python packages required.
+# Collector uses Python standard library only (urllib, html.parser, zoneinfo, fcntl).

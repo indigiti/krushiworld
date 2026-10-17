@@ -1,27 +1,69 @@
 <?php
+/**
+ * Backward-compatible simple APMC endpoint from KrushiWorld's first prototype.
+ * This is a read-only adapter over the v1.4 collector cache and archive.
+ * Preferred full API remains public/index.php?api=latest / api=query.
+ */
 declare(strict_types=1);
-date_default_timezone_set('Asia/Kolkata');
+require __DIR__ . '/app/bootstrap.php';
+apmc_apply_security_headers(false);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=300');
-require __DIR__ . '/src.php';
 try {
-    $category=(string)($_GET['category'] ?? 'main-fruit');
-    $date=apmc_date(isset($_GET['date']) ? (string)$_GET['date'] : null);
-    $requested=$date;
-    $stale=false;
-    try { $data=apmc_snapshot($category,$requested); }
-    catch (RuntimeException $exception) {
-        $data=apmc_latest($category,$requested);
-        if (!$data) throw $exception;
-        $stale=true;
+    $category = (string)($_GET['category'] ?? 'main-fruit');
+    $cfg = apmc_json_read(__DIR__ . '/collector/config.json');
+    $supported = array_values(array_filter(array_map(static fn($x) => $x['slug'] ?? null, $cfg['markets'] ?? [])));
+    if (!in_array($category, $supported, true)) throw new InvalidArgumentException('Unsupported category');
+
+    $requested = (string)($_GET['date'] ?? date('Y-m-d'));
+    $date = DateTimeImmutable::createFromFormat('!Y-m-d', $requested, new DateTimeZone('Asia/Kolkata'));
+    if (!$date || $date->format('Y-m-d') !== $requested || $requested > date('Y-m-d')) {
+        throw new InvalidArgumentException('Invalid or future date');
     }
-    $data['stale']=$stale || $data['date'] !== $requested;
-    $data['requested_date']=$requested;
-    echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+
+    $snapshot = [];
+    for ($step = 0; $step <= 30; ++$step) {
+        $candidate = $date->modify('-' . $step . ' days');
+        $archive = APMC_STORAGE . '/daily/' . $candidate->format('Y/m/d') . '/' . $category . '.json';
+        $data = apmc_json_read($archive);
+        if (!empty($data['records'])) { $snapshot = $data; break; }
+    }
+    if (!$snapshot) {
+        $current = (new RateRepository())->market($category);
+        if (!empty($current['records']) && isset($current['date']) && $current['date'] <= $requested) {
+            $snapshot = $current;
+        }
+    }
+    if (!$snapshot || empty($snapshot['records'])) {
+        http_response_code(503);
+        echo json_encode(['error' => 'No verified historical rates for this date/category.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    $actualDate = (string)($snapshot['date'] ?? '');
+    $rows = array_map(static fn(array $r): array => [
+        'commodity' => (string)($r['name_mr'] ?? $r['name_en'] ?? ''),
+        'commodity_en' => (string)($r['name_en'] ?? ''),
+        'variety' => (string)($r['variety'] ?? ''),
+        'min' => $r['min'] ?? null,
+        'max' => $r['max'] ?? null,
+        'modal' => $r['average'] ?? null,
+        'unit' => $r['unit'] ?? null,
+        'arrivals' => $r['arrival'] ?? null,
+        'report_date' => $r['date'] ?? $actualDate,
+    ], $snapshot['records']);
+    echo json_encode([
+        'source' => 'Pune APMC',
+        'source_url' => $snapshot['source_url'] ?? null,
+        'category' => $category,
+        'date' => $actualDate,
+        'requested_date' => $requested,
+        'stale' => $actualDate !== $requested,
+        'rows' => $rows,
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 } catch (InvalidArgumentException $e) {
     http_response_code(400);
-    echo json_encode(['error'=>$e->getMessage()]);
+    echo json_encode(['error' => $e->getMessage()]);
 } catch (Throwable $e) {
     http_response_code(503);
-    echo json_encode(['error'=>'Market prices are temporarily unavailable. No verified snapshot available.']);
+    echo json_encode(['error' => 'Rates temporarily unavailable.'], JSON_UNESCAPED_UNICODE);
 }
