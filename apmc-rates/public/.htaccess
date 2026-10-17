@@ -4,13 +4,22 @@ DirectoryIndex index.php
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+  Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
 </IfModule>
 
-# Clean URLs are deliberately not required. The application works using index.php?view=... / ?api=...
+# First-party versioned and bilingual pretty routes; legacy query URLs remain supported.
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Human-facing bilingual mandi pages; these routes never expose private sources.
+  RewriteRule ^(en|mr)/?$ index.php [L,QSA]
+  RewriteRule ^(en|mr)/mandis/?$ index.php [L,QSA]
+  RewriteRule ^(en|mr)/mandis/[a-z0-9-]{1,110}/?$ index.php [L,QSA]
+  RewriteRule ^admin/?$ index.php [L,QSA]
+  # Stable versioned API contract, separate from legacy query aliases.
+  RewriteRule ^api/v1/(latest|markets|query|summary|health|discover)/?$ index.php [L,QSA]
+  RewriteRule ^api/v1/mandis/[a-z0-9-]{1,110}/rates/?$ index.php [L,QSA]
+
   RewriteRule ^api/(latest|health|query|summary|market|markets|discover)$ index.php?api=$1 [L,QSA]
   RewriteRule ^openapi\.json$ index.php?seo=openapi [L,QSA]
   RewriteRule ^sitemap\.xml$ index.php?seo=sitemap [L,QSA]
