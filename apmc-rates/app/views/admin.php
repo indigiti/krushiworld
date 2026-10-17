@@ -22,7 +22,7 @@ $csrf = $authorized ? apmc_admin_csrf_token() : '';
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>APMC Engine · System</title>
-  <script nonce="<?= apmc_escape($nonce) ?>">(function(){try{var saved=localStorage.getItem('apmc-theme');var dark=saved?saved==='dark':true;document.documentElement.classList.toggle('dark',!!dark);document.documentElement.dataset.theme=dark?'dark':'light';var lang=localStorage.getItem('apmc-language')==='mr'?'mr':'en';document.documentElement.lang=lang;document.documentElement.dataset.lang=lang;}catch(e){}})();</script>
+  <script nonce="<?= apmc_escape($nonce) ?>">(function(){try{var saved=localStorage.getItem('apmc-theme');var dark=saved?saved==='dark':true;document.documentElement.classList.toggle('dark',!!dark);document.documentElement.dataset.theme=dark?'dark':'light';var preferred=localStorage.getItem('apmc-language');var lang=['en','mr','hi'].includes(preferred)?preferred:'en';document.documentElement.lang=lang;document.documentElement.dataset.lang=lang;}catch(e){}})();</script>
   <script nonce="<?= apmc_escape($nonce) ?>">window.APMC_I18N = <?= $i18nJson ?: '{}' ?>; window.APMC_CSRF = <?= json_encode($csrf) ?>;</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +47,7 @@ $csrf = $authorized ? apmc_admin_csrf_token() : '';
       <div class="language-switcher" role="group" aria-label="Language">
         <button id="langEn" type="button" class="language-option" data-lang-option="en" aria-pressed="false">EN</button>
         <button id="langMr" type="button" class="language-option" data-lang-option="mr" aria-pressed="false">मराठी</button>
+        <button id="langHi" type="button" class="language-option" data-lang-option="hi" aria-pressed="false">हिन्दी</button>
       </div>
       <button id="themeToggle" type="button" class="material-icon-button" data-i18n-aria="toggleTheme" aria-label="Toggle light and dark theme" title="Toggle theme">
         <svg viewBox="0 0 24 24" class="theme-icon theme-icon-light size-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
