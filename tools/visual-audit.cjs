@@ -4,6 +4,7 @@
 const path=require('node:path');
 const fs=require('node:fs');
 const os=require('node:os');
+const http=require('node:http');
 const {spawn}=require('node:child_process');
 const { chromium }=require('playwright-core');
 const output=process.env.VISUAL_AUDIT_OUTPUT||path.join(process.cwd(),'visual-audit-screenshots');
@@ -52,7 +53,12 @@ async function startServer(){
   cwd:repo,env:{...process.env,APMC_DISABLE_WEB_FALLBACK:'1'},stdio:'ignore'
  });
  for(let n=0;n<70;n++){
-  try{const response=await fetch(address+'/en/');if(response.ok)return;}catch(_){}
+  const healthy=await new Promise(resolve=>{
+   const req=http.get(address+'/en/',response=>{response.resume();resolve(response.statusCode===200);});
+   req.once('error',()=>resolve(false));
+   req.setTimeout(1200,()=>{req.destroy();resolve(false)});
+  });
+  if(healthy)return;
   await sleep(170);
  }
  throw new Error('PHP server never became healthy');
