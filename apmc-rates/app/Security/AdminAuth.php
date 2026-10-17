@@ -201,6 +201,29 @@ final class AdminAuth {
         $this->signIn((int)$user['id'],'local');
         return true;
     }
+    private function verifyLocalStep(string $password,string $code): int {
+        $session=$this->user();
+        if(!$session || $session['provider']!=='local')throw new RuntimeException('Local authenticated account required');
+        $user=$this->store()->user((int)$session['user_id']);
+        if(!$user || !is_string($user['password_hash']) || !password_verify($password,$user['password_hash'])
+            || !$this->verifyMfa($user,$code))throw new RuntimeException('Current credentials or fresh MFA code not verified');
+        return (int)$user['id'];
+    }
+    public function passwordChange(string $current,string $code,string $new): void {
+        $id=$this->verifyLocalStep($current,$code);
+        $this->store()->changePassword($id,$new);
+        $this->logout();
+    }
+    public function recoveryRotate(string $password,string $code): array {
+        $id=$this->verifyLocalStep($password,$code);
+        $codes=[];
+        for($i=0;$i<8;$i++){
+            $hex=strtoupper(bin2hex(random_bytes(8)));
+            $codes[]=substr($hex,0,8).'-'.substr($hex,8,8);
+        }
+        $this->store()->replaceRecovery($id,$codes);
+        return $codes;
+    }
     public function createUser(string $username,string $password,string $role): array {
         if(!$this->superAdmin())throw new RuntimeException('Super Admin access required');
         // The bootstrap GitHub session may provision a pending local administrator.
