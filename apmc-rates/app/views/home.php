@@ -43,6 +43,7 @@ $jsonLd = json_encode($seoService->jsonLd($pageLang), JSON_UNESCAPED_UNICODE | J
 <script defer src="<?= apmc_escape(apmc_asset('krushipulse.js')) ?>"></script>
 <script defer src="<?= apmc_escape(apmc_asset('nearest-mandi.js')) ?>"></script>
 <script defer src="<?= apmc_escape(apmc_asset('intelligence.js')) ?>"></script>
+<script defer src="<?= apmc_escape(apmc_asset('phase4.js')) ?>"></script>
 <script defer src="<?= apmc_escape(apmc_asset('offline.js')) ?>"></script>
 <link rel="manifest" href="<?= apmc_escape(apmc_public_base() . '/app.webmanifest') ?>">
 <meta name="application-name" content="KrushiPulse">
@@ -99,7 +100,7 @@ $jsonLd = json_encode($seoService->jsonLd($pageLang), JSON_UNESCAPED_UNICODE | J
         </div>
         <?php endif; ?>
         <section class="kp-section kp-rates" id="rates"><div class="kp-section-head"><div><span class="kp-overline">02 / <?= $ui('दर शोध','MARKET EXPLORER') ?></span><h2><?= $pageMarketName !== '' ? apmc_escape($pageMarketName) : $ui('सर्व बाजारभाव, एकाच ठिकाणी.','Explore every rate.') ?></h2><p><?= $ui('पुणे APMC च्या उपलब्ध नोंदी · प्रत्यक्ष तारीख व एकक तपासा','Available Pune APMC entries · Verify actual source date and units') ?></p></div><a class="kp-text-link" href="<?= apmc_escape(apmc_script_url().'?api=latest') ?>" target="_blank" rel="noopener noreferrer">JSON API ↗</a></div>
-        <div class="kp-filters"><label class="kp-search-field"><span>⌕</span><input id="kpSearch" type="search" autocomplete="off" placeholder="<?= $ui('पीक किंवा मंडी शोधा…','Search crop, market or category…') ?>" aria-label="<?= $ui('बाजारभाव शोधा','Search market prices') ?>"></label><label class="kp-select-field"><span><?= $ui('राज्य','State') ?></span><select id="kpState" aria-label="<?= $ui('राज्य निवडा','Choose state') ?>"><option value="all"><?= $ui('सर्व राज्ये','All states') ?></option></select></label><label class="kp-select-field"><span><?= $ui('जिल्हा','District') ?></span><select id="kpDistrict" aria-label="<?= $ui('जिल्हा निवडा','Choose district') ?>"><option value="all"><?= $ui('सर्व जिल्हे','All districts') ?></option></select></label><label class="kp-select-field"><span><?= $ui('मंडी','Mandi') ?></span><select id="kpMarket" aria-label="<?= $ui('मंडी निवडा','Choose market') ?>"><option value="all"><?= $ui('सर्व मंड्या','All markets') ?></option></select></label><label class="kp-select-field"><span><?= $ui('श्रेणी','Category') ?></span><select id="kpCategory" aria-label="<?= $ui('श्रेणी निवडा','Choose category') ?>"><option value="all"><?= $ui('सर्व श्रेणी','All categories') ?></option></select></label><label class="kp-toggle-filter"><input id="kpOnlySaved" type="checkbox"><span>★ <?= $ui('माझी पिके','My crops') ?></span></label></div>
+        <div class="kp-filters"><label class="kp-search-field"><span>⌕</span><input id="kpSearch" type="search" autocomplete="off" placeholder="<?= $ui('पीक किंवा मंडी शोधा…','Search crop, market or category…') ?>" aria-label="<?= $ui('बाजारभाव शोधा','Search market prices') ?>"></label><button id="kpVoiceSearch" type="button" class="kp-voice-btn" aria-label="<?= $ui('आवाजाद्वारे पीक शोधा','Search crops by voice') ?>" title="<?= $ui('आवाजाद्वारे पीक शोधा','Search crops by voice') ?>"><span aria-hidden="true">🎙️</span> <?= $ui('आवाज','Voice') ?></button><label class="kp-select-field"><span><?= $ui('राज्य','State') ?></span><select id="kpState" aria-label="<?= $ui('राज्य निवडा','Choose state') ?>"><option value="all"><?= $ui('सर्व राज्ये','All states') ?></option></select></label><label class="kp-select-field"><span><?= $ui('जिल्हा','District') ?></span><select id="kpDistrict" aria-label="<?= $ui('जिल्हा निवडा','Choose district') ?>"><option value="all"><?= $ui('सर्व जिल्हे','All districts') ?></option></select></label><label class="kp-select-field"><span><?= $ui('मंडी','Mandi') ?></span><select id="kpMarket" aria-label="<?= $ui('मंडी निवडा','Choose market') ?>"><option value="all"><?= $ui('सर्व मंड्या','All markets') ?></option></select></label><label class="kp-select-field"><span><?= $ui('श्रेणी','Category') ?></span><select id="kpCategory" aria-label="<?= $ui('श्रेणी निवडा','Choose category') ?>"><option value="all"><?= $ui('सर्व श्रेणी','All categories') ?></option></select></label><label class="kp-toggle-filter"><input id="kpOnlySaved" type="checkbox"><span>★ <?= $ui('माझी पिके','My crops') ?></span></label></div>
         <p id="kpDirectoryStatus" role="status" aria-live="polite" class="kp-directory-status"><?= $ui('राष्ट्रीय मंडी यादी तपासत आहोत…','Checking the national mandi directory…') ?></p>
         <div class="kp-table-card"><div class="kp-table-header"><div><b><span class="kp-green-dot"></span> <?= $ui('उपलब्ध दर','Available quotations') ?></b><span id="kpFilteredCount">—</span></div><div><span id="kpReportHint"><?= $ui('प्रकाशित अहवाल','Published reports') ?></span></div></div><div class="kp-table-scroll"><table class="kp-table"><thead><tr><th aria-label="Favorite">☆</th><th><?= $ui('शेतमाल','Commodity') ?></th><th><?= $ui('मंडी','Market') ?></th><th><?= $ui('सरासरी दर','Modal / avg.') ?></th><th><?= $ui('किमान','Minimum') ?></th><th><?= $ui('कमाल','Maximum') ?></th><th><?= $ui('बदल','Change') ?></th><th><?= $ui('तारीख','Report date') ?></th><th><?= $ui('कल','Insights') ?></th></tr></thead><tbody id="kpTableRows"></tbody></table></div><div id="kpTableEmpty" class="kp-table-empty" hidden><?= $ui('या निवडीसाठी सत्यापित दर उपलब्ध नाहीत. वेगळी मंडी किंवा पीक निवडा.','No verified rates match these selections. Try another mandi or crop.') ?></div><div class="kp-table-bottom"><span id="kpShowing">—</span><button type="button" id="kpMore" class="kp-more"><?= $ui('आणखी दर पहा','Load more rates') ?> ↓</button></div></div>
        </section>
@@ -152,9 +153,45 @@ $jsonLd = json_encode($seoService->jsonLd($pageLang), JSON_UNESCAPED_UNICODE | J
           <a id="kpWeatherSource" href="https://mausam.imd.gov.in/" target="_blank" rel="noopener noreferrer" class="kp-text-link"><?= $ui('IMD अधिकृत हवामान संकेतस्थळ','Visit official IMD weather service') ?> ↗</a></div>
         </div>
       </section>
+
+      <section class="kp-section kp-phase4" id="crop-intelligence" aria-labelledby="kpPhase4Heading">
+        <div class="kp-section-head"><div><span class="kp-overline">05 / <?= $ui('बाजार समजून घ्या','MARKET INTELLIGENCE') ?></span>
+          <h2 id="kpPhase4Heading"><?= $ui('पीक अंतर्दृष्टी, आधारभाव आणि मंडी प्रोफाइल','Crop insights, MSP and mandi profiles') ?></h2>
+          <p><?= $ui('प्रकाशित अहवालांच्या पुराव्यासह विश्लेषण; कोणतीही भविष्यवाणी नाही.','Transparent explanations from published reports. No invented forecasts or guaranteed sale prices.') ?></p>
+        </div></div>
+        <div class="kp-phase4-grid">
+          <article class="kp-phase4-card">
+            <div class="kp-phase4-symbol" aria-hidden="true">📊</div>
+            <h3><?= $ui('समजावून सांगणारे बाजार निरीक्षण','Explainable price observations') ?></h3>
+            <p id="kpExplanationStatus" class="kp-analysis-note" role="status"><?= $ui('दरांच्या तक्त्यात पीक निवडा; किमान दोन खऱ्या नोंदी आवश्यक.','Choose a crop in the rate table; at least two real reporting dates are required.') ?></p>
+            <div id="kpExplanationFacts" class="kp-phase4-facts"></div>
+            <p class="kp-phase4-note"><?= $ui('हा बाजारभाव इतिहास आहे, भावाची भविष्यवाणी किंवा विक्री सल्ला नाही.','Historical observations, not a future-price forecast or trading advice.') ?></p>
+          </article>
+          <article class="kp-phase4-card">
+            <div class="kp-phase4-symbol" aria-hidden="true">🌾</div>
+            <h3><?= $ui('सरकारी MSP संदर्भ','Government MSP reference') ?></h3>
+            <label class="kp-phase4-label" for="kpMspSeason"><?= $ui('विपणन हंगाम','Marketing season') ?></label>
+            <select id="kpMspSeason" class="kp-phase4-select"><option value="2026-27">2026–27</option></select>
+            <p id="kpMspStatus" class="kp-analysis-note" role="status"><?= $ui('पीक निवडल्यावर लागू असल्यास अधिकृत आधारभाव दिसेल.','Choose a crop to see official seasonal MSP references, if applicable.') ?></p>
+            <div id="kpMspResults" class="kp-phase4-facts"></div>
+            <p class="kp-phase4-note"><?= $ui('MSP म्हणजे हमखास विक्री किंमत नाही. दर्जा, खरेदी निकष व एकक तपासा.','MSP is not a guaranteed transaction or procurement price. Check crop grade, eligibility and units.') ?></p>
+          </article>
+          <article class="kp-phase4-card">
+            <div class="kp-phase4-symbol" aria-hidden="true">🏬</div>
+            <h3><?= $ui('मंडी संपर्क आणि सुविधा','Mandi profile and facilities') ?></h3>
+            <p id="kpProfileStatus" class="kp-analysis-note" role="status"><?= $ui('मंडी निवडा; पडताळलेली माहिती दिसेल.','Select a mandi to see source-verified details.') ?></p>
+            <div id="kpProfileDetails" class="kp-phase4-facts"></div>
+            <p class="kp-phase4-note"><?= $ui('प्रवासापूर्वी वेळ व प्रवेशाची खात्री करा. काही मंड्यांचे तपशील अद्याप पडताळलेले नाहीत.','Confirm opening hours and access before travelling. Some mandi details are not yet verified.') ?></p>
+          </article>
+        </div>
+        <div class="kp-phase4-voice-note">
+          <span aria-hidden="true">🎙️</span>
+          <span id="kpVoiceStatus" role="status"><?= $ui('आवाज शोध ऐच्छिक आहे. ब्राउझर मायक्रोफोनची परवानगी मागू शकतो; काही ब्राउझर तृतीय-पक्ष भाषांतर सेवा वापरतात.','Voice search is optional. Your browser may request microphone access and may process speech through its provider. Type to search anytime.') ?></span>
+        </div>
+      </section>
     </div>
   </main>
-  <footer class="kp-footer"><div class="kp-width footer-inner"><div class="kp-footer-brand"><b>✳ Krushi<span>Pulse</span></b><small>by KrushiWorld</small><p><?= $ui('स्रोत: कृषी उत्पन्न बाजार समिती, पुणे. वैयक्तिक पसंती केवळ या ब्राउझरवर.', 'Source: Pune APMC. Your guest preferences are stored on this browser only.') ?></p></div><div><a href="#top"><?= $ui('वर जा','Back to top') ?> ↑</a><a href="<?= apmc_escape(apmc_absolute_url('/admin/')) ?>"><?= $ui('व्यवस्था स्थिती','System status') ?></a><span>v1.13.0</span></div></div></footer>
+  <footer class="kp-footer"><div class="kp-width footer-inner"><div class="kp-footer-brand"><b>✳ Krushi<span>Pulse</span></b><small>by KrushiWorld</small><p><?= $ui('स्रोत: कृषी उत्पन्न बाजार समिती, पुणे. वैयक्तिक पसंती केवळ या ब्राउझरवर.', 'Source: Pune APMC. Your guest preferences are stored on this browser only.') ?></p></div><div><a href="#top"><?= $ui('वर जा','Back to top') ?> ↑</a><a href="<?= apmc_escape(apmc_absolute_url('/admin/')) ?>"><?= $ui('व्यवस्था स्थिती','System status') ?></a><span>v2.0.0</span></div></div></footer>
   <nav class="kp-mobile-nav" aria-label="Mobile navigation"><a href="#top">⌂<small><?= $ui('होम','Home') ?></small></a><a href="#my-rates">★<small><?= $ui('माझे दर','My rates') ?></small></a><a href="#rates">▤<small><?= $ui('सर्व दर','All rates') ?></small></a><button id="kpMobilePrefs" type="button">⚙<small><?= $ui('पसंती','Settings') ?></small></button></nav>
   <div class="kp-overlay" id="kpOverlay" hidden></div>
   <aside id="kpDrawer" class="kp-drawer" inert role="dialog" aria-modal="true" aria-labelledby="kpDrawerTitle" aria-hidden="true" tabindex="-1"><div class="kp-drawer-head"><div><span class="kp-overline">MY KRUSHIPULSE</span><h2 id="kpDrawerTitle"><?= $ui('माझे डॅशबोर्ड','Personalize dashboard') ?></h2></div><button id="kpCloseDrawer" type="button" class="kp-x" aria-label="Close preferences">×</button></div><div class="kp-drawer-body"><p><?= $ui('तुमच्या गरजेनुसार मंडी आणि आवडती पिके निवडा. प्रत्येक भेटीत ती आपोआप दिसतील.', 'Pick a default mandi and the crops you care about. They will automatically show whenever you return.') ?></p><label class="kp-drawer-label" for="kpPrefMarket"><?= $ui('माझी मुख्य मंडी','My default mandi') ?></label><select id="kpPrefMarket" class="kp-drawer-select"><option value="all"><?= $ui('सर्व मंड्या','All mandis') ?></option></select><div class="kp-drawer-label-heading"><span><?= $ui('माझी आवडती पिके','My favorite crops') ?></span><small><?= $ui('इच्छित पिके निवडा','Choose any') ?></small></div><div class="kp-crop-choices" id="kpCropChoices"></div><p class="kp-storage-note">⌁ <?= $ui('लॉगिन आवश्यक नाही. पसंती या उपकरणावर जतन होते; दुसऱ्या फोनवर आपोआप दिसणार नाही.', 'No login needed. Saved on this device; not synced across phones or browsers.') ?></p></div><div class="kp-drawer-actions"><button type="button" id="kpClearPrefs" class="kp-clear-btn"><?= $ui('पसंती रीसेट','Reset preferences') ?></button><button type="button" id="kpSavePrefs" class="kp-save-btn"><?= $ui('जतन करा','Save dashboard') ?> <span>→</span></button></div></aside>
