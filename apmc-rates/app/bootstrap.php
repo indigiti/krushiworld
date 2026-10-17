@@ -20,6 +20,11 @@ require_once __DIR__ . '/RefreshService.php';
 require_once __DIR__ . '/WebCollector.php';
 require_once __DIR__ . '/PublicQueryService.php';
 require_once __DIR__ . '/SeoService.php';
+// HTTP routing -> application use cases -> existing read-only data repositories.
+require_once __DIR__ . '/Application/MarketDirectoryService.php';
+require_once __DIR__ . '/Application/MarketRatesService.php';
+require_once __DIR__ . '/Http/RouteResolver.php';
+require_once __DIR__ . '/Http/PublicApiController.php';
 
 function apmc_config(?string $key = null, mixed $default = null): mixed {
     global $config;
@@ -263,7 +268,7 @@ function apmc_apply_security_headers(bool $admin = false): void {
     header('X-Frame-Options: DENY');
     header('X-Permitted-Cross-Domain-Policies: none');
     header('Referrer-Policy: strict-origin-when-cross-origin');
-    header('Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=(), browsing-topics=()');
+    header('Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), browsing-topics=()');
     header('Cross-Origin-Opener-Policy: same-origin');
     header('Cross-Origin-Resource-Policy: same-origin');
     header('Origin-Agent-Cluster: ?1');
