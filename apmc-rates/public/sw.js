@@ -1,5 +1,5 @@
 /* KrushiPulse PWA: cache public shell only. NEVER cache APIs or claim old rates as live. */
-const CACHE='krushipulse-shell-v2.0.2';
+const CACHE='krushipulse-shell-v2.1.0';
 const BASE=new URL(self.registration.scope);
 const content=path=>new URL(path,BASE).toString();
 const SHELL=['mr/','en/','hi/','build/krushipulse.css','build/krushipulse.js','build/commodity-icons.js','build/nearest-mandi.js','build/intelligence.js','build/phase4.js','build/offline.js','app.webmanifest','icons/krushipulse.svg'];
