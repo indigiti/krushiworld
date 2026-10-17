@@ -1,7 +1,7 @@
 <?php
 return [
     'name' => 'KrushiWorld KrushiPulse - Agricultural Market Intelligence',
-    'version' => '2.0.1',
+    'version' => '2.0.2',
     'timezone' => 'Asia/Kolkata',
     'site' => [
         // Set APMC_PUBLIC_ORIGIN in production, e.g. https://your-domain.example
