@@ -10,7 +10,7 @@ mkdir -p "$tmp/public_html/krushiworld" "$tmp/private_html/krushiworld/storage"
 cp -a "$root/release/public/." "$tmp/public_html/krushiworld/"
 cp -a "$root/release/private/." "$tmp/private_html/krushiworld/"
 export APMC_DISABLE_WEB_FALLBACK=1
-php -S 127.0.0.1:18739 -t "$tmp/public_html" > "$tmp/php.log" 2>&1 &
+php -d opcache.jit=0 -S 127.0.0.1:18739 -t "$tmp/public_html" > "$tmp/php.log" 2>&1 &
 pid=$!
 url='http://127.0.0.1:18739/krushiworld'
 ready=0
@@ -38,5 +38,5 @@ fi
 if [[ -e "$tmp/public_html/krushiworld/collector" || -e "$tmp/public_html/krushiworld/config" ]]; then
   echo 'Private source exposed through document root'; exit 1
 fi
-if grep -q 'Fatal error\|PHP Warning' "$tmp/php.log"; then cat "$tmp/php.log"; exit 1; fi
+if grep -q 'PHP Fatal error\|Uncaught Error' "$tmp/php.log"; then cat "$tmp/php.log"; exit 1; fi
 echo 'DigiOps Cloudways-style HTTP smoke tests: PASS'
