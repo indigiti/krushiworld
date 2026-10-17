@@ -109,11 +109,26 @@ async function loadMarketDirectory(){
   if(requested){state.market=prefs.market;setMarketScope(prefs.market);}
   renderSelectors();renderData();
   const national=payload.data.national||{};
-  setText('kpDirectoryStatus',national.status==='ready'
-   ?t('भारतातील उपलब्ध नोंदवलेल्या मंड्या: ','Known reporting mandis in India: ')+national.market_count+' · '+t('अहवाल तारीख पडताळा','Check report dates')
-   :national.status==='not_configured'
-     ?t('सध्या पुणे APMC उपलब्ध आहे. देशभरातील दरांसाठी सर्व्हर API की आवश्यक.','Pune APMC available. Nationwide rates require a server-side AGMARKNET API key.')
-     :t('राष्ट्रीय मंडी दरांचे संकलन सुरू/प्रतीक्षेत आहे.','National mandi data import is awaiting its first successful refresh.'));
+  const coverage=payload.data.coverage||{};
+  const geo=Number(coverage.with_coordinates||0),total=Number(coverage.total||0);
+  setText('kpGeoCoverage',t('दूरीसाठी नकाशात पडताळलेल्या मंड्या: ','Mandis with audited distance references: ')+geo+' / '+total
+     +' · '+t('इतरांसाठी राज्य-जिल्हा किंवा नावाने शोधा.','Search unmapped mandis by state, district or name.'));
+  const lastDate=national.latest_report_date||coverage.latest_report_date||'—';
+  const imported=national.updated_at?String(national.updated_at).replace('T',' ').slice(0,16)+' UTC':'—';
+  const base=t('राष्ट्रीय AGMARKNET स्थिती: ','National AGMARKNET: ');
+  const details=t('शेवटचा स्रोत अहवाल: ','Latest reported date: ')+lastDate
+    +' · '+t('शेवटचे संकलन: ','Last imported: ')+imported;
+  const status=national.status;
+  const message=status==='ready'
+     ?t('डेटा उपलब्ध; मूळ तारीख पडताळा.','Snapshot available; check original report dates.')
+     :status==='stale'
+       ?t('अहवाल/संकलन जुने आहे; नवीन दर म्हणून वापरू नका.','Report or import is old; do not treat prices as current.')
+       :status==='cached_unconfigured'
+         ?t('API की नाही; फक्त मागील जतन झालेला डेटा.','API key missing; only previously cached data is available.')
+         :status==='not_configured'
+           ?t('देशभरातील दरांसाठी सर्व्हर API की आवश्यक.','Server AGMARKNET API key required for nationwide rates.')
+           :t('पहिले यशस्वी संकलन बाकी आहे.','Awaiting the first complete verified import.');
+  setText('kpDirectoryStatus',base+message+' · '+details);
   if(state.market.startsWith('agmarknet-'))handleNational();
  }catch(_){
   setText('kpDirectoryStatus',t('मंडी यादी सध्या उपलब्ध नाही; स्थानिक दर वापरता येतील.','Market directory unavailable; existing Pune rates are still accessible.'));
