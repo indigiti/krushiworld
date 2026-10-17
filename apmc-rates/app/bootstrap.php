@@ -273,7 +273,7 @@ function apmc_apply_security_headers(bool $admin = false): void {
     header('X-Frame-Options: DENY');
     header('X-Permitted-Cross-Domain-Policies: none');
     header('Referrer-Policy: strict-origin-when-cross-origin');
-    header('Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), browsing-topics=()');
+    header('Permissions-Policy: geolocation=(self), camera=(), microphone=(self), payment=(), usb=(), browsing-topics=()');
     header('Cross-Origin-Opener-Policy: same-origin');
     header('Cross-Origin-Resource-Policy: same-origin');
     header('Origin-Agent-Cluster: ?1');
