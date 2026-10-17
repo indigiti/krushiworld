@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.8.0
+# KrushiWorld KrushiPulse — APMC Rates v1.8.1
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -195,3 +195,7 @@ The production package contains built CSS/JS; Node is not required on the server
 The frontend provides three instant-switchable visual themes: Harvest, Midnight and Saffron. The header palette icon cycles themes. The globe icon switches Marathi and English (server-side localized markup). Open Personalize to choose a default mandi and favorite crops; starring a commodity saves it immediately. These settings persist **locally in the current browser** via localStorage; no account and no cross-device synchronization. When arriving again, the stored market and crops are loaded without a new search.
 
 The data shown comes from the preserved collector/API and displays the source report date and unit. If the source has not published data, the page shows an unavailable state rather than fabricated quotations. The deployment still needs server cron, private storage and a live-source validation check.
+
+## Crop emojis (v1.8.1)
+
+The existing Pune commodity dictionary supplies over 100 source-verified emojis. `app/DataNormalizer.php` now propagates verified dictionary icons even to older cached snapshots. The first-party `commodity-icons.js` recognizes additional English and Marathi AGMARKNET commodity labels and uses conservative category fallbacks for crops without Unicode emojis. Market rate rows, favorites, and the preference crop picker use the same resolver. Icon glyphs are decorative to screen readers; textual crop names remain available. No image downloads or API calls are needed. Node tests and DigiOps package/HTTP smoke tests verify the new JS asset.
