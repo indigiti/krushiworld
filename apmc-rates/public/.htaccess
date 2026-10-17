@@ -12,9 +12,9 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Human-facing bilingual mandi pages; these routes never expose private sources.
-  RewriteRule ^(en|mr)/?$ index.php [L,QSA]
-  RewriteRule ^(en|mr)/mandis/?$ index.php [L,QSA]
-  RewriteRule ^(en|mr)/mandis/[a-z0-9-]{1,110}/?$ index.php [L,QSA]
+  RewriteRule ^(en|mr|hi)/?$ index.php [L,QSA]
+  RewriteRule ^(en|mr|hi)/mandis/?$ index.php [L,QSA]
+  RewriteRule ^(en|mr|hi)/mandis/[a-z0-9-]{1,110}/?$ index.php [L,QSA]
   RewriteRule ^admin/?$ index.php [L,QSA]
   # Stable versioned API contract, separate from legacy query aliases.
   RewriteRule ^api/v1/(latest|markets|query|summary|health|discover)/?$ index.php [L,QSA]
