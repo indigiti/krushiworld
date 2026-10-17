@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.8.1
+# KrushiWorld KrushiPulse — APMC Rates v1.9.0
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -199,3 +199,7 @@ The data shown comes from the preserved collector/API and displays the source re
 ## Crop emojis (v1.8.1)
 
 The existing Pune commodity dictionary supplies over 100 source-verified emojis. `app/DataNormalizer.php` now propagates verified dictionary icons even to older cached snapshots. The first-party `commodity-icons.js` recognizes additional English and Marathi AGMARKNET commodity labels and uses conservative category fallbacks for crops without Unicode emojis. Market rate rows, favorites, and the preference crop picker use the same resolver. Icon glyphs are decorative to screen readers; textual crop names remain available. No image downloads or API calls are needed. Node tests and DigiOps package/HTTP smoke tests verify the new JS asset.
+
+## v1.9.0 — multilingual pretty URLs and layered architecture
+
+KrushiPulse now supports /en/, /mr/, /en/mandis/, /mr/mandis/{market-id}/ and /api/v1/mandis/{market-id}/rates, with query-string compatibility and legacy API preserved. HTTP router/controllers, application market services, existing repositories and views are separated. See [V1.9_PRETTY_URL_ARCHITECTURE.md](V1.9_PRETTY_URL_ARCHITECTURE.md). Cloudways requires Apache rewrite support; same-origin GPS permission has also been enabled for opt-in nearest-mandi selection.
