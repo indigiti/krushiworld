@@ -40,6 +40,15 @@ foreach ($feeds as $feed) {
     checkMarket(($r['average'] ?? null) === 3700 && ($r['unit'] ?? '') === 'qtl', 'Quoted rates/units preserved');
     $unique[$r['market_id']] = true;
 }
+// Older snapshots without a feed slug still carry a canonical market ID.
+$legacy = $normalizer->normalizeRecord([
+    'market_id' => 'manjari', 'market_name_en' => 'Gahu (lokavana)',
+    'name_en' => 'Gahu (lokavana)', 'commodity_key' => 'legacy-wheat',
+    'date' => '2026-10-17', 'unit' => 'qtl',
+    'min' => 3200, 'max' => 4200, 'average' => 3700,
+]);
+checkMarket(($legacy['market_name_en'] ?? '') === 'Manjari', 'Legacy record uses verified market_id, never crop name');
+checkMarket(($legacy['market_id'] ?? '') === 'manjari', 'Legacy market ID preserved');
 checkMarket(count($unique) === 5, '19 commodity feeds correctly resolve to five actual markets');
 $markets = (array)(apmc_i18n()['markets'] ?? []);
 foreach (['Main Market Yard','Manjari','Moshi','Pimpri','Khadki'] as $english) {
