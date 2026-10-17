@@ -96,6 +96,8 @@ async function viewportAudit(page,label,locale,expectedMarket){
  check(metrics.horizontalOverflow<18,label+' document overflow '+metrics.horizontalOverflow+'px');
  check(metrics.title?.visible&&metrics.title.x>=-8,label+' hero title hidden/clipped');
  check(metrics.rates?.visible,label+' table section not rendered');
+ if(metrics.screen<=390)check(metrics.tableContainer?.scroll<=metrics.tableContainer?.client+15,
+   label+' mobile rates still need horizontal scrolling: '+JSON.stringify(metrics.tableContainer));
  check(metrics.sections.every(x=>x.visible),label+' feature section hidden');
  check(metrics.pwa,label+' PWA manifest missing');
  check(!metrics.imageErrors.length,label+' broken images '+metrics.imageErrors.join(','));
