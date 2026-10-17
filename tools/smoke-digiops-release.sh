@@ -25,6 +25,11 @@ php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!=
 # Empty/offline national import must not invent geocoded mandis or PIN areas.
 php -r '$j=json_decode(file_get_contents($argv[1]),true);$d=$j["data"]??[];$c=$d["coverage"]??[];if(($c["with_coordinates"]??0)<5 || ($c["with_postal_reference"]??0)<2 || !array_key_exists("latest_report_date",$c) || !array_key_exists("latest_report_date",$d["national"]??[]))exit(1);$markets=array_column($d["markets"],null,"market_id");if(($markets["main-market-yard"]["pincode"]??"")!=="411037" || ($markets["pimpri"]["pincode"]??"")!=="411017")exit(1);' "$tmp/markets.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=national&market=agmarknet-test" > "$tmp/national.json"
+# Invalid national market requests must return a controlled 400, never a PHP fatal.
+bad_national_status="$(curl --silent --output "$tmp/invalid-national.json" --write-out '%{http_code}' --max-time 15 "$url/?api=national&market=invalid")"
+if [[ "$bad_national_status" != "400" ]]; then
+  echo "National API failed to reject invalid market safely (status=$bad_national_status)"; cat "$tmp/php.log"; exit 1
+fi
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || !is_array($j["data"]["records"]??null)) exit(1);' "$tmp/national.json"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=mr" > "$tmp/mr.html"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=en" > "$tmp/en.html"
