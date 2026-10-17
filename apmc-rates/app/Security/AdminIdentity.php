@@ -125,6 +125,7 @@ final class AdminIdentity {
         $r=$this->user($id);
         if(!$r)throw new RuntimeException('User not found');
         if($id===$actor && $status==='disabled') throw new RuntimeException('Cannot disable your own account');
+        if($status==='active' && $r['status']==='pending_mfa') throw new RuntimeException('MFA enrollment must be completed by local login');
         if($r['role']==='super_admin' && $status==='disabled' && $r['password_hash']!==null && $this->localVerifiedCount()<=1)
             throw new RuntimeException('Cannot disable the last verified local Super Admin');
         $this->exec('UPDATE users SET status=? WHERE id=?',[$status,$id]);
