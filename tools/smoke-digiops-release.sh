@@ -77,4 +77,19 @@ fi
 status="$(curl --silent --output "$tmp/missing.html" --write-out '%{http_code}' --max-time 15 "$url/en/mandis/no-such-market/")"
 if [[ "$status" != 404 ]]; then echo "Unknown mandi must return 404, got $status"; exit 1; fi
 if ! grep -q '/krushiworld/mr/' "$tmp/mr-pretty.html"; then echo 'Pretty Marathi home route missing'; exit 1; fi
+
+# Phase 2/3 app assets and read-only intelligence API must function even
+# before private history/weather collectors have been activated.
+for asset in app.webmanifest sw.js build/intelligence.js build/offline.js icons/krushipulse.svg; do
+  curl --fail --silent --show-error --max-time 15 "$url/$asset" > "$tmp/$(basename "$asset")"
+  if [[ ! -s "$tmp/$(basename "$asset")" ]]; then echo "Missing Phase 2/3 asset: $asset"; exit 1; fi
+done
+if ! grep -q 'kpHistoryChart' "$tmp/en.html" || ! grep -q 'kpTargetPrice' "$tmp/en.html" || ! grep -q 'app.webmanifest' "$tmp/en.html"; then
+  echo 'Missing price intelligence / alerts / PWA panels'; exit 1
+fi
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/history?market=main-market-yard&commodity=Onion&unit=kg&days=30" > "$tmp/history.json"
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/compare?market=main-market-yard&commodity=Onion&unit=kg&days=30" > "$tmp/compare.json"
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/weather" > "$tmp/weather.json"
+php -r '$h=json_decode(file_get_contents($argv[1]),true);$c=json_decode(file_get_contents($argv[2]),true);$w=json_decode(file_get_contents($argv[3]),true);if(($h["ok"]??false)!==true||!is_array($h["data"]["points"]??null)||($c["ok"]??false)!==true||!is_array($c["data"]["markets"]??null)||($w["ok"]??false)!==true||!isset($w["data"]["status"]))exit(1);' "$tmp/history.json" "$tmp/compare.json" "$tmp/weather.json"
+
 echo 'DigiOps Cloudways-style HTTP smoke tests: PASS'
