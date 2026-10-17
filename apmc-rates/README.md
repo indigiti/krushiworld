@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.11.0
+# KrushiWorld KrushiPulse — APMC Rates v1.13.0
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -211,3 +211,11 @@ KrushiPulse adds /hi/ and /hi/mandis/{market-id}/ localized, shareable pages alo
 ## v1.11.0 — National data & mandi discovery (Phase 1)
 
 This release hardens official AGMARKNET ingestion (secret-safe health status, reported-date freshness, incomplete pagination checks, last-good fallback) and adds an audited geocoded mandi expansion mechanism. GPS discovery uses only documented mandi coordinates, while PIN matching is limited to sourced mandi postal addresses. A manual mandi/district search and State/District selectors remain available nationwide, subject to actual AGMARKNET source coverage. The UI shows mapped-market coverage, last report date and import status without implying live rates or pretending that all mandis have verified coordinates. See [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md) for Cloudways activation and reviewed geocode CSV import instructions.
+
+## v1.13.0 — Phase 2 + Phase 3: price intelligence and farmer experience
+
+Historical source-backed mandi modal quotations are archived in private SQLite via `collector/history.py`. A one-time Pune backfill can reuse previously downloaded daily snapshots. Read-only `/api/v1/intelligence/history` and `/api/v1/intelligence/compare` endpoints require a selected market, commodity, variety, grade and original unit; no fake trend is drawn with fewer than two observations and prices from different varieties or units are never merged. The frontend has a responsive SVG price chart, cross-mandi report comparisons and an indicative proceeds calculator (quantity times reported price minus transport and other costs, not guaranteed sale value).
+
+Phase 3 adds browser-local target-price alerts checked while the site is open or revisited (no unattended push or SMS service), an installable PWA and offline shell (price APIs are network-only and cached pages may be stale), and an authorized weather-advisory adapter (`storage/weather/latest.json`) that remains visibly unconfigured without a sourced, current feed. Saved crop watchlists, all three languages, existing themes, and Pune/national rate collectors are preserved.
+
+Configuration and operational cautions: [PHASES_2_3_OPERATIONS.md](PHASES_2_3_OPERATIONS.md).
