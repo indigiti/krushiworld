@@ -19,7 +19,10 @@ final class MarketDirectoryService {
         $directory = apmc_json_read(APMC_ROOT . '/config/market_coordinates.json', []);
         // Independently audited geocodes may be supplied for national AGMARKNET
         // IDs. Never infer market coordinates from a district or PIN centroid.
-        $nationalGeocodes = apmc_json_read(APMC_ROOT . '/config/national_market_coordinates.json', []);
+        $nationalGeocodes = apmc_json_read(
+            APMC_STORAGE . '/national/geocodes.json',
+            apmc_json_read(APMC_ROOT . '/config/national_market_coordinates.json', [])
+        );
         $postalReferences = apmc_json_read(APMC_ROOT . '/config/postal_market_references.json', []);
         $overrides = (array)($nationalGeocodes['markets'] ?? []);
         $postalMarkets = (array)($postalReferences['markets'] ?? []);
