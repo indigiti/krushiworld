@@ -43,7 +43,12 @@ final class MarketDirectoryService {
             $id = (string)($market['market_id'] ?? '');
             if ($id !== '' && str_starts_with($id, 'agmarknet-')) $merged[$id] = $market;
         }
+        $localizedMarkets = (array)(apmc_i18n()['markets'] ?? []);
         foreach ($merged as &$market) {
+            $nameEn = (string)($market['name_en'] ?? '');
+            if ($nameEn !== '' && isset($localizedMarkets[$nameEn]['hi'])) {
+                $market['name_hi'] = (string)$localizedMarkets[$nameEn]['hi'];
+            }
             $id = (string)($market['market_id'] ?? '');
             $geo = $directory[$id] ?? ($market['geo'] ?? null);
             if (is_array($geo) && isset($geo['latitude'], $geo['longitude'])
