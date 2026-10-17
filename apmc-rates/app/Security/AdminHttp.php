@@ -7,12 +7,13 @@ final class AdminHttp {
     public static function run(AdminAuth $auth): void {
         $GLOBALS['kp_auth_notice'] = '';
         $GLOBALS['kp_auth_enrollment'] = null;
+        $GLOBALS['kp_auth_recovery'] = null;
         $method=(string)($_SERVER['REQUEST_METHOD']??'GET');
         if($method==='GET' && isset($_GET['code'],$_GET['state'])){
             $ok=$auth->githubCallback((string)$_GET['code'],(string)$_GET['state']);
             if($ok){self::redirect();return;}
-            $GLOBALS['kp_auth_notice']='GitHub identity was not verified or is not on the staging allowlist.';
-            return;
+            header('Location: '.apmc_absolute_url('/admin/?auth_failed=1'),true,303);
+            exit;
         }
         if($method==='GET' && ($_GET['auth']??'')==='github-start'){
             try {header('Location: '.$auth->githubStart(),true,302);exit;}
@@ -35,6 +36,17 @@ final class AdminHttp {
             if($action==='logout'){
                 if(!$auth->user())throw new \RuntimeException('Login required');
                 $auth->logout();self::redirect();
+            }
+            if($action==='change_password') {
+                $auth->passwordChange((string)($_POST['current_password']??''),
+                    trim((string)($_POST['fresh_otp']??'')),(string)($_POST['new_password']??''));
+                self::redirect();
+            }
+            if($action==='rotate_recovery'){
+                $GLOBALS['kp_auth_recovery']=$auth->recoveryRotate(
+                    (string)($_POST['current_password']??''),trim((string)($_POST['fresh_otp']??'')));
+                $GLOBALS['kp_auth_notice']='Old recovery codes are now invalid. Save the new one-time codes securely.';
+                return;
             }
             $actor=$auth->user();
             if(!$actor || $actor['role']!=='super_admin'){
