@@ -31,6 +31,8 @@ jobs:
           node-version: '22'
       - name: PHP syntax checks
         run: find apmc-rates tools -type f -name '*.php' -print0 | xargs -0 -r -n1 php -l
+      - name: PHP pretty URL and layered service contracts
+        run: php apmc-rates/tests/test_pretty_routes.php
       - name: Python unit tests
         run: python -m unittest discover -s apmc-rates/tests -p 'test_*.py' -v
       - name: JavaScript syntax checks
