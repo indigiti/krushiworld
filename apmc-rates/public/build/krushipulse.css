@@ -51,3 +51,18 @@
 .kp-language-options a:hover,.kp-language-options a:focus-visible{background:var(--field);color:var(--primary2)}
 .kp-language-options a[aria-current=page]{background:var(--field);color:var(--primary2)}
 @media(max-width:690px){.kp-language-options{right:-8px;min-width:132px}.kp-language-menu .kp-lang-btn{white-space:nowrap}}
+
+/* Phase 1: mobile-first audited mandi discovery and explicit source coverage. */
+.kp-phase1-search{display:flex;flex-wrap:wrap;align-items:end;gap:10px;margin:16px 0 10px}
+.kp-phase1-input{display:flex;flex:1 1 185px;flex-direction:column;gap:6px;min-width:148px}
+.kp-phase1-input span{font-size:12px;font-weight:750;color:var(--text)}
+.kp-phase1-input input{width:100%;min-width:0;height:43px;border:1px solid var(--stroke);background:var(--field);color:var(--text);border-radius:10px;padding:0 12px;font:inherit;font-size:14px}
+.kp-phase1-input input:focus-visible{outline:2px solid var(--primary2);outline-offset:2px}
+.kp-phase1-search button{min-height:43px;font-size:12px}
+.kp-phase1-browse{font-size:12px;font-weight:750;color:var(--primary2);padding:12px 3px;text-underline-offset:3px}
+.kp-geo-coverage{margin:9px 0;color:var(--sub);font-size:12px;line-height:1.6}
+.kp-nearby-card{gap:7px}
+.kp-nearby-card>strong{font-size:15px}
+.kp-nearby-card>b{font-size:14px}
+.kp-nearby-card>small{line-height:1.5}
+@media(max-width:700px){.kp-phase1-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.kp-phase1-input{min-width:0}.kp-phase1-browse{grid-column:1/-1}.kp-phase1-search button{padding:0 12px}.kp-phase1-input span{font-size:11px}}
