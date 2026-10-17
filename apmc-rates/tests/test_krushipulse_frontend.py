@@ -25,6 +25,19 @@ class KrushiPulseFrontendTests(unittest.TestCase):
         self.assertEqual(len(ids),len(set(ids)))
         for element in ('kpWatchlist','kpTheme','kpLanguage','kpPreferencesOpen','kpDrawer','kpPrefMarket','kpCropChoices','kpSearch','kpMarket','kpCategory','kpOnlySaved','kpTableRows','kpSavePrefs'):
             self.assertIn(element,ids)
+    def test_nearest_mandi_contract(self):
+        import json
+        geo=json.loads((ROOT/'config/market_coordinates.json').read_text(encoding='utf-8'))
+        self.assertEqual(len(geo),5)
+        js=(ROOT/'public/build/nearest-mandi.js').read_text(encoding='utf-8')
+        self.assertIn('getCurrentPosition',js)
+        self.assertIn('distance(',js)
+        self.assertIn('api=markets',js)
+        self.assertNotIn('localStorage',js)
+        self.assertNotIn('watchPosition',js)
+        self.assertIn('id="kpLocate"',self.view)
+        self.assertIn("apmc_asset('nearest-mandi.js')",self.view)
+
     def test_three_persistent_themes_and_saved_dashboard(self):
         for theme in ('harvest','midnight','saffron'):
             self.assertIn('data-theme="'+theme+'"',self.css)
