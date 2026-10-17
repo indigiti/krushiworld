@@ -63,7 +63,15 @@ final class DataNormalizer {
 
     public function normalizeRecord(array $record): array {
         $feedSlug = trim((string)($record['feed_slug'] ?? $record['market_slug'] ?? ''));
-        $market = $this->resolveMarket($feedSlug, (string)($record['market_name_en'] ?? $record['market_name'] ?? ''));
+        // Resolve physical market from a recognized feed first. Older cached records
+        // may lack a feed slug; in that case trust a recognized physical market_id
+        // instead of guessing a market from an unrelated commodity name.
+        $existingMarketId = trim((string)($record['market_id'] ?? ''));
+        $market = $feedSlug !== '' && isset($this->feedToMarket[$feedSlug])
+            ? $this->feedToMarket[$feedSlug]
+            : ($existingMarketId !== '' && isset($this->marketById[$existingMarketId])
+                ? $this->marketById[$existingMarketId]
+                : $this->resolveMarket($feedSlug, (string)($record['market_name_en'] ?? $record['market_name'] ?? '')));
 
         $sourceName = trim((string)($record['source_name'] ?? $record['name_mr'] ?? $record['name_en'] ?? ''));
         $resolved = $this->resolveCommodity($sourceName, (string)($record['name_en'] ?? ''), (string)($record['name_mr'] ?? ''));
