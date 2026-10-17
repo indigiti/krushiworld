@@ -30,6 +30,15 @@ require_once __DIR__ . '/Application/MarketProfileService.php';
 require_once __DIR__ . '/Application/ExplainableInsightService.php';
 require_once __DIR__ . '/Http/RouteResolver.php';
 require_once __DIR__ . '/Http/PublicApiController.php';
+require_once __DIR__ . '/Security/AdminIdentity.php';
+require_once __DIR__ . '/Security/AdminAuth.php';
+require_once __DIR__ . '/Security/AdminHttp.php';
+
+function apmc_auth(): \KrushiPulse\Security\AdminAuth {
+    static $auth = null;
+    return $auth ??= new \KrushiPulse\Security\AdminAuth();
+}
+
 
 function apmc_config(?string $key = null, mixed $default = null): mixed {
     global $config;
@@ -122,6 +131,7 @@ function apmc_admin_supplied_token(): string {
 }
 
 function apmc_admin_authorized(): bool {
+    if (apmc_auth()->enabled()) return apmc_auth()->user() !== null;
     $expected = apmc_admin_token_value();
     if ($expected === '') return false;
 
@@ -245,12 +255,15 @@ function apmc_page_language(): string {
 }
 
 function apmc_admin_csrf_token(): string {
+    if (apmc_auth()->enabled()) return apmc_auth()->csrf();
     $secret = apmc_admin_token_value();
     if ($secret === '') return '';
     return hash_hmac('sha256', 'apmc-admin-csrf-v1', $secret);
 }
 
 function apmc_admin_csrf_valid(): bool {
+    if (apmc_auth()->enabled())
+        return apmc_auth()->validCsrf((string)($_SERVER['HTTP_X_APMC_CSRF'] ?? ($_POST['_csrf'] ?? '')));
     $expected = apmc_admin_csrf_token();
     if ($expected === '') return false;
     $provided = (string)($_SERVER['HTTP_X_APMC_CSRF'] ?? ($_POST['_csrf'] ?? ''));
