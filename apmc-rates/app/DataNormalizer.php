@@ -75,6 +75,9 @@ final class DataNormalizer {
         $record['market_name_mr'] = $market['market_name_mr'];
         $record['name_en'] = $resolved['en'];
         $record['name_mr'] = $resolved['mr'];
+        // Old cached APMC records also receive the verified emoji dictionary on read.
+        // Unrecognized crops retain any existing source emoji for safe UI fallback.
+        if (!empty($resolved['emoji'])) $record['emoji'] = (string)$resolved['emoji'];
         $record['name_resolution'] = [
             'method' => $resolved['method'],
             'confidence' => $resolved['confidence'],
@@ -97,6 +100,7 @@ final class DataNormalizer {
                 $entry = $this->commodityIndex[$key];
                 return [
                     'en' => (string)$entry['en'], 'mr' => (string)$entry['mr'],
+                    'emoji' => (string)($entry['emoji'] ?? ''),
                     'method' => (string)$entry['method'], 'confidence' => (float)$entry['confidence'], 'verified' => true,
                 ];
             }
@@ -148,6 +152,7 @@ final class DataNormalizer {
                 if ($key === '') continue;
                 $this->commodityIndex[$key] = [
                     'en' => $en, 'mr' => $mr,
+                    'emoji' => trim((string)($entry['emoji'] ?? '')),
                     'method' => $idx <= 1 ? 'verified_source_map' : 'verified_alias',
                     'confidence' => $idx <= 1 ? 1.0 : 0.99,
                 ];
