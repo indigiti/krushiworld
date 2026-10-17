@@ -22,11 +22,16 @@ try {
     if ($db->localReady()) {
         fwrite(STDERR,"An active, verified local Super Admin exists. Manage additional accounts in the dashboard.\n");exit(1);
     }
-    if (!posix_isatty(STDIN)) {fwrite(STDERR,"An interactive private terminal is required.\n");exit(1);}
+    if (!function_exists('posix_isatty') || !posix_isatty(STDIN)
+        || !function_exists('exec')) {
+        fwrite(STDERR,"A private interactive terminal with stty is required.\n");exit(1);
+    }
     fwrite(STDERR,"Provision local Super Admin '$name' (account remains pending until MFA login).\nPassword (14+ characters): ");
-    if (function_exists('shell_exec'))@shell_exec('stty -echo');
-    $password=trim((string)fgets(STDIN));
-    if (function_exists('shell_exec'))@shell_exec('stty echo');
+    $result=1;
+    @exec('stty -echo </dev/tty 2>/dev/null', $ignored, $result);
+    if ($result !== 0) throw new RuntimeException('Cannot hide terminal input');
+    try { $password=trim((string)fgets(STDIN)); }
+    finally { @exec('stty echo </dev/tty 2>/dev/null'); }
     fwrite(STDERR,"\n");
     if (strlen($password)<14||strlen($password)>256)throw new RuntimeException('Password must be between 14 and 256 characters');
     $secret=AdminAuth::totpNew();
@@ -41,6 +46,6 @@ try {
     // Best-effort reduction of in-process password lifetime.
     $password=str_repeat("\0",strlen($password));
 } catch(Throwable $e) {
-    if (function_exists('shell_exec'))@shell_exec('stty echo');
+    if (function_exists('exec'))@exec('stty echo </dev/tty 2>/dev/null');
     fwrite(STDERR,"Provisioning rejected. Check private storage, unique username and APMC_AUTH_KEY.\n");exit(1);
 }
