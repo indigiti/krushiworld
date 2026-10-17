@@ -18,6 +18,8 @@ $required = [
     'public/build/commodity-icons.js',
     'public/build/nearest-mandi.js',
     'private/app/bootstrap.php', 'private/app/NationalMarketRepository.php', 'private/app/views/home.php',
+    'private/app/Http/RouteResolver.php', 'private/app/Http/PublicApiController.php',
+    'private/app/Application/MarketDirectoryService.php', 'private/app/Application/MarketRatesService.php',
     'private/config/app.php', 'private/config/i18n.json', 'private/config/market_coordinates.json',
     'private/collector/refresh.py', 'private/collector/national.py', 'private/collector/config.json',
     'private/collector/commodity_map.json', 'private/bin/server-refresh.sh',
