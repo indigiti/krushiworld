@@ -46,7 +46,7 @@ class Phase4FrontendTests(unittest.TestCase):
         self.assertEqual(self.js,self.source)
         manifest=(ROOT/'public/sw.js').read_text(encoding='utf-8')
         self.assertIn('build/phase4.js',manifest)
-        self.assertIn("krushipulse-shell-v2.0.0",manifest)
+        self.assertIn("krushipulse-shell-v2.0.1",manifest)
         self.assertNotIn("rel.startsWith('api/')||rel.startsWith('admin/')||rel==='api.php'||rel==='index.php'||url.searchParams.has('api')||url.searchParams.has('view')||url.searchParams.has('seo'))return false",manifest)
         self.assertIn("rel.startsWith('api/')",manifest)
         self.assertIn("microphone=(self)",(ROOT/'app/bootstrap.php').read_text(encoding='utf-8'))
