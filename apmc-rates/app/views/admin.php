@@ -124,6 +124,7 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
     <div class="admin-alert admin-alert-warning mb-4" role="alert"><b data-i18n="securityAction">Security action:</b> <span data-i18n="defaultTokenWarning">the package default admin token is still configured. Replace it before exposing this console publicly.</span></div>
   <?php endif; ?>
 
+  <?php if ($identityMode): require __DIR__ . '/admin-security.php'; endif; ?>
   <section class="grid gap-3 md:grid-cols-4">
     <article class="admin-card"><div class="metric-label" data-i18n="engine">Engine</div><div class="mt-3 flex items-center gap-2"><span class="health-dot health-dot-<?= apmc_escape($engineStatus) ?>"></span><div class="text-xl font-black" data-status-key="<?= apmc_escape($engineStatus) ?>"><?= apmc_escape(strtoupper($engineStatus)) ?></div></div><div class="metric-note mt-1" data-i18n="collectorStorageState">Collector and storage state</div></article>
     <article class="admin-card"><div class="metric-label" data-i18n="lastSourceCheck">Last source check</div><div class="mt-3 text-sm font-bold" data-empty-time="<?= empty($manifest['last_checked_at']) ? '1' : '0' ?>"><?= apmc_escape((string)($manifest['last_checked_at'] ?? 'Never')) ?></div><div class="metric-note mt-1" data-i18n="requestRefresh">Server cron primary · page fallback on failure</div></article>
