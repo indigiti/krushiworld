@@ -32,7 +32,7 @@ if ($route['kind'] === 'mandi') {
 }
 $GLOBALS['apmc_route'] = $route;
 
-$view = $route['kind'] === 'admin' ? 'admin' : (string) ($_GET['view'] ?? 'home');
+$view = $route['kind'] === 'admin' ? 'admin' : ($route['kind'] === 'legacy' ? (string)($_GET['view'] ?? 'home') : 'home');
 apmc_apply_security_headers($view === 'admin');
 
 // Promote a valid one-time token to an HttpOnly SameSite cookie, then remove the
@@ -60,7 +60,7 @@ if ($view === 'admin' && (string)($_POST['admin_logout'] ?? '') === '1') {
     exit;
 }
 
-$seo = (string)($route['kind'] === 'seo' ? $route['name'] : ($_GET['seo'] ?? ''));
+$seo = (string)($route['kind'] === 'seo' ? $route['name'] : ($route['kind'] === 'legacy' ? ($_GET['seo'] ?? '') : ''));
 if ($seo !== '') {
     if ($seo === 'robots') {
         header('Content-Type: text/plain; charset=utf-8');
@@ -90,7 +90,7 @@ if ($seo !== '') {
     http_response_code(404); exit('Not found');
 }
 
-$api = (string)($route['kind'] === 'api' ? $route['api'] : ($_GET['api'] ?? ''));
+$api = (string)($route['kind'] === 'api' ? $route['api'] : ($route['kind'] === 'legacy' ? ($_GET['api'] ?? '') : ''));
 if ($api !== '') {
     \KrushiPulse\Http\PublicApiController::dispatch(
         $api, $route, $repo, $national, $refresh, $webCollector,
