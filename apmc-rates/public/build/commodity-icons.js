@@ -20,7 +20,7 @@
     [/\b(?:onions?)\b|कांदा|प्याज/u, '🧅'],
     [/\b(?:tomatoes?|tomato)\b|टोमॅटो|टमाटर/u, '🍅'],
     [/\b(?:potatoes?|potato)\b|बटाटा|आलू/u, '🥔'],
-    [/\b(?:chill?ies?|chilies?|chilis?|hot peppers?)\b|मिरची|मिर्च/u, '🌶️'],
+    [/\b(?:chillies?|chillis?|chilies?|chilis?|hot peppers?)\b|मिरची|मिर्च/u, '🌶️'],
     [/\b(?:brinjals?|eggplants?|aubergines?)\b|वांगी|बैंगन/u, '🍆'],
     [/\b(?:carrots?)\b|गाजर/u, '🥕'],
     [/\b(?:beetroots?|beets?)\b|बीट/u, '🫜'],
@@ -61,15 +61,15 @@
   ];
 
   const categoryIcons = [
+    [/leafy|greens|पालेभाज्या|पाले/u, '🌿'],
+    [/dry fruit|nut|सुकामेवा/u, '🥜'],
     [/flower|blossom|फुले|फूल/u, '🌸'],
     [/fruit|फळे|फल/u, '🍎'],
     [/onion.*potato|vegetable|भाजी|तरकारी/u, '🥬'],
-    [/leafy|greens|पालेभाज्या|पाले/u, '🌿'],
     [/grain|cereal|धान्य|तृणधान्य/u, '🌾'],
     [/pulse|dal|legume|डाळ|कडधान्य/u, '🫘'],
     [/spice|मसाल/u, '🌶️'],
     [/oilseed|तेलबिया/u, '🌻'],
-    [/dry fruit|nut|सुकामेवा/u, '🥜'],
     [/cotton|कापूस/u, '🌿'],
   ];
 
