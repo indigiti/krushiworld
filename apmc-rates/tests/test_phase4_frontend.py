@@ -16,6 +16,7 @@ class Phase4FrontendTests(unittest.TestCase):
             self.assertIn('id="'+ident+'"',self.html,ident)
         self.assertIn('phase4.js',self.html)
         self.assertIn('window.KrushiPulsePhase4SelectRate',self.js)
+        self.assertIn('window.KrushiPulsePhase4SelectRate?.(r)',(ROOT/'public/build/intelligence.js').read_text(encoding='utf-8'))
         self.assertIn('window.APMC_APP_BASE',self.js)
     def test_voice_is_optional_and_respects_browser(self):
         for expected in ['webkitSpeechRecognition','SpeechRecognition','button.addEventListener',
