@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.9.0
+# KrushiWorld KrushiPulse — APMC Rates v1.10.0
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -203,3 +203,7 @@ The existing Pune commodity dictionary supplies over 100 source-verified emojis.
 ## v1.9.0 — multilingual pretty URLs and layered architecture
 
 KrushiPulse now supports /en/, /mr/, /en/mandis/, /mr/mandis/{market-id}/ and /api/v1/mandis/{market-id}/rates, with query-string compatibility and legacy API preserved. HTTP router/controllers, application market services, existing repositories and views are separated. See [V1.9_PRETTY_URL_ARCHITECTURE.md](V1.9_PRETTY_URL_ARCHITECTURE.md). Cloudways requires Apache rewrite support; same-origin GPS permission has also been enabled for opt-in nearest-mandi selection.
+
+## v1.10.0 — Hindi third-language interface
+
+KrushiPulse adds /hi/ and /hi/mandis/{market-id}/ localized, shareable pages alongside /en/ and /mr/. The language switcher preserves the selected mandi. Hindi text covers the homepage, market filters, nearest-mandi browser permissions, saved crops, and admin UI. Over 280 known commodity labels and source-backed category/unit names have Hindi translations; national mandi/source names without a verified Hindi translation retain their official spelling. All report amounts, source dates and saved market IDs are unchanged. Sitemaps, canonical hreflang entries, APIs (`lang=hi`) and CI integration tests include Hindi. Deploy using the standard DigiOps release artifact. Hindi preference is preserved in the browser with the existing cookie and admin localStorage behavior.
