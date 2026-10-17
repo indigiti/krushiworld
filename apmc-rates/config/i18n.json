@@ -2368,7 +2368,8 @@
     "Recognized: ": "पहचाना गया: ",
     "Microphone permission denied. Type to search.": "माइक्रोफ़ोन की अनुमति नहीं मिली। खोजने के लिए टाइप करें।",
     "Speech could not be recognized. Please type to search.": "आवाज़ नहीं पहचानी जा सकी। टाइप करके खोजें।",
-    "Could not start microphone recognition.": "माइक्रोफ़ोन आवाज़ पहचान शुरू नहीं हो सकी।"
+    "Could not start microphone recognition.": "माइक्रोफ़ोन आवाज़ पहचान शुरू नहीं हो सकी।",
+    "Available mandi quotations": "उपलब्ध मंडी भाव"
   },
   "states_hi": {
     "Andhra Pradesh": "आंध्र प्रदेश",
