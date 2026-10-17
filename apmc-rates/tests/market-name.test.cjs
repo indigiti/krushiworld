@@ -30,6 +30,7 @@ function make(lang,marketRows=directory){
     lang,MR:lang==='mr',HI:lang==='hi',
     dict:{markets:marketI18n},
     marketRows:()=>marketRows,
+    marketIndex:()=>new Map(marketRows.map(m=>[m.key,m])),
     t:(mr,en)=>lang==='mr'?mr:en
   };
   return vm.runInNewContext(functionSource+'\nmarketName;',scope);
