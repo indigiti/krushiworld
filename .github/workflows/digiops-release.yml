@@ -31,6 +31,8 @@ jobs:
           node-version: '22'
       - name: PHP syntax checks
         run: find apmc-rates tools -type f -name '*.php' -print0 | xargs -0 -r -n1 php -l
+      - name: Staging-to-production identity and MFA regression tests
+        run: php apmc-rates/tests/test_auth_handover.php
       - name: PHP pretty URL and layered service contracts
         run: php apmc-rates/tests/test_pretty_routes.php
       - name: SQLite price intelligence and comparability contracts
