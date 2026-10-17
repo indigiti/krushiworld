@@ -92,4 +92,20 @@ curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/compar
 curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/weather" > "$tmp/weather.json"
 php -r '$h=json_decode(file_get_contents($argv[1]),true);$c=json_decode(file_get_contents($argv[2]),true);$w=json_decode(file_get_contents($argv[3]),true);if(($h["ok"]??false)!==true||!is_array($h["data"]["points"]??null)||($c["ok"]??false)!==true||!is_array($c["data"]["markets"]??null)||($w["ok"]??false)!==true||!isset($w["data"]["status"]))exit(1);' "$tmp/history.json" "$tmp/compare.json" "$tmp/weather.json"
 
+
+# Phase 4: current official MSP season, source-verified mandi profiles,
+# no invented observation history, and usable voice fallback.
+curl --fail --silent --show-error --max-time 15 "$url/build/phase4.js" > "$tmp/phase4.js"
+if ! grep -q 'id="kpVoiceSearch"' "$tmp/en.html" || ! grep -q 'id="kpMspResults"' "$tmp/en.html" || ! grep -q 'id="kpProfileDetails"' "$tmp/en.html"; then
+  echo 'Phase 4 farmer dashboard features missing'; exit 1
+fi
+if ! grep -q 'webkitSpeechRecognition' "$tmp/phase4.js"; then echo 'Multilingual speech capability missing'; exit 1; fi
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/msp?commodity=Wheat&season=2026-27" > "$tmp/msp.json"
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/msp?commodity=Onion&season=2026-27" > "$tmp/no-msp.json"
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/intelligence/insights?market=main-market-yard&commodity=Onion&unit=quintal" > "$tmp/insights.json"
+curl --fail --silent --show-error --max-time 15 "$url/api/v1/mandis/moshi/profile" > "$tmp/profile.json"
+php -r '$w=json_decode(file_get_contents($argv[1]),true);$o=json_decode(file_get_contents($argv[2]),true);$i=json_decode(file_get_contents($argv[3]),true);$p=json_decode(file_get_contents($argv[4]),true);if(($w["ok"]??false)!==true||($w["data"]["references"][0]["msp_inr_per_quintal"]??0)!=2585||($o["data"]["available"]??true)!==false||($i["data"]["is_prediction"]??true)!==false||($p["data"]["facility_status"]??"")!=="verified_subset"||!in_array("Farmer accommodation",$p["data"]["verified_facilities"]??[],true))exit(1);' "$tmp/msp.json" "$tmp/no-msp.json" "$tmp/insights.json" "$tmp/profile.json"
+code="$(curl --silent --output "$tmp/no-profile.json" --write-out '%{http_code}' --max-time 15 "$url/api/v1/mandis/unknown-mandi/profile")"
+if [[ "$code" != "404" ]]; then echo "Unknown mandi profile must return 404"; exit 1; fi
+
 echo 'DigiOps Cloudways-style HTTP smoke tests: PASS'
