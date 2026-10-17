@@ -15,7 +15,7 @@ $prefix = '/krushiworld';
 if ($path !== $prefix && !str_starts_with($path, $prefix . '/')) return false;
 $relative = substr($path, strlen($prefix));
 if ($relative !== '' && $relative !== '/' && !preg_match(
-    '~^/(?:en|mr|hi)(?:/mandis(?:/[a-z0-9-]{1,110})?)?/?$|^/admin/?$|^/api/(?:v1/)?(?:latest|markets|query|summary|health|discover|market|national)/?$|^/api/v1/intelligence/(?:history|compare|weather)/?$|^/api/v1/mandis/[a-z0-9-]{1,110}/rates/?$|^/(?:openapi\.json|sitemap\.xml|robots\.txt|llms\.txt|\.well-known/apmc-data-agent\.json)$~D',
+    '~^/(?:en|mr|hi)(?:/mandis(?:/[a-z0-9-]{1,110})?)?/?$|^/admin/?$|^/api/(?:v1/)?(?:latest|markets|query|summary|health|discover|market|national)/?$|^/api/v1/intelligence/(?:history|compare|weather|insights|msp)/?$|^/api/v1/mandis/[a-z0-9-]{1,110}/(?:rates|profile)/?$|^/(?:openapi\.json|sitemap\.xml|robots\.txt|llms\.txt|\.well-known/apmc-data-agent\.json)$~D',
     $relative
 )) return false;
 $entry = $publicRoot . $prefix . '/index.php';
