@@ -10,4 +10,6 @@ if [ -n "${APMC_DATA_GOV_IN_API_KEY:-}" ]; then
   "$PYTHON_BIN" "$ROOT/collector/national.py" || echo "AGMARKNET refresh unavailable; retaining last-good data" >&2
 fi
 
-exec "$PYTHON_BIN" "$ROOT/collector/refresh.py" --check --scheduled --trigger server-cron
+# Never block the Pune refresh when national history is temporarily unavailable.
+"$PYTHON_BIN" "$ROOT/collector/refresh.py" --check --scheduled --trigger server-cron
+"$PYTHON_BIN" "$ROOT/collector/history.py" || echo "KrushiPulse history archival unavailable; prior history preserved" >&2
