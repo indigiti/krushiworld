@@ -2,7 +2,8 @@
   "default": "mr",
   "supported": [
     "en",
-    "mr"
+    "mr",
+    "hi"
   ],
   "labels": {
     "en": {
@@ -129,7 +130,8 @@
       "sponsoredBy": "Sponsored by",
       "latestMarketValues": "Latest market values",
       "coSponsoredBy": "Co-sponsored by",
-      "no_new_data": "NO NEW DATA"
+      "no_new_data": "NO NEW DATA",
+      "hindi": "Hindi"
     },
     "mr": {
       "appName": "पुणे एपीएमसी बाजार",
@@ -255,29 +257,162 @@
       "sponsoredBy": "प्रायोजक",
       "latestMarketValues": "ताजे बाजारभाव",
       "coSponsoredBy": "सह-प्रायोजक",
-      "no_new_data": "नवीन डेटा नाही"
+      "no_new_data": "नवीन डेटा नाही",
+      "hindi": "हिंदी"
+    },
+    "hi": {
+      "appName": "पुणे एपीएमसी बाजार",
+      "subtitle": "दैनिक थोक बाजार जानकारी",
+      "language": "भाषा",
+      "english": "English",
+      "marathi": "मराठी",
+      "toggleTheme": "रंग और थीम बदलें",
+      "systemStatus": "सिस्टम की स्थिति",
+      "todayMarket": "आजचा बाजार",
+      "dailyMarketRates": "दैनिक मंडी भाव",
+      "location": "पुणे, महाराष्ट्र",
+      "searchLabel": "फसलें या मंडी खोजें",
+      "searchPlaceholder": "टमाटर, प्याज, आलू खोजें…",
+      "marketFilter": "मंडी से छाँटें",
+      "allMarkets": "सभी मंडियाँ",
+      "marketPulse": "बाजार की स्थिति",
+      "pricesUp": "भाव बढ़े",
+      "pricesDown": "भाव घटे",
+      "unchanged": "बदलाव नहीं",
+      "totalArrivals": "कुल आवक",
+      "vsPrevious": "मागील जतन केलेल्या सत्राच्या तुलनेत",
+      "stableCommodities": "स्थिर शेतमाल",
+      "reportedToday": "आज नोंदवलेली आवक",
+      "featuredCommodities": "महत्त्वाचे शेतमाल",
+      "featuredNote": "निवडक बाजारभाव आणि अलीकडील बदल",
+      "all": "सर्व",
+      "min": "किमान",
+      "max": "कमाल",
+      "arrival": "आवक",
+      "savedTrend": "७ दिवसांचा जतन केलेला कल",
+      "warmingEmpty": "लाईव्ह बाजारभाव तयार होत आहेत. सर्व्हर रिफ्रेश मुख्य आहे; गरज पडल्यास पेज रिकव्हरी आपोआप सुरू होते.",
+      "allDailyRates": "सभी दैनिक भाव",
+      "matchingRecords": "जुळणाऱ्या नोंदी",
+      "resetFilters": "फिल्टर रीसेट करा",
+      "commodity": "कृषि उपज",
+      "average": "औसत",
+      "move": "बदल",
+      "showing": "दाखवत आहे",
+      "of": "पैकी",
+      "loadMore": "और देखें",
+      "source": "स्रोत: कृषि उपज मंडी समिति, पुणे · संग्रहित सार्वजनिक भाव",
+      "runtimeFooter": "सर्व्हर-शेड्यूल रिफ्रेश · पेज फॉलबॅक · डेटाबेस नाही",
+      "waitingSnapshot": "पहिल्या थेट नोंदीची प्रतीक्षा",
+      "latestAvailable": "नवीनतम उपलब्ध",
+      "checkingSource": "अधिकृत स्त्रोत तपासत आहे…",
+      "feedNeedRetry": "फीड पुन्हा तपासणे आवश्यक · कॅश डेटा सुरक्षित",
+      "feedsNeedRetry": "फीड पुन्हा तपासणे आवश्यक · कॅश डेटा सुरक्षित",
+      "feedAwaiting": "फीडवर नवीन भावांची प्रतीक्षा",
+      "feedsAwaiting": "फीडवर नवीन भावांची प्रतीक्षा",
+      "sourceCurrent": "अधिकृत स्त्रोताची कॅश अद्ययावत आहे",
+      "activeFresh": "सक्रिय व अद्ययावत",
+      "activePartial": "सक्रिय · अंशतः",
+      "warmingUp": "डेटा तयार होत आहे",
+      "ratesAcross": "दर",
+      "feeds": "फीडमध्ये",
+      "new": "नया",
+      "newSavedRate": "नवीन जतन केलेला दर",
+      "unchangedTrend": "बदलाव नहीं",
+      "marketPage": "बाजार पृष्ठ",
+      "dataEngine": "एपीएमसी डेटा इंजिन",
+      "adminSubtitle": "सिस्टम हेल्थ, कलेक्टर रनटाइम आणि फ्लॅट-फाइल स्टोरेज.",
+      "signOut": "साइन आउट",
+      "adminAccess": "प्रशासक प्रवेश",
+      "adminAccessHelp": "कॉन्फिगर केलेला अॅडमिन टोकन प्रविष्ट करा. लॉगिननंतर सुरक्षित HttpOnly सेशन कुकी वापरली जाते, त्यामुळे टोकन अॅड्रेस बारमध्ये राहत नाही.",
+      "tokenRejected": "टोकन स्वीकारला गेला नाही. APMC_ADMIN_TOKEN किंवा config/app.php तपासा.",
+      "adminToken": "प्रशासक टोकन",
+      "enterToken": "टोकन दर्ज करें",
+      "openConsole": "सिस्टम कंसोल खोलें",
+      "securityAction": "सुरक्षा कृती:",
+      "defaultTokenWarning": "पॅकेजचा डीफॉल्ट अॅडमिन टोकन अजूनही वापरात आहे. कन्सोल सार्वजनिक करण्यापूर्वी तो बदला.",
+      "engine": "इंजिन",
+      "collectorStorageState": "कलेक्टर आणि स्टोरेज स्थिती",
+      "lastSourceCheck": "शेवटची स्त्रोत तपासणी",
+      "requestRefresh": "सर्व्हर क्रॉन मुख्य · बिघाड झाल्यास पेज फॉलबॅक",
+      "lastDataChange": "शेवटचा डेटा बदल",
+      "hashSnapshot": "हॅश-पडताळलेला स्नॅपशॉट",
+      "coverage": "कव्हरेज",
+      "configuredFeeds": "कॉन्फिगर केलेले बाजार फीड",
+      "webOperations": "वेब ऑपरेशन्स",
+      "webOperationsHelp": "कृती फक्त POST द्वारे चालतात आणि विद्यमान कलेक्टर वापरतात. रिफ्रेश सुरू असताना सार्वजनिक कॅश डेटा उपलब्ध राहतो.",
+      "checkNow": "अभी जाँचें",
+      "retryMissing": "गुम डेटा दोबारा जाँचें",
+      "rebuildIndexes": "सूची फिर से बनाएँ",
+      "backfill7": "पिछले 7 दिन भरें",
+      "processLaunch": "प्रोसेस लाँच",
+      "storage": "स्टोरेज",
+      "collectorErrors": "कलेक्टर त्रुटी",
+      "runtimeChain": "exec / popen / proc_open फॉलबॅक साखळी",
+      "atomicStorage": "अॅटोमिक JSON स्नॅपशॉट आणि एक्सपोर्ट",
+      "currentFeedErrors": "सध्याच्या फीड त्रुटी हेल्थ स्थितीत जतन",
+      "marketFeeds": "बाजार फीड",
+      "marketFeedsHelp": "स्त्रोत उपलब्ध नसल्यास प्रत्येक फीड शेवटचा वैध स्नॅपशॉट राखतो.",
+      "available": "उपलब्ध",
+      "unavailable": "उपलब्ध नहीं",
+      "writable": "लेखनयोग्य",
+      "checkPermissions": "परवानग्या तपासा",
+      "never": "कभी नहीं",
+      "noDate": "तारीख नहीं",
+      "noCurrentError": "सध्याची त्रुटी नाही",
+      "starting": "सुरू करत आहे…",
+      "startingCollector": "कलेक्टर कृती सुरू करत आहे…",
+      "collectorNotStarted": "कलेक्टर सुरू झाला नाही:",
+      "runtimeUnavailable": "रनटाइम अनुपलब्ध",
+      "cachedSafe": "कॅश सार्वजनिक डेटा उपलब्ध आहे.",
+      "actionStarted": "कृती पार्श्वभूमीत सुरू झाली. ती चालू असताना विद्यमान सार्वजनिक डेटा उपलब्ध राहतो.",
+      "couldNotStart": "कृती सुरू करता आली नाही:",
+      "unknownError": "अज्ञात त्रुटी",
+      "healthy": "सुदृढ",
+      "degraded": "अंशतः",
+      "warming": "तयार होत आहे",
+      "error": "त्रुटी",
+      "ok": "ठीक",
+      "unknown": "अज्ञात",
+      "visualBuild": "द्विभाषिक व्हिज्युअल/रनटाइम बिल्ड",
+      "retrySource": "स्त्रोत पुन्हा तपासा",
+      "webFallback": "वेब-नेटिव्ह फॉलबॅक",
+      "incrementalPhp": "इन्क्रिमेंटल PHP कलेक्टर",
+      "sourceRecovery": "PHP प्रोसेस लाँच बंद असतानाही कार्यरत",
+      "startupRecovery": "स्टार्टअप रिकव्हरी",
+      "adminDisabled": "सर्व्हर वातावरणात APMC_ADMIN_TOKEN कॉन्फिगर करेपर्यंत अॅडमिन प्रवेश बंद आहे.",
+      "marketTicker": "बाजार पट्टी",
+      "sponsoredBy": "प्रायोजक",
+      "latestMarketValues": "ताजे बाजारभाव",
+      "coSponsoredBy": "सह-प्रायोजक",
+      "no_new_data": "नवीन डेटा नाही",
+      "hindi": "हिन्दी"
     }
   },
   "markets": {
     "Main Market Yard": {
       "en": "Main Market Yard",
-      "mr": "मुख्य बाजार आवार"
+      "mr": "मुख्य बाजार आवार",
+      "hi": "मुख्य बाजार यार्ड"
     },
     "Manjari": {
       "en": "Manjari",
-      "mr": "मांजरी"
+      "mr": "मांजरी",
+      "hi": "मांजरी"
     },
     "Moshi": {
       "en": "Moshi",
-      "mr": "मोशी"
+      "mr": "मोशी",
+      "hi": "मोशी"
     },
     "Pimpri": {
       "en": "Pimpri",
-      "mr": "पिंपरी"
+      "mr": "पिंपरी",
+      "hi": "पिंपरी"
     },
     "Khadki": {
       "en": "Khadki",
-      "mr": "खडकी"
+      "mr": "खडकी",
+      "hi": "खड़की"
     }
   },
   "market_slugs": {
@@ -304,1279 +439,1597 @@
   "categories": {
     "Fruits": {
       "en": "Fruits",
-      "mr": "फळे"
+      "mr": "फळे",
+      "hi": "फल"
     },
     "Grains": {
       "en": "Grains",
-      "mr": "धान्य"
+      "mr": "धान्य",
+      "hi": "अनाज"
     },
     "Flowers": {
       "en": "Flowers",
-      "mr": "फुले"
+      "mr": "फुले",
+      "hi": "फूल"
     },
     "Banana & Betel Leaf": {
       "en": "Banana & Betel Leaf",
-      "mr": "केळी व पान"
+      "mr": "केळी व पान",
+      "hi": "केला और पान"
     },
     "Chinese Vegetables": {
       "en": "Chinese Vegetables",
-      "mr": "चायनीज भाज्या"
+      "mr": "चायनीज भाज्या",
+      "hi": "चीनी सब्जियाँ"
     },
     "Leafy Vegetables": {
       "en": "Leafy Vegetables",
-      "mr": "पालेभाज्या"
+      "mr": "पालेभाज्या",
+      "hi": "पत्तेदार सब्जियाँ"
     },
     "Onion & Potato": {
       "en": "Onion & Potato",
-      "mr": "कांदा व बटाटा"
+      "mr": "कांदा व बटाटा",
+      "hi": "प्याज और आलू"
     },
     "Dry Fruits": {
       "en": "Dry Fruits",
-      "mr": "सुकामेवा"
+      "mr": "सुकामेवा",
+      "hi": "सूखे मेवे"
     },
     "Vegetables": {
       "en": "Vegetables",
-      "mr": "भाजीपाला"
+      "mr": "भाजीपाला",
+      "hi": "सब्जियाँ"
     },
     "Onion": {
       "en": "Onion",
-      "mr": "कांदा"
+      "mr": "कांदा",
+      "hi": "प्याज"
     }
   },
   "units": {
     "क्विंटल": {
       "en": "qtl",
-      "mr": "क्विं."
+      "mr": "क्विं.",
+      "hi": "क्विं."
     },
     "क्विंटल ": {
       "en": "qtl",
-      "mr": "क्विं."
+      "mr": "क्विं.",
+      "hi": "क्विं."
     },
     "Quintal": {
       "en": "qtl",
-      "mr": "क्विं."
+      "mr": "क्विं.",
+      "hi": "क्विं."
     },
     "quintal": {
       "en": "qtl",
-      "mr": "क्विं."
+      "mr": "क्विं.",
+      "hi": "क्विं."
     },
     "किलो": {
       "en": "kg",
-      "mr": "किलो"
+      "mr": "किलो",
+      "hi": "किलो"
     },
     "Kg": {
       "en": "kg",
-      "mr": "किलो"
+      "mr": "किलो",
+      "hi": "किलो"
     },
     "KG": {
       "en": "kg",
-      "mr": "किलो"
+      "mr": "किलो",
+      "hi": "किलो"
     },
     "Kilogram": {
       "en": "kg",
-      "mr": "किलो"
+      "mr": "किलो",
+      "hi": "किलो"
     },
     "शेकडा": {
       "en": "100",
-      "mr": "शेकडा"
+      "mr": "शेकडा",
+      "hi": "सैकड़ा"
     },
     "शेकडा ": {
       "en": "100",
-      "mr": "शेकडा"
+      "mr": "शेकडा",
+      "hi": "सैकड़ा"
     },
     "Hundred": {
       "en": "100",
-      "mr": "शेकडा"
+      "mr": "शेकडा",
+      "hi": "सैकड़ा"
     },
     "डझन": {
       "en": "dozen",
-      "mr": "डझन"
+      "mr": "डझन",
+      "hi": "दर्जन"
     },
     "Dozen": {
       "en": "dozen",
-      "mr": "डझन"
+      "mr": "डझन",
+      "hi": "दर्जन"
     },
     "नग": {
       "en": "pcs",
-      "mr": "नग"
+      "mr": "नग",
+      "hi": "नग"
     },
     "Nos": {
       "en": "pcs",
-      "mr": "नग"
+      "mr": "नग",
+      "hi": "नग"
     },
     "Pieces": {
       "en": "pcs",
-      "mr": "नग"
+      "mr": "नग",
+      "hi": "नग"
     },
     "गड्डी": {
       "en": "bundle",
-      "mr": "गड्डी"
+      "mr": "गड्डी",
+      "hi": "गट्ठा"
     },
     "Bundle": {
       "en": "bundle",
-      "mr": "गड्डी"
+      "mr": "गड्डी",
+      "hi": "गट्ठा"
     },
     "जुडी": {
       "en": "bunch",
-      "mr": "जुडी"
+      "mr": "जुडी",
+      "hi": "गुच्छा"
     },
     "Bunch": {
       "en": "bunch",
-      "mr": "जुडी"
+      "mr": "जुडी",
+      "hi": "गुच्छा"
     },
     "पेटी": {
       "en": "crate",
-      "mr": "पेटी"
+      "mr": "पेटी",
+      "hi": "पेटी"
     },
     "Crate": {
       "en": "crate",
-      "mr": "पेटी"
+      "mr": "पेटी",
+      "hi": "पेटी"
     }
   },
   "commodities": {
     "टोमॅटो": {
       "en": "Tomato",
-      "mr": "टोमॅटो"
+      "mr": "टोमॅटो",
+      "hi": "टमाटर"
     },
     "Tomato": {
       "en": "Tomato",
-      "mr": "टोमॅटो"
+      "mr": "टोमॅटो",
+      "hi": "टमाटर"
     },
     "Tomatoes": {
       "en": "Tomato",
-      "mr": "टोमॅटो"
+      "mr": "टोमॅटो",
+      "hi": "टमाटर"
     },
     "कांदा": {
       "en": "Onion",
-      "mr": "कांदा"
+      "mr": "कांदा",
+      "hi": "प्याज"
     },
     "Onion": {
       "en": "Onion",
-      "mr": "कांदा"
+      "mr": "कांदा",
+      "hi": "प्याज"
     },
     "Onions": {
       "en": "Onion",
-      "mr": "कांदा"
+      "mr": "कांदा",
+      "hi": "प्याज"
     },
     "बटाटा": {
       "en": "Potato",
-      "mr": "बटाटा"
+      "mr": "बटाटा",
+      "hi": "आलू"
     },
     "Potato": {
       "en": "Potato",
-      "mr": "बटाटा"
+      "mr": "बटाटा",
+      "hi": "आलू"
     },
     "Potatoes": {
       "en": "Potato",
-      "mr": "बटाटा"
+      "mr": "बटाटा",
+      "hi": "आलू"
     },
     "लसूण": {
       "en": "Garlic",
-      "mr": "लसूण"
+      "mr": "लसूण",
+      "hi": "लहसुन"
     },
     "Garlic": {
       "en": "Garlic",
-      "mr": "लसूण"
+      "mr": "लसूण",
+      "hi": "लहसुन"
     },
     "आले": {
       "en": "Ginger",
-      "mr": "आले"
+      "mr": "आले",
+      "hi": "अदरक"
     },
     "Ginger": {
       "en": "Ginger",
-      "mr": "आले"
+      "mr": "आले",
+      "hi": "अदरक"
     },
     "भेंडी": {
       "en": "Okra",
-      "mr": "भेंडी"
+      "mr": "भेंडी",
+      "hi": "भिंडी"
     },
     "Okra": {
       "en": "Okra",
-      "mr": "भेंडी"
+      "mr": "भेंडी",
+      "hi": "भिंडी"
     },
     "Lady Finger": {
       "en": "Okra",
-      "mr": "भेंडी"
+      "mr": "भेंडी",
+      "hi": "भिंडी"
     },
     "गवार": {
       "en": "Cluster Beans",
-      "mr": "गवार"
+      "mr": "गवार",
+      "hi": "ग्वार फली"
     },
     "Cluster Beans": {
       "en": "Cluster Beans",
-      "mr": "गवार"
+      "mr": "गवार",
+      "hi": "ग्वार फली"
     },
     "मटार": {
       "en": "Peas",
-      "mr": "मटार"
+      "mr": "मटार",
+      "hi": "मटर"
     },
     "Peas": {
       "en": "Peas",
-      "mr": "मटर"
+      "mr": "मटर",
+      "hi": "मटर"
     },
     "मटर": {
       "en": "Peas",
-      "mr": "मटर"
+      "mr": "मटर",
+      "hi": "मटर"
     },
     "घेवडा": {
       "en": "Beans",
-      "mr": "घेवडा"
+      "mr": "घेवडा",
+      "hi": "सेम"
     },
     "Beans": {
       "en": "Beans",
-      "mr": "घेवडा"
+      "mr": "घेवडा",
+      "hi": "सेम"
     },
     "दोडका": {
       "en": "Ridge Gourd",
-      "mr": "दोडका"
+      "mr": "दोडका",
+      "hi": "तोरई"
     },
     "Ridge Gourd": {
       "en": "Ridge Gourd",
-      "mr": "दोडका"
+      "mr": "दोडका",
+      "hi": "तोरई"
     },
     "मिरची": {
       "en": "Chilli",
-      "mr": "मिरची"
+      "mr": "मिरची",
+      "hi": "मिर्च"
     },
     "Chilli": {
       "en": "Chilli",
-      "mr": "मिरची"
+      "mr": "मिरची",
+      "hi": "मिर्च"
     },
     "Green Chilli": {
       "en": "Chilli",
-      "mr": "मिरची"
+      "mr": "मिरची",
+      "hi": "मिर्च"
     },
     "Chili": {
       "en": "Chilli",
-      "mr": "मिरची"
+      "mr": "मिरची",
+      "hi": "मिर्च"
     },
     "काकडी": {
       "en": "Cucumber",
-      "mr": "काकडी"
+      "mr": "काकडी",
+      "hi": "खीरा"
     },
     "Cucumber": {
       "en": "Cucumber",
-      "mr": "काकडी"
+      "mr": "काकडी",
+      "hi": "खीरा"
     },
     "कारली": {
       "en": "Bitter Gourd",
-      "mr": "कारली"
+      "mr": "कारली",
+      "hi": "करेला"
     },
     "Bitter Gourd": {
       "en": "Bitter Gourd",
-      "mr": "कारली"
+      "mr": "कारली",
+      "hi": "करेला"
     },
     "गाजर": {
       "en": "Carrot",
-      "mr": "गाजर"
+      "mr": "गाजर",
+      "hi": "गाजर"
     },
     "Carrot": {
       "en": "Carrot",
-      "mr": "गाजर"
+      "mr": "गाजर",
+      "hi": "गाजर"
     },
     "पापडी": {
       "en": "Papdi Beans",
-      "mr": "पापडी"
+      "mr": "पापडी",
+      "hi": "पापड़ी"
     },
     "Papdi Beans": {
       "en": "Papdi Beans",
-      "mr": "पापडी"
+      "mr": "पापडी",
+      "hi": "पापड़ी"
     },
     "पडवळ": {
       "en": "Snake Gourd",
-      "mr": "पडवळ"
+      "mr": "पडवळ",
+      "hi": "चिचिंडा"
     },
     "Snake Gourd": {
       "en": "Snake Gourd",
-      "mr": "पडवळ"
+      "mr": "पडवळ",
+      "hi": "चिचिंडा"
     },
     "फलॉवर": {
       "en": "Cauliflower",
-      "mr": "फलॉवर"
+      "mr": "फलॉवर",
+      "hi": "फूलगोभी"
     },
     "Cauliflower": {
       "en": "Cauliflower",
-      "mr": "फ्लॉवर"
+      "mr": "फ्लॉवर",
+      "hi": "फूलगोभी"
     },
     "कोबी": {
       "en": "Cabbage",
-      "mr": "कोबी"
+      "mr": "कोबी",
+      "hi": "पत्तागोभी"
     },
     "Cabbage": {
       "en": "Cabbage",
-      "mr": "कोबी"
+      "mr": "कोबी",
+      "hi": "पत्तागोभी"
     },
     "वांगी": {
       "en": "Brinjal",
-      "mr": "वांगी"
+      "mr": "वांगी",
+      "hi": "बैंगन"
     },
     "Brinjal": {
       "en": "Brinjal",
-      "mr": "वांगी"
+      "mr": "वांगी",
+      "hi": "बैंगन"
     },
     "Eggplant": {
       "en": "Brinjal",
-      "mr": "वांगी"
+      "mr": "वांगी",
+      "hi": "बैंगन"
     },
     "Aubergine": {
       "en": "Brinjal",
-      "mr": "वांगी"
+      "mr": "वांगी",
+      "hi": "बैंगन"
     },
     "ढोबळी": {
       "en": "Capsicum",
-      "mr": "ढोबळी"
+      "mr": "ढोबळी",
+      "hi": "शिमला मिर्च"
     },
     "Capsicum": {
       "en": "Capsicum",
-      "mr": "ढोबळी मिरची"
+      "mr": "ढोबळी मिरची",
+      "hi": "शिमला मिर्च"
     },
     "ढोबळी मिरची": {
       "en": "Capsicum",
-      "mr": "ढोबळी मिरची"
+      "mr": "ढोबळी मिरची",
+      "hi": "शिमला मिर्च"
     },
     "Bell Pepper": {
       "en": "Capsicum",
-      "mr": "ढोबळी मिरची"
+      "mr": "ढोबळी मिरची",
+      "hi": "शिमला मिर्च"
     },
     "सुरण": {
       "en": "Elephant Foot Yam",
-      "mr": "सुरण"
+      "mr": "सुरण",
+      "hi": "जिमीकंद"
     },
     "Elephant Foot Yam": {
       "en": "Elephant Foot Yam",
-      "mr": "सुरण"
+      "mr": "सुरण",
+      "hi": "जिमीकंद"
     },
     "तोंडली": {
       "en": "Ivy Gourd",
-      "mr": "तोंडली"
+      "mr": "तोंडली",
+      "hi": "कुंदरू"
     },
     "Ivy Gourd": {
       "en": "Ivy Gourd",
-      "mr": "तोंडली"
+      "mr": "तोंडली",
+      "hi": "कुंदरू"
     },
     "बीट": {
       "en": "Beetroot",
-      "mr": "बीट"
+      "mr": "बीट",
+      "hi": "चुकंदर"
     },
     "Beetroot": {
       "en": "Beetroot",
-      "mr": "बीट"
+      "mr": "बीट",
+      "hi": "चुकंदर"
     },
     "कडीपत्ता": {
       "en": "Curry Leaves",
-      "mr": "कडीपत्ता"
+      "mr": "कडीपत्ता",
+      "hi": "करी पत्ता"
     },
     "Curry Leaves": {
       "en": "Curry Leaves",
-      "mr": "कडीपत्ता"
+      "mr": "कडीपत्ता",
+      "hi": "करी पत्ता"
     },
     "कोहळा": {
       "en": "Ash Gourd",
-      "mr": "कोहळा"
+      "mr": "कोहळा",
+      "hi": "पेठा"
     },
     "Ash Gourd": {
       "en": "Ash Gourd",
-      "mr": "कोहळा"
+      "mr": "कोहळा",
+      "hi": "पेठा"
     },
     "आरवी": {
       "en": "Colocasia",
-      "mr": "आरवी"
+      "mr": "आरवी",
+      "hi": "अरबी"
     },
     "Colocasia": {
       "en": "Colocasia",
-      "mr": "आरवी"
+      "mr": "आरवी",
+      "hi": "अरबी"
     },
     "पावटा": {
       "en": "Broad Beans",
-      "mr": "पावटा"
+      "mr": "पावटा",
+      "hi": "बड़ी सेम"
     },
     "Broad Beans": {
       "en": "Broad Beans",
-      "mr": "पावटा"
+      "mr": "पावटा",
+      "hi": "बड़ी सेम"
     },
     "घेासावळी": {
       "en": "Sponge Gourd",
-      "mr": "घेासावळी"
+      "mr": "घेासावळी",
+      "hi": "गिलकी"
     },
     "Sponge Gourd": {
       "en": "Sponge Gourd",
-      "mr": "घोसावळी"
+      "mr": "घोसावळी",
+      "hi": "गिलकी"
     },
     "घोसावळी": {
       "en": "Sponge Gourd",
-      "mr": "घोसावळी"
+      "mr": "घोसावळी",
+      "hi": "गिलकी"
     },
     "वालवर": {
       "en": "Field Beans",
-      "mr": "वालवर"
+      "mr": "वालवर",
+      "hi": "वाल की फली"
     },
     "Field Beans": {
       "en": "Field Beans",
-      "mr": "वालवर"
+      "mr": "वालवर",
+      "hi": "वाल की फली"
     },
     "शेवगा": {
       "en": "Drumstick",
-      "mr": "शेवगा"
+      "mr": "शेवगा",
+      "hi": "सहजन"
     },
     "Drumstick": {
       "en": "Drumstick",
-      "mr": "शेवगा"
+      "mr": "शेवगा",
+      "hi": "सहजन"
     },
     "Moringa Pods": {
       "en": "Drumstick",
-      "mr": "शेवगा"
+      "mr": "शेवगा",
+      "hi": "सहजन"
     },
     "परवर": {
       "en": "Pointed Gourd",
-      "mr": "परवर"
+      "mr": "परवर",
+      "hi": "परवल"
     },
     "Pointed Gourd": {
       "en": "Pointed Gourd",
-      "mr": "परवर"
+      "mr": "परवर",
+      "hi": "परवल"
     },
     "भावनगरी": {
       "en": "Bhavnagari Chilli",
-      "mr": "भावनगरी"
+      "mr": "भावनगरी",
+      "hi": "भावनगरी मिर्च"
     },
     "Bhavnagari Chilli": {
       "en": "Bhavnagari Chilli",
-      "mr": "भावनगरी"
+      "mr": "भावनगरी",
+      "hi": "भावनगरी मिर्च"
     },
     "ढेमसा": {
       "en": "Tinda",
-      "mr": "ढेमसा"
+      "mr": "ढेमसा",
+      "hi": "टिंडा"
     },
     "Tinda": {
       "en": "Tinda",
-      "mr": "ढेमसा"
+      "mr": "ढेमसा",
+      "hi": "टिंडा"
     },
     "कैरी": {
       "en": "Raw Mango",
-      "mr": "कैरी"
+      "mr": "कैरी",
+      "hi": "कच्चा आम"
     },
     "Raw Mango": {
       "en": "Raw Mango",
-      "mr": "कैरी"
+      "mr": "कैरी",
+      "hi": "कच्चा आम"
     },
     "चवळी": {
       "en": "Cowpea",
-      "mr": "चवळी"
+      "mr": "चवळी",
+      "hi": "लोबिया"
     },
     "Cowpea": {
       "en": "Cowpea",
-      "mr": "चवळी"
+      "mr": "चवळी",
+      "hi": "लोबिया"
     },
     "करटूले": {
       "en": "Spiny Gourd",
-      "mr": "करटूले"
+      "mr": "करटूले",
+      "hi": "ककोड़ा"
     },
     "Spiny Gourd": {
       "en": "Spiny Gourd",
-      "mr": "करटूले"
+      "mr": "करटूले",
+      "hi": "ककोड़ा"
     },
     "दु.भोपळा": {
       "en": "Bottle Gourd",
-      "mr": "दु.भोपळा"
+      "mr": "दु.भोपळा",
+      "hi": "लौकी"
     },
     "Bottle Gourd": {
       "en": "Bottle Gourd",
-      "mr": "दुधीभोपळा"
+      "mr": "दुधीभोपळा",
+      "hi": "लौकी"
     },
     "डांगर (भोपळा )": {
       "en": "Pumpkin",
-      "mr": "डांगर (भोपळा )"
+      "mr": "डांगर (भोपळा )",
+      "hi": "कद्दू"
     },
     "Pumpkin": {
       "en": "Pumpkin",
-      "mr": "डांगर (भोपळा )"
+      "mr": "डांगर (भोपळा )",
+      "hi": "कद्दू"
     },
     "भुशेंगा": {
       "en": "Groundnut Pods",
-      "mr": "भुशेंगा"
+      "mr": "भुशेंगा",
+      "hi": "मूंगफली"
     },
     "Groundnut Pods": {
       "en": "Groundnut Pods",
-      "mr": "भुईमुग शेंग"
+      "mr": "भुईमुग शेंग",
+      "hi": "मूंगफली"
     },
     "कोथिंबीर": {
       "en": "Coriander Leaves",
-      "mr": "कोथिंबीर"
+      "mr": "कोथिंबीर",
+      "hi": "हरा धनिया"
     },
     "Coriander Leaves": {
       "en": "Coriander Leaves",
-      "mr": "कोथिंबीर"
+      "mr": "कोथिंबीर",
+      "hi": "हरा धनिया"
     },
     "Coriander": {
       "en": "Coriander Leaves",
-      "mr": "कोथिंबीर"
+      "mr": "कोथिंबीर",
+      "hi": "हरा धनिया"
     },
     "Cilantro": {
       "en": "Coriander Leaves",
-      "mr": "कोथिंबीर"
+      "mr": "कोथिंबीर",
+      "hi": "हरा धनिया"
     },
     "Kothimbir": {
       "en": "Coriander Leaves",
-      "mr": "कोथिंबीर"
+      "mr": "कोथिंबीर",
+      "hi": "हरा धनिया"
     },
     "मेथी": {
       "en": "Fenugreek Leaves",
-      "mr": "मेथी"
+      "mr": "मेथी",
+      "hi": "मेथी के पत्ते"
     },
     "Fenugreek Leaves": {
       "en": "Fenugreek Leaves",
-      "mr": "मेथी"
+      "mr": "मेथी",
+      "hi": "मेथी के पत्ते"
     },
     "Fenugreek": {
       "en": "Fenugreek Leaves",
-      "mr": "मेथी"
+      "mr": "मेथी",
+      "hi": "मेथी के पत्ते"
     },
     "Methi": {
       "en": "Fenugreek Leaves",
-      "mr": "मेथी"
+      "mr": "मेथी",
+      "hi": "मेथी के पत्ते"
     },
     "शेपू": {
       "en": "Dill Leaves",
-      "mr": "शेपू"
+      "mr": "शेपू",
+      "hi": "सोआ"
     },
     "Dill Leaves": {
       "en": "Dill Leaves",
-      "mr": "शेपू"
+      "mr": "शेपू",
+      "hi": "सोआ"
     },
     "Dill": {
       "en": "Dill Leaves",
-      "mr": "शेपू"
+      "mr": "शेपू",
+      "hi": "सोआ"
     },
     "Shepu": {
       "en": "Dill Leaves",
-      "mr": "शेपू"
+      "mr": "शेपू",
+      "hi": "सोआ"
     },
     "कांदापात": {
       "en": "Spring Onion",
-      "mr": "कांदापात"
+      "mr": "कांदापात",
+      "hi": "हरा प्याज"
     },
     "Spring Onion": {
       "en": "Spring Onion",
-      "mr": "कांदापात"
+      "mr": "कांदापात",
+      "hi": "हरा प्याज"
     },
     "Green Onion": {
       "en": "Spring Onion",
-      "mr": "कांदापात"
+      "mr": "कांदापात",
+      "hi": "हरा प्याज"
     },
     "Scallion": {
       "en": "Spring Onion",
-      "mr": "कांदापात"
+      "mr": "कांदापात",
+      "hi": "हरा प्याज"
     },
     "Onion Leaves": {
       "en": "Spring Onion",
-      "mr": "कांदापात"
+      "mr": "कांदापात",
+      "hi": "हरा प्याज"
     },
     "पालक": {
       "en": "Spinach",
-      "mr": "पालक"
+      "mr": "पालक",
+      "hi": "पालक"
     },
     "Spinach": {
       "en": "Spinach",
-      "mr": "पालक"
+      "mr": "पालक",
+      "hi": "पालक"
     },
     "Palak": {
       "en": "Spinach",
-      "mr": "पालक"
+      "mr": "पालक",
+      "hi": "पालक"
     },
     "मूळा": {
       "en": "Radish",
-      "mr": "मूळा"
+      "mr": "मूळा",
+      "hi": "मूली"
     },
     "Radish": {
       "en": "Radish",
-      "mr": "मूळा"
+      "mr": "मूळा",
+      "hi": "मूली"
     },
     "Mula": {
       "en": "Radish",
-      "mr": "मूळा"
+      "mr": "मूळा",
+      "hi": "मूली"
     },
     "चवळई": {
       "en": "Amaranth Greens",
-      "mr": "चवळई"
+      "mr": "चवळई",
+      "hi": "चौलाई"
     },
     "Amaranth Greens": {
       "en": "Rajgira Greens",
-      "mr": "राजगिरा"
+      "mr": "राजगिरा",
+      "hi": "चौलाई साग"
     },
     "Chawlai": {
       "en": "Amaranth Greens",
-      "mr": "चवळई"
+      "mr": "चवळई",
+      "hi": "चौलाई"
     },
     "Amaranth Leaves": {
       "en": "Amaranth Greens",
-      "mr": "चवळई"
+      "mr": "चवळई",
+      "hi": "चौलाई"
     },
     "करडई": {
       "en": "Safflower Greens",
-      "mr": "करडई"
+      "mr": "करडई",
+      "hi": "करडई साग"
     },
     "Safflower Greens": {
       "en": "Safflower Greens",
-      "mr": "करडई"
+      "mr": "करडई",
+      "hi": "करडई साग"
     },
     "Safflower Leaves": {
       "en": "Safflower Greens",
-      "mr": "करडई"
+      "mr": "करडई",
+      "hi": "करडई साग"
     },
     "राजगिरा": {
       "en": "Rajgira Greens",
-      "mr": "राजगिरा"
+      "mr": "राजगिरा",
+      "hi": "चौलाई साग"
     },
     "Rajgira Greens": {
       "en": "Rajgira Greens",
-      "mr": "राजगिरा"
+      "mr": "राजगिरा",
+      "hi": "चौलाई साग"
     },
     "Rajgira Leaves": {
       "en": "Rajgira Greens",
-      "mr": "राजगिरा"
+      "mr": "राजगिरा",
+      "hi": "चौलाई साग"
     },
     "आळू": {
       "en": "Colocasia Leaves",
-      "mr": "आळू"
+      "mr": "आळू",
+      "hi": "अरबी के पत्ते"
     },
     "Colocasia Leaves": {
       "en": "Colocasia Leaves",
-      "mr": "आळू"
+      "mr": "आळू",
+      "hi": "अरबी के पत्ते"
     },
     "Taro Leaves": {
       "en": "Colocasia Leaves",
-      "mr": "आळू"
+      "mr": "आळू",
+      "hi": "अरबी के पत्ते"
     },
     "Alu Leaves": {
       "en": "Colocasia Leaves",
-      "mr": "आळू"
+      "mr": "आळू",
+      "hi": "अरबी के पत्ते"
     },
     "पुदिना": {
       "en": "Mint Leaves",
-      "mr": "पुदिना"
+      "mr": "पुदिना",
+      "hi": "पुदीना"
     },
     "Mint Leaves": {
       "en": "Mint Leaves",
-      "mr": "पुदिना"
+      "mr": "पुदिना",
+      "hi": "पुदीना"
     },
     "Mint": {
       "en": "Mint Leaves",
-      "mr": "पुदिना"
+      "mr": "पुदिना",
+      "hi": "पुदीना"
     },
     "Pudina": {
       "en": "Mint Leaves",
-      "mr": "पुदिना"
+      "mr": "पुदिना",
+      "hi": "पुदीना"
     },
     "चुका": {
       "en": "Sorrel Leaves",
-      "mr": "चुका"
+      "mr": "चुका",
+      "hi": "खट्टा साग"
     },
     "Sorrel Leaves": {
       "en": "Sorrel Leaves",
-      "mr": "चुका"
+      "mr": "चुका",
+      "hi": "खट्टा साग"
     },
     "Sorrel": {
       "en": "Sorrel Leaves",
-      "mr": "चुका"
+      "mr": "चुका",
+      "hi": "खट्टा साग"
     },
     "Chuka": {
       "en": "Sorrel Leaves",
-      "mr": "चुका"
+      "mr": "चुका",
+      "hi": "खट्टा साग"
     },
     "चाकवत": {
       "en": "Bathua Greens",
-      "mr": "चाकवत"
+      "mr": "चाकवत",
+      "hi": "बथुआ"
     },
     "Bathua Greens": {
       "en": "Bathua Greens",
-      "mr": "चाकवत"
+      "mr": "चाकवत",
+      "hi": "बथुआ"
     },
     "Bathua": {
       "en": "Bathua Greens",
-      "mr": "चाकवत"
+      "mr": "चाकवत",
+      "hi": "बथुआ"
     },
     "Lambs Quarters": {
       "en": "Bathua Greens",
-      "mr": "चाकवत"
+      "mr": "चाकवत",
+      "hi": "बथुआ"
     },
     "अंबाडी": {
       "en": "Roselle Leaves",
-      "mr": "अंबाडी"
+      "mr": "अंबाडी",
+      "hi": "अंबाड़ी साग"
     },
     "Roselle Leaves": {
       "en": "Roselle Leaves",
-      "mr": "अंबाडी"
+      "mr": "अंबाडी",
+      "hi": "अंबाड़ी साग"
     },
     "Roselle Greens": {
       "en": "Roselle Leaves",
-      "mr": "अंबाडी"
+      "mr": "अंबाडी",
+      "hi": "अंबाड़ी साग"
     },
     "Ambadi": {
       "en": "Roselle Leaves",
-      "mr": "अंबाडी"
+      "mr": "अंबाडी",
+      "hi": "अंबाड़ी साग"
     },
     "नारळ": {
       "en": "Coconut",
-      "mr": "नारळ"
+      "mr": "नारळ",
+      "hi": "नारियल"
     },
     "Coconut": {
       "en": "Coconut",
-      "mr": "नारळ"
+      "mr": "नारळ",
+      "hi": "नारियल"
     },
     "Coconuts": {
       "en": "Coconut",
-      "mr": "नारळ"
+      "mr": "नारळ",
+      "hi": "नारियल"
     },
     "गवती चहा": {
       "en": "Lemongrass",
-      "mr": "गवती चहा"
+      "mr": "गवती चहा",
+      "hi": "लेमनग्रास"
     },
     "Lemongrass": {
       "en": "Lemongrass",
-      "mr": "गवती चहा"
+      "mr": "गवती चहा",
+      "hi": "लेमनग्रास"
     },
     "Lemon Grass": {
       "en": "Lemongrass",
-      "mr": "गवती चहा"
+      "mr": "गवती चहा",
+      "hi": "लेमनग्रास"
     },
     "दुधी भोपळा": {
       "en": "Bottle Gourd",
-      "mr": "दुधी भोपळा"
+      "mr": "दुधी भोपळा",
+      "hi": "लौकी"
     },
     "Lauki": {
       "en": "Bottle Gourd",
-      "mr": "दुधीभोपळा"
+      "mr": "दुधीभोपळा",
+      "hi": "लौकी"
     },
     "Dudhi": {
       "en": "Bottle Gourd",
-      "mr": "दुधीभोपळा"
+      "mr": "दुधीभोपळा",
+      "hi": "लौकी"
     },
     "दुधीभोपळा": {
       "en": "Bottle Gourd",
-      "mr": "दुधीभोपळा"
+      "mr": "दुधीभोपळा",
+      "hi": "लौकी"
     },
     "फ्लॉवर": {
       "en": "Cauliflower",
-      "mr": "फ्लॉवर"
+      "mr": "फ्लॉवर",
+      "hi": "फूलगोभी"
     },
     "Flower": {
       "en": "Cauliflower",
-      "mr": "फ्लॉवर"
+      "mr": "फ्लॉवर",
+      "hi": "फूलगोभी"
     },
     "भुईमूग शेंग": {
       "en": "Groundnut Pods",
-      "mr": "भुईमूग शेंग"
+      "mr": "भुईमूग शेंग",
+      "hi": "मूंगफली"
     },
     "Peanut Pods": {
       "en": "Groundnut Pods",
-      "mr": "भुईमुग शेंग"
+      "mr": "भुईमुग शेंग",
+      "hi": "मूंगफली"
     },
     "Groundnut": {
       "en": "Groundnut Pods",
-      "mr": "भुईमुग शेंग"
+      "mr": "भुईमुग शेंग",
+      "hi": "मूंगफली"
     },
     "भुईमुग शेंग": {
       "en": "Groundnut Pods",
-      "mr": "भुईमुग शेंग"
+      "mr": "भुईमुग शेंग",
+      "hi": "मूंगफली"
     },
     "मका": {
       "en": "Maize",
-      "mr": "मका"
+      "mr": "मका",
+      "hi": "मक्का"
     },
     "Maize": {
       "en": "Maize",
-      "mr": "मका"
+      "mr": "मका",
+      "hi": "मक्का"
     },
     "Corn": {
       "en": "Maize",
-      "mr": "मका"
+      "mr": "मका",
+      "hi": "मक्का"
     },
     "स्वीट कॉर्न": {
       "en": "Sweet Corn",
-      "mr": "स्वीट कॉर्न"
+      "mr": "स्वीट कॉर्न",
+      "hi": "स्वीट कॉर्न"
     },
     "Sweet Corn": {
       "en": "Sweet Corn",
-      "mr": "स्वीट कॉर्न"
+      "mr": "स्वीट कॉर्न",
+      "hi": "स्वीट कॉर्न"
     },
     "Sweetcorn": {
       "en": "Sweet Corn",
-      "mr": "स्वीट कॉर्न"
+      "mr": "स्वीट कॉर्न",
+      "hi": "स्वीट कॉर्न"
     },
     "लिंबू": {
       "en": "Lemon",
-      "mr": "लिंबू"
+      "mr": "लिंबू",
+      "hi": "नींबू"
     },
     "Lemon": {
       "en": "Lemon",
-      "mr": "लिंबू"
+      "mr": "लिंबू",
+      "hi": "नींबू"
     },
     "Lemons": {
       "en": "Lemon",
-      "mr": "लिंबू"
+      "mr": "लिंबू",
+      "hi": "नींबू"
     },
     "सफरचंद": {
       "en": "Apple",
-      "mr": "सफरचंद"
+      "mr": "सफरचंद",
+      "hi": "सेब"
     },
     "Apple": {
       "en": "Apple",
-      "mr": "सफरचंद"
+      "mr": "सफरचंद",
+      "hi": "सेब"
     },
     "Apples": {
       "en": "Apple",
-      "mr": "सफरचंद"
+      "mr": "सफरचंद",
+      "hi": "सेब"
     },
     "मोसंबी": {
       "en": "Sweet Lime",
-      "mr": "मोसंबी"
+      "mr": "मोसंबी",
+      "hi": "मौसंबी"
     },
     "Sweet Lime": {
       "en": "Sweet Lime",
-      "mr": "मोसंबी"
+      "mr": "मोसंबी",
+      "hi": "मौसंबी"
     },
     "Mosambi": {
       "en": "Sweet Lime",
-      "mr": "मोसंबी"
+      "mr": "मोसंबी",
+      "hi": "मौसंबी"
     },
     "Sweet Lemon": {
       "en": "Sweet Lime",
-      "mr": "मोसंबी"
+      "mr": "मोसंबी",
+      "hi": "मौसंबी"
     },
     "संत्रा": {
       "en": "Orange",
-      "mr": "संत्रा"
+      "mr": "संत्रा",
+      "hi": "संतरा"
     },
     "Orange": {
       "en": "Orange",
-      "mr": "संत्रा"
+      "mr": "संत्रा",
+      "hi": "संतरा"
     },
     "Oranges": {
       "en": "Orange",
-      "mr": "संत्रा"
+      "mr": "संत्रा",
+      "hi": "संतरा"
     },
     "डाळींब": {
       "en": "Pomegranate",
-      "mr": "डाळींब"
+      "mr": "डाळींब",
+      "hi": "अनार"
     },
     "Pomegranate": {
       "en": "Pomegranate",
-      "mr": "डाळिंब"
+      "mr": "डाळिंब",
+      "hi": "अनार"
     },
     "Pomegranates": {
       "en": "Pomegranate",
-      "mr": "डाळिंब"
+      "mr": "डाळिंब",
+      "hi": "अनार"
     },
     "डाळिंब": {
       "en": "Pomegranate",
-      "mr": "डाळिंब"
+      "mr": "डाळिंब",
+      "hi": "अनार"
     },
     "पपई": {
       "en": "Papaya",
-      "mr": "पपई"
+      "mr": "पपई",
+      "hi": "पपीता"
     },
     "Papaya": {
       "en": "Papaya",
-      "mr": "पपई"
+      "mr": "पपई",
+      "hi": "पपीता"
     },
     "Papayas": {
       "en": "Papaya",
-      "mr": "पपई"
+      "mr": "पपई",
+      "hi": "पपीता"
     },
     "चिकू": {
       "en": "Sapota",
-      "mr": "चिकू"
+      "mr": "चिकू",
+      "hi": "चीकू"
     },
     "Sapota": {
       "en": "Sapota",
-      "mr": "चिकू"
+      "mr": "चिकू",
+      "hi": "चीकू"
     },
     "Chikoo": {
       "en": "Sapota",
-      "mr": "चिकू"
+      "mr": "चिकू",
+      "hi": "चीकू"
     },
     "Sapodilla": {
       "en": "Sapota",
-      "mr": "चिकू"
+      "mr": "चिकू",
+      "hi": "चीकू"
     },
     "सिताफळ": {
       "en": "Custard Apple",
-      "mr": "सिताफळ"
+      "mr": "सिताफळ",
+      "hi": "सीताफल"
     },
     "Custard Apple": {
       "en": "Custard Apple",
-      "mr": "सीताफळ"
+      "mr": "सीताफळ",
+      "hi": "सीताफल"
     },
     "Sitaphal": {
       "en": "Custard Apple",
-      "mr": "सीताफळ"
+      "mr": "सीताफळ",
+      "hi": "सीताफल"
     },
     "सीताफळ": {
       "en": "Custard Apple",
-      "mr": "सीताफळ"
+      "mr": "सीताफळ",
+      "hi": "सीताफल"
     },
     "द्राक्ष": {
       "en": "Grapes",
-      "mr": "द्राक्ष"
+      "mr": "द्राक्ष",
+      "hi": "अंगूर"
     },
     "Grapes": {
       "en": "Grapes",
-      "mr": "द्राक्ष"
+      "mr": "द्राक्ष",
+      "hi": "अंगूर"
     },
     "Grape": {
       "en": "Grapes",
-      "mr": "द्राक्ष"
+      "mr": "द्राक्ष",
+      "hi": "अंगूर"
     },
     "आंबा": {
       "en": "Mango",
-      "mr": "आंबा"
+      "mr": "आंबा",
+      "hi": "आम"
     },
     "Mango": {
       "en": "Mango",
-      "mr": "आंबा"
+      "mr": "आंबा",
+      "hi": "आम"
     },
     "Mangoes": {
       "en": "Mango",
-      "mr": "आंबा"
+      "mr": "आंबा",
+      "hi": "आम"
     },
     "केळी": {
       "en": "Banana",
-      "mr": "केळी"
+      "mr": "केळी",
+      "hi": "केला"
     },
     "Banana": {
       "en": "Banana",
-      "mr": "केळी"
+      "mr": "केळी",
+      "hi": "केला"
     },
     "Bananas": {
       "en": "Banana",
-      "mr": "केळी"
+      "mr": "केळी",
+      "hi": "केला"
     },
     "कच्ची केळी": {
       "en": "Raw Banana",
-      "mr": "कच्ची केळी"
+      "mr": "कच्ची केळी",
+      "hi": "कच्चा केला"
     },
     "Raw Banana": {
       "en": "Raw Banana",
-      "mr": "कच्ची केळी"
+      "mr": "कच्ची केळी",
+      "hi": "कच्चा केला"
     },
     "Green Banana": {
       "en": "Raw Banana",
-      "mr": "कच्ची केळी"
+      "mr": "कच्ची केळी",
+      "hi": "कच्चा केला"
     },
     "Raw Plantain": {
       "en": "Raw Banana",
-      "mr": "कच्ची केळी"
+      "mr": "कच्ची केळी",
+      "hi": "कच्चा केला"
     },
     "पेरू": {
       "en": "Guava",
-      "mr": "पेरू"
+      "mr": "पेरू",
+      "hi": "अमरूद"
     },
     "Guava": {
       "en": "Guava",
-      "mr": "पेरू"
+      "mr": "पेरू",
+      "hi": "अमरूद"
     },
     "Guavas": {
       "en": "Guava",
-      "mr": "पेरू"
+      "mr": "पेरू",
+      "hi": "अमरूद"
     },
     "कलिंगड": {
       "en": "Watermelon",
-      "mr": "कलिंगड"
+      "mr": "कलिंगड",
+      "hi": "तरबूज"
     },
     "Watermelon": {
       "en": "Watermelon",
-      "mr": "कलिंगड"
+      "mr": "कलिंगड",
+      "hi": "तरबूज"
     },
     "Watermelons": {
       "en": "Watermelon",
-      "mr": "कलिंगड"
+      "mr": "कलिंगड",
+      "hi": "तरबूज"
     },
     "खरबूज": {
       "en": "Muskmelon",
-      "mr": "खरबूज"
+      "mr": "खरबूज",
+      "hi": "खरबूजा"
     },
     "Muskmelon": {
       "en": "Muskmelon",
-      "mr": "खरबूज"
+      "mr": "खरबूज",
+      "hi": "खरबूजा"
     },
     "Musk Melon": {
       "en": "Muskmelon",
-      "mr": "खरबूज"
+      "mr": "खरबूज",
+      "hi": "खरबूजा"
     },
     "अननस": {
       "en": "Pineapple",
-      "mr": "अननस"
+      "mr": "अननस",
+      "hi": "अनानास"
     },
     "Pineapple": {
       "en": "Pineapple",
-      "mr": "अननस"
+      "mr": "अननस",
+      "hi": "अनानास"
     },
     "Pineapples": {
       "en": "Pineapple",
-      "mr": "अननस"
+      "mr": "अननस",
+      "hi": "अनानास"
     },
     "बोर": {
       "en": "Jujube",
-      "mr": "बोर"
+      "mr": "बोर",
+      "hi": "बेर"
     },
     "Jujube": {
       "en": "Jujube",
-      "mr": "बोर"
+      "mr": "बोर",
+      "hi": "बेर"
     },
     "Ber": {
       "en": "Jujube",
-      "mr": "बोर"
+      "mr": "बोर",
+      "hi": "बेर"
     },
     "विड्याची पाने (पाटी)": {
       "en": "Betel Leaves",
-      "mr": "विड्याची पाने (पाटी)"
+      "mr": "विड्याची पाने (पाटी)",
+      "hi": "पान के पत्ते"
     },
     "Betel Leaves": {
       "en": "Betel Leaves",
-      "mr": "विड्याची पाने"
+      "mr": "विड्याची पाने",
+      "hi": "पान के पत्ते"
     },
     "Betel Leaf": {
       "en": "Betel Leaves",
-      "mr": "विड्याची पाने"
+      "mr": "विड्याची पाने",
+      "hi": "पान के पत्ते"
     },
     "Paan Leaves": {
       "en": "Betel Leaves",
-      "mr": "विड्याची पाने"
+      "mr": "विड्याची पाने",
+      "hi": "पान के पत्ते"
     },
     "विड्याची पाने": {
       "en": "Betel Leaves",
-      "mr": "विड्याची पाने"
+      "mr": "विड्याची पाने",
+      "hi": "पान के पत्ते"
     },
     "तांदुळ (बासमती)": {
       "en": "Basmati Rice",
-      "mr": "तांदुळ (बासमती)"
+      "mr": "तांदुळ (बासमती)",
+      "hi": "बासमती चावल"
     },
     "Basmati Rice": {
       "en": "Basmati Rice",
-      "mr": "तांदुळ (बासमती)"
+      "mr": "तांदुळ (बासमती)",
+      "hi": "बासमती चावल"
     },
     "Basmati": {
       "en": "Basmati Rice",
-      "mr": "तांदुळ (बासमती)"
+      "mr": "तांदुळ (बासमती)",
+      "hi": "बासमती चावल"
     },
     "तांदुळ (बासमती दुबार)": {
       "en": "Basmati Dubar Rice",
-      "mr": "तांदुळ (बासमती दुबार)"
+      "mr": "तांदुळ (बासमती दुबार)",
+      "hi": "बासमती दुबार चावल"
     },
     "Basmati Dubar Rice": {
       "en": "Basmati Dubar Rice",
-      "mr": "तांदुळ (बासमती दुबार)"
+      "mr": "तांदुळ (बासमती दुबार)",
+      "hi": "बासमती दुबार चावल"
     },
     "Basmati Dubar": {
       "en": "Basmati Dubar Rice",
-      "mr": "तांदुळ (बासमती दुबार)"
+      "mr": "तांदुळ (बासमती दुबार)",
+      "hi": "बासमती दुबार चावल"
     },
     "तांदुळ (बासमती मोगरा)": {
       "en": "Basmati Mogra Rice",
-      "mr": "तांदुळ (बासमती मोगरा)"
+      "mr": "तांदुळ (बासमती मोगरा)",
+      "hi": "बासमती मोगरा चावल"
     },
     "Basmati Mogra Rice": {
       "en": "Basmati Mogra Rice",
-      "mr": "तांदुळ (बासमती मोगरा)"
+      "mr": "तांदुळ (बासमती मोगरा)",
+      "hi": "बासमती मोगरा चावल"
     },
     "Basmati Mogra": {
       "en": "Basmati Mogra Rice",
-      "mr": "तांदुळ (बासमती मोगरा)"
+      "mr": "तांदुळ (बासमती मोगरा)",
+      "hi": "बासमती मोगरा चावल"
     },
     "तांदुळ (बासमती कणी)": {
       "en": "Basmati Broken Rice",
-      "mr": "तांदुळ (बासमती कणी)"
+      "mr": "तांदुळ (बासमती कणी)",
+      "hi": "बासमती टुकड़ा चावल"
     },
     "Basmati Broken Rice": {
       "en": "Basmati Broken Rice",
-      "mr": "तांदुळ (बासमती कणी)"
+      "mr": "तांदुळ (बासमती कणी)",
+      "hi": "बासमती टुकड़ा चावल"
     },
     "Basmati Kani": {
       "en": "Basmati Broken Rice",
-      "mr": "तांदुळ (बासमती कणी)"
+      "mr": "तांदुळ (बासमती कणी)",
+      "hi": "बासमती टुकड़ा चावल"
     },
     "Broken Basmati Rice": {
       "en": "Basmati Broken Rice",
-      "mr": "तांदुळ (बासमती कणी)"
+      "mr": "तांदुळ (बासमती कणी)",
+      "hi": "बासमती टुकड़ा चावल"
     },
     "तांदुळ (आंबेमोहर)": {
       "en": "Ambemohar Rice",
-      "mr": "तांदुळ (आंबेमोहर)"
+      "mr": "तांदुळ (आंबेमोहर)",
+      "hi": "आंबेमोहर चावल"
     },
     "Ambemohar Rice": {
       "en": "Ambemohar Rice",
-      "mr": "तांदुळ (आंबेमोहर)"
+      "mr": "तांदुळ (आंबेमोहर)",
+      "hi": "आंबेमोहर चावल"
     },
     "Ambemohar": {
       "en": "Ambemohar Rice",
-      "mr": "तांदुळ (आंबेमोहर)"
+      "mr": "तांदुळ (आंबेमोहर)",
+      "hi": "आंबेमोहर चावल"
     },
     "गहू": {
       "en": "Wheat",
-      "mr": "गहू"
+      "mr": "गहू",
+      "hi": "गेहूँ"
     },
     "Wheat": {
       "en": "Wheat",
-      "mr": "गहू"
+      "mr": "गहू",
+      "hi": "गेहूँ"
     },
     "Wheat Grain": {
       "en": "Wheat",
-      "mr": "गहू"
+      "mr": "गहू",
+      "hi": "गेहूँ"
     },
     "ज्वारी": {
       "en": "Sorghum",
-      "mr": "ज्वारी"
+      "mr": "ज्वारी",
+      "hi": "ज्वार"
     },
     "Sorghum": {
       "en": "Sorghum",
-      "mr": "ज्वारी"
+      "mr": "ज्वारी",
+      "hi": "ज्वार"
     },
     "Jowar": {
       "en": "Sorghum",
-      "mr": "ज्वारी"
+      "mr": "ज्वारी",
+      "hi": "ज्वार"
     },
     "बाजरी": {
       "en": "Pearl Millet",
-      "mr": "बाजरी"
+      "mr": "बाजरी",
+      "hi": "बाजरा"
     },
     "Pearl Millet": {
       "en": "Pearl Millet",
-      "mr": "बाजरी"
+      "mr": "बाजरी",
+      "hi": "बाजरा"
     },
     "Bajra": {
       "en": "Pearl Millet",
-      "mr": "बाजरी"
+      "mr": "बाजरी",
+      "hi": "बाजरा"
     },
     "हरभरा": {
       "en": "Chickpea",
-      "mr": "हरभरा"
+      "mr": "हरभरा",
+      "hi": "चना"
     },
     "Chickpea": {
       "en": "Chickpea",
-      "mr": "हरभरा"
+      "mr": "हरभरा",
+      "hi": "चना"
     },
     "Gram": {
       "en": "Chickpea",
-      "mr": "हरभरा"
+      "mr": "हरभरा",
+      "hi": "चना"
     },
     "Chana": {
       "en": "Chickpea",
-      "mr": "हरभरा"
+      "mr": "हरभरा",
+      "hi": "चना"
     },
     "तूर": {
       "en": "Pigeon Pea",
-      "mr": "तूर"
+      "mr": "तूर",
+      "hi": "अरहर"
     },
     "Pigeon Pea": {
       "en": "Pigeon Pea",
-      "mr": "तूर"
+      "mr": "तूर",
+      "hi": "अरहर"
     },
     "Tur": {
       "en": "Pigeon Pea",
-      "mr": "तूर"
+      "mr": "तूर",
+      "hi": "अरहर"
     },
     "Arhar": {
       "en": "Pigeon Pea",
-      "mr": "तूर"
+      "mr": "तूर",
+      "hi": "अरहर"
     },
     "मूग": {
       "en": "Green Gram",
-      "mr": "मूग"
+      "mr": "मूग",
+      "hi": "मूंग"
     },
     "Green Gram": {
       "en": "Green Gram",
-      "mr": "मूग"
+      "mr": "मूग",
+      "hi": "मूंग"
     },
     "Moong": {
       "en": "Green Gram",
-      "mr": "मूग"
+      "mr": "मूग",
+      "hi": "मूंग"
     },
     "Mung Bean": {
       "en": "Green Gram",
-      "mr": "मूग"
+      "mr": "मूग",
+      "hi": "मूंग"
     },
     "उडीद": {
       "en": "Black Gram",
-      "mr": "उडीद"
+      "mr": "उडीद",
+      "hi": "उड़द"
     },
     "Black Gram": {
       "en": "Black Gram",
-      "mr": "उडीद"
+      "mr": "उडीद",
+      "hi": "उड़द"
     },
     "Urad": {
       "en": "Black Gram",
-      "mr": "उडीद"
+      "mr": "उडीद",
+      "hi": "उड़द"
     },
     "मसूर": {
       "en": "Lentil",
-      "mr": "मसूर"
+      "mr": "मसूर",
+      "hi": "मसूर"
     },
     "Lentil": {
       "en": "Lentil",
-      "mr": "मसूर"
+      "mr": "मसूर",
+      "hi": "मसूर"
     },
     "Masoor": {
       "en": "Lentil",
-      "mr": "मसूर"
+      "mr": "मसूर",
+      "hi": "मसूर"
     },
     "झेंडू": {
       "en": "Marigold",
-      "mr": "झेंडू"
+      "mr": "झेंडू",
+      "hi": "गेंदा"
     },
     "Marigold": {
       "en": "Marigold",
-      "mr": "झेंडू"
+      "mr": "झेंडू",
+      "hi": "गेंदा"
     },
     "Marigold Flowers": {
       "en": "Marigold",
-      "mr": "झेंडू"
+      "mr": "झेंडू",
+      "hi": "गेंदा"
     },
     "गुलाब": {
       "en": "Rose",
-      "mr": "गुलाब"
+      "mr": "गुलाब",
+      "hi": "गुलाब"
     },
     "Rose": {
       "en": "Rose",
-      "mr": "गुलाब"
+      "mr": "गुलाब",
+      "hi": "गुलाब"
     },
     "Roses": {
       "en": "Rose",
-      "mr": "गुलाब"
+      "mr": "गुलाब",
+      "hi": "गुलाब"
     },
     "शेवंती": {
       "en": "Chrysanthemum",
-      "mr": "शेवंती"
+      "mr": "शेवंती",
+      "hi": "गुलदाउदी"
     },
     "Chrysanthemum": {
       "en": "Chrysanthemum",
-      "mr": "शेवंती"
+      "mr": "शेवंती",
+      "hi": "गुलदाउदी"
     },
     "Chrysanthemum Flowers": {
       "en": "Chrysanthemum",
-      "mr": "शेवंती"
+      "mr": "शेवंती",
+      "hi": "गुलदाउदी"
     },
     "अॅस्टर": {
       "en": "Aster",
-      "mr": "अॅस्टर"
+      "mr": "अॅस्टर",
+      "hi": "एस्टर"
     },
     "Aster": {
       "en": "Aster",
-      "mr": "अॅस्टर"
+      "mr": "अॅस्टर",
+      "hi": "एस्टर"
     },
     "Aster Flowers": {
       "en": "Aster",
-      "mr": "अॅस्टर"
+      "mr": "अॅस्टर",
+      "hi": "एस्टर"
     },
     "ग्लॅडिओलस": {
       "en": "Gladiolus",
-      "mr": "ग्लॅडिओलस"
+      "mr": "ग्लॅडिओलस",
+      "hi": "ग्लैडियोलस"
     },
     "Gladiolus": {
       "en": "Gladiolus",
-      "mr": "ग्लॅडिओलस"
+      "mr": "ग्लॅडिओलस",
+      "hi": "ग्लैडियोलस"
     },
     "Gladiolus Flowers": {
       "en": "Gladiolus",
-      "mr": "ग्लॅडिओलस"
+      "mr": "ग्लॅडिओलस",
+      "hi": "ग्लैडियोलस"
     }
   },
   "market_ids": {
@@ -1600,5 +2053,231 @@
       "en": "Khadki",
       "mr": "खडकी"
     }
+  },
+  "ui_hi": {
+    "KrushiPulse | My Mandi Dashboard | KrushiWorld": "KrushiPulse | मेरा मंडी डैशबोर्ड | KrushiWorld",
+    "KrushiPulse: Your preferred mandi and crops, with published source dates and official APMC rate data.": "KrushiPulse: आपकी पसंदीदा मंडी और फसलों के प्रकाशित भाव, स्रोत की तारीख और आधिकारिक एपीएमसी जानकारी।",
+    "KRUSHIWORLD · APMC MARKET INTELLIGENCE": "KRUSHIWORLD · एपीएमसी बाजार जानकारी",
+    "SOURCE: PUNE APMC · CHECK REPORT DATES": "स्रोत: पुणे एपीएमसी · रिपोर्ट की तारीख देखें",
+    "Your smarter mandi companion": "आपकी मंडी का स्मार्ट साथी",
+    "Main navigation": "मुख्य नेविगेशन",
+    "Home": "होम",
+    "My Rates": "मेरे भाव",
+    "Market Rates": "बाजार भाव",
+    "Markets": "मंडियाँ",
+    "Farmer Guide": "किसान मार्गदर्शिका",
+    "My preferences": "मेरी पसंद",
+    "Personalize": "अपनी पसंद चुनें",
+    "YOUR FARM. YOUR MARKET. YOUR PULSE.": "आपका खेत · आपकी मंडी · आपके भाव",
+    "Market prices,": "बाजार भाव अब",
+    "made personal.": "आपकी पसंद के अनुसार।",
+    "Choose your mandi and crops once. Your latest available published rates appear here automatically whenever you return.": "अपनी मंडी और फसलें एक बार चुनें। अगली बार आने पर उनके नवीनतम उपलब्ध प्रकाशित भाव अपने आप दिखेंगे।",
+    "Make it my dashboard": "मेरा डैशबोर्ड बनाएँ",
+    "Browse all rates": "सभी भाव देखें",
+    "Based on official reports": "आधिकारिक रिपोर्ट पर आधारित",
+    "Source date · Market · Unit": "रिपोर्ट की तारीख · मंडी · इकाई",
+    "No repeat searching": "बार-बार खोजने की ज़रूरत नहीं",
+    "Preferences saved on this device": "पसंद इसी डिवाइस में सुरक्षित",
+    "My market watch": "मेरे बाजार भाव",
+    "Your saved crops": "आपकी चुनी हुई फसलें",
+    "Onion": "प्याज",
+    "Your watchlist": "आपकी पसंदीदा फसलें",
+    "Tomato": "टमाटर",
+    "Grains": "अनाज",
+    "Prices always show source dates": "भाव के साथ रिपोर्ट की तारीख",
+    "Your mandi. Your crops.": "आपकी मंडी। आपकी फसलें।",
+    "Better information. Better harvests.": "बेहतर जानकारी। बेहतर निर्णय।",
+    "Checking report date": "रिपोर्ट की तारीख जाँच रहे हैं",
+    "Latest source report": "नवीनतम आधिकारिक रिपोर्ट",
+    "Available mandis": "उपलब्ध मंडियाँ",
+    "Published rate records": "प्रकाशित भावों की संख्या",
+    "Checking sources": "स्रोत जाँचे जा रहे हैं",
+    "No stale prices presented as today": "पुराने भाव आज के बताकर नहीं दिखाए जाते",
+    "MANDIS NEAR YOU": "आपके आस-पास की मंडियाँ",
+    "Nearest mandi rates.": "नज़दीकी मंडी के भाव।",
+    "Use your location to discover nearby markets with published rates.": "अपनी लोकेशन की अनुमति देकर प्रकाशित भाव वाली नज़दीकी मंडियाँ खोजें।",
+    "Use my location": "मेरी लोकेशन इस्तेमाल करें",
+    "Clear location": "लोकेशन हटाएँ",
+    "Location is optional. You can always select a mandi manually.": "लोकेशन देना वैकल्पिक है। आप हमेशा खुद मंडी चुन सकते हैं।",
+    "Distances are approximate straight-line estimates, not driving distance. Your GPS coordinates are not stored or sent to our server.": "दूरी सीधी रेखा की अनुमानित दूरी है, सड़क की नहीं। आपके GPS निर्देशांक सहेजे या सर्वर पर भेजे नहीं जाते।",
+    "YOUR DASHBOARD": "आपका डैशबोर्ड",
+    "My mandi. My crops.": "मेरी मंडी। मेरी फसलें।",
+    "Save your favorites once; your rates will appear here on every visit.": "पसंदीदा फसलें एक बार सहेजें; हर बार यहाँ उनके भाव देखें।",
+    "Edit preferences": "पसंद बदलें",
+    "Your personal watchlist": "आपकी पसंदीदा सूची",
+    "crops": "फसलें",
+    "Star any crop below to save it to your watchlist.": "किसी भी फसल के आगे ★ दबाकर उसे अपनी सूची में जोड़ें।",
+    "YOUR SAVED MANDI": "आपकी चुनी हुई मंडी",
+    "All markets": "सभी मंडियाँ",
+    "Share mandi link": "मंडी का लिंक साझा करें",
+    "This preference is remembered on your next visit.": "अगली बार भी आपकी पसंद याद रहेगी।",
+    "Choose mandi": "मंडी चुनें",
+    "Check published report dates": "प्रकाशित रिपोर्ट की तारीख देखें",
+    "View this mandi’s rates": "इस मंडी के भाव देखें",
+    "MARKET EXPLORER": "बाजार भाव खोजें",
+    "Explore every rate.": "सभी बाजार भाव एक जगह।",
+    "Available Pune APMC entries · Verify actual source date and units": "पुणे एपीएमसी की उपलब्ध रिपोर्टें · मूल तारीख और इकाई जाँचें",
+    "Search crop, market or category…": "फसल, मंडी या श्रेणी खोजें…",
+    "Search market prices": "बाजार भाव खोजें",
+    "State": "राज्य",
+    "Choose state": "राज्य चुनें",
+    "All states": "सभी राज्य",
+    "District": "जिला",
+    "Choose district": "जिला चुनें",
+    "All districts": "सभी जिले",
+    "Mandi": "मंडी",
+    "Choose market": "मंडी चुनें",
+    "Category": "श्रेणी",
+    "Choose category": "श्रेणी चुनें",
+    "All categories": "सभी श्रेणियाँ",
+    "My crops": "मेरी फसलें",
+    "Checking the national mandi directory…": "राष्ट्रीय मंडी सूची जाँच रहे हैं…",
+    "Available quotations": "उपलब्ध भाव",
+    "Published reports": "प्रकाशित रिपोर्टें",
+    "Commodity": "कृषि उपज",
+    "Market": "मंडी",
+    "Modal / avg.": "मॉडल / औसत",
+    "Minimum": "न्यूनतम",
+    "Maximum": "अधिकतम",
+    "Change": "बदलाव",
+    "Report date": "रिपोर्ट की तारीख",
+    "No verified rates match these selections. Try another mandi or crop.": "इस चयन के लिए सत्यापित भाव नहीं मिले। दूसरी मंडी या फसल चुनें।",
+    "Load more rates": "और भाव देखें",
+    "FARMER FIELD NOTES": "किसानों के लिए मार्गदर्शन",
+    "Read the market. Know the date. Plan wisely.": "भाव देखें। तारीख जाँचें। सोच-समझकर निर्णय लें।",
+    "Published wholesale quotations are not guaranteed transaction prices or retail prices.": "प्रकाशित थोक भाव वास्तविक सौदे के भाव या खुदरा कीमत की गारंटी नहीं हैं।",
+    "Official Pune APMC source ↗": "पुणे एपीएमसी का आधिकारिक स्रोत ↗",
+    "Your everyday shortcuts": "आपके रोज़ के आसान विकल्प",
+    "Set your mandi": "अपनी मंडी चुनें",
+    "Saved automatically on this device": "इस डिवाइस पर अपने आप सुरक्षित",
+    "Star the crops you sell": "अपनी फसलों को ★ करें",
+    "No need to search for them again": "फिर से खोजने की ज़रूरत नहीं",
+    "Choose language and colors": "भाषा और रंग चुनें",
+    "Marathi, English and three themes": "हिन्दी, मराठी, अंग्रेज़ी और तीन थीम",
+    "Source: Pune APMC. Your guest preferences are stored on this browser only.": "स्रोत: पुणे एपीएमसी। आपकी पसंद केवल इस ब्राउज़र में सहेजी जाती है।",
+    "Back to top": "ऊपर जाएँ",
+    "System status": "सिस्टम की स्थिति",
+    "My rates": "मेरे भाव",
+    "All rates": "सभी भाव",
+    "Settings": "सेटिंग्स",
+    "Personalize dashboard": "डैशबोर्ड अपनी पसंद से बनाएँ",
+    "Pick a default mandi and the crops you care about. They will automatically show whenever you return.": "अपनी मुख्य मंडी और पसंदीदा फसलें चुनें। हर बार आने पर वे अपने आप दिखेंगी।",
+    "My default mandi": "मेरी मुख्य मंडी",
+    "All mandis": "सभी मंडियाँ",
+    "My favorite crops": "मेरी पसंदीदा फसलें",
+    "Choose any": "कोई भी चुनें",
+    "No login needed. Saved on this device; not synced across phones or browsers.": "लॉगिन ज़रूरी नहीं। पसंद इस डिवाइस पर सुरक्षित रहती है, दूसरे फ़ोन या ब्राउज़र में अपने आप नहीं आएगी।",
+    "Reset preferences": "पसंद रीसेट करें",
+    "Save dashboard": "डैशबोर्ड सहेजें",
+    "Not available": "उपलब्ध नहीं",
+    "Awaiting source": "स्रोत की प्रतीक्षा",
+    "Some feeds unavailable": "कुछ स्रोत उपलब्ध नहीं",
+    "Some reports older": "कुछ रिपोर्टें पुरानी हैं",
+    "Published rates available": "प्रकाशित भाव उपलब्ध हैं",
+    "Each row shows its source date": "हर पंक्ति में मूल रिपोर्ट की तारीख है",
+    "No current report": "नई रिपोर्ट उपलब्ध नहीं",
+    "Loading the selected mandi reports…": "चुनी हुई मंडी के भाव लोड हो रहे हैं…",
+    "AGMARKNET published records: ": "AGMARKNET प्रकाशित भाव: ",
+    "No current published rates for this mandi.": "इस मंडी के मौजूदा प्रकाशित भाव उपलब्ध नहीं हैं।",
+    "National feed unavailable; check the last published report.": "राष्ट्रीय स्रोत उपलब्ध नहीं है; आख़िरी प्रकाशित रिपोर्ट देखें।",
+    "Known reporting mandis in India: ": "भारत में रिपोर्ट देने वाली मंडियाँ: ",
+    "Check report dates": "रिपोर्ट की तारीख जाँचें",
+    "Pune APMC available. Nationwide rates require a server-side AGMARKNET API key.": "पुणे एपीएमसी उपलब्ध है। देशभर के भावों के लिए सर्वर पर AGMARKNET API कुंजी ज़रूरी है।",
+    "National mandi data import is awaiting its first successful refresh.": "राष्ट्रीय मंडी डेटा के पहले सफल अपडेट की प्रतीक्षा है।",
+    "Market directory unavailable; existing Pune rates are still accessible.": "मंडी सूची उपलब्ध नहीं; पुणे के पहले से उपलब्ध भाव देख सकते हैं।",
+    "Market unavailable": "मंडी उपलब्ध नहीं",
+    "Star a crop in the rate table, or open “Edit preferences” to choose your crops.": "फसल के सामने तारा दबाएँ या 'पसंद बदलें' से फसलें चुनें।",
+    "Not in current dataset": "वर्तमान डेटा में नहीं",
+    "No date": "तारीख उपलब्ध नहीं",
+    "Price unavailable": "भाव उपलब्ध नहीं",
+    "More crops are saved in your preferences.": "आपकी पसंद में और फसलें सहेजी गई हैं।",
+    "Remove favorite crop": "पसंदीदा फसल हटाएँ",
+    "Save favorite crop": "फसल पसंद में जोड़ें",
+    "Showing ": "दिखा रहे हैं ",
+    "records": "रिकॉर्ड",
+    "Crop choices will appear after source data is available.": "स्रोत का डेटा आने पर फसलें यहाँ दिखेंगी।",
+    "Switch theme · ": "थीम बदलें · ",
+    "unit": "इकाई",
+    "No covered mandi with published rates within 150 km. Select manually.": "150 किमी के भीतर प्रकाशित भाव वाली मंडी नहीं मिली। कृपया खुद चुनें।",
+    "Nearby mandis ranked by approximate distance; markets without current reports are labeled.": "अनुमानित दूरी के हिसाब से नज़दीकी मंडियाँ; बिना नई रिपोर्ट वाली मंडियाँ चिह्नित हैं।",
+    "No report date": "रिपोर्ट की तारीख नहीं",
+    "No current published rates": "नए प्रकाशित भाव नहीं",
+    "HTTPS and location permission required. Choose manually.": "HTTPS और लोकेशन की अनुमति चाहिए। खुद मंडी चुनें।",
+    "Waiting for location permission…": "लोकेशन की अनुमति का इंतज़ार…",
+    "Location denied. Choose manually.": "लोकेशन की अनुमति नहीं मिली। खुद मंडी चुनें।",
+    "Location unavailable. Choose manually.": "लोकेशन उपलब्ध नहीं। खुद मंडी चुनें।",
+    "Location cleared; your chosen mandi remains saved.": "लोकेशन हटा दी गई; चुनी हुई मंडी सुरक्षित रहेगी।"
+  },
+  "states_hi": {
+    "Andhra Pradesh": "आंध्र प्रदेश",
+    "Arunachal Pradesh": "अरुणाचल प्रदेश",
+    "Assam": "असम",
+    "Bihar": "बिहार",
+    "Chhattisgarh": "छत्तीसगढ़",
+    "Goa": "गोवा",
+    "Gujarat": "गुजरात",
+    "Haryana": "हरियाणा",
+    "Himachal Pradesh": "हिमाचल प्रदेश",
+    "Jharkhand": "झारखंड",
+    "Karnataka": "कर्नाटक",
+    "Kerala": "केरल",
+    "Madhya Pradesh": "मध्य प्रदेश",
+    "Maharashtra": "महाराष्ट्र",
+    "Manipur": "मणिपुर",
+    "Meghalaya": "मेघालय",
+    "Mizoram": "मिजोरम",
+    "Nagaland": "नागालैंड",
+    "Odisha": "ओडिशा",
+    "Punjab": "पंजाब",
+    "Rajasthan": "राजस्थान",
+    "Sikkim": "सिक्किम",
+    "Tamil Nadu": "तमिलनाडु",
+    "Telangana": "तेलंगाना",
+    "Tripura": "त्रिपुरा",
+    "Uttar Pradesh": "उत्तर प्रदेश",
+    "Uttarakhand": "उत्तराखंड",
+    "West Bengal": "पश्चिम बंगाल",
+    "Delhi": "दिल्ली",
+    "NCT of Delhi": "दिल्ली",
+    "Jammu and Kashmir": "जम्मू और कश्मीर",
+    "Ladakh": "लद्दाख",
+    "Chandigarh": "चंडीगढ़",
+    "Puducherry": "पुदुचेरी",
+    "Dadra and Nagar Haveli": "दादरा और नगर हवेली",
+    "Daman and Diu": "दमन और दीव",
+    "Andaman and Nicobar Islands": "अंडमान और निकोबार द्वीपसमूह",
+    "Lakshadweep": "लक्षद्वीप"
+  },
+  "districts_hi": {
+    "Pune": "पुणे",
+    "Nashik": "नासिक",
+    "Mumbai": "मुंबई",
+    "Nagpur": "नागपुर",
+    "Ahmednagar": "अहमदनगर",
+    "Solapur": "सोलापुर",
+    "Satara": "सतारा",
+    "Kolhapur": "कोल्हापुर",
+    "Sangli": "सांगली",
+    "Jalgaon": "जलगाँव",
+    "Aurangabad": "औरंगाबाद",
+    "Chhatrapati Sambhajinagar": "छत्रपति संभाजीनगर",
+    "Thane": "ठाणे",
+    "Raigad": "रायगढ़",
+    "Nanded": "नांदेड़",
+    "Amravati": "अमरावती",
+    "Beed": "बीड",
+    "Latur": "लातूर",
+    "Akola": "अकोला",
+    "Ahmedabad": "अहमदाबाद",
+    "Surat": "सूरत",
+    "Indore": "इंदौर",
+    "Jaipur": "जयपुर",
+    "Lucknow": "लखनऊ",
+    "Varanasi": "वाराणसी",
+    "Delhi": "दिल्ली",
+    "Bengaluru": "बेंगलुरु",
+    "Hyderabad": "हैदराबाद",
+    "Patna": "पटना",
+    "Bhopal": "भोपाल"
   }
 }
