@@ -20,3 +20,9 @@
 .kp-nearby-card b{color:var(--primary2)}
 .kp-nearby-card small{color:var(--sub)}
 @media(max-width:690px){.kp-nearby{padding:16px}.kp-nearby-actions{width:100%}.kp-nearby-list{grid-template-columns:1fr}}
+
+
+/* Nationwide mandi filtering and explicit import status */
+.kp-directory-status{margin:10px 0 15px;font-size:12px;line-height:1.65;color:var(--sub);font-weight:600}
+.kp-filters .kp-select-field{flex:1 1 155px;min-width:135px}
+@media(max-width:690px){.kp-filters .kp-select-field{min-width:0;flex-basis:calc(50% - 8px)}}
