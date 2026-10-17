@@ -6,25 +6,52 @@ final class SeoService {
 
     public function canonical(string $lang): string {
         $lang = $lang === 'mr' ? 'mr' : 'en';
-        return apmc_absolute_url('/?lang=' . $lang);
+        $route = (array)($GLOBALS['apmc_route'] ?? []);
+        if (($route['kind'] ?? '') === 'mandi' && !empty($route['market'])) {
+            return apmc_absolute_url('/' . $lang . '/mandis/' . rawurlencode((string)$route['market']) . '/');
+        }
+        if (($route['kind'] ?? '') === 'directory') {
+            return apmc_absolute_url('/' . $lang . '/mandis/');
+        }
+        return apmc_absolute_url('/' . $lang . '/');
     }
 
     public function sitemapXml(): string {
         $latest = $this->repo->latest();
         $modified = (string)($latest['meta']['serving_date'] ?? date('Y-m-d'));
-        $en = $this->canonical('en');
-        $mr = $this->canonical('mr');
         $esc = static fn(string $v): string => htmlspecialchars($v, ENT_XML1 | ENT_QUOTES, 'UTF-8');
         $alternate = static function(string $en, string $mr) use ($esc): string {
             return '<xhtml:link rel="alternate" hreflang="en-IN" href="' . $esc($en) . '"/>'
                 . '<xhtml:link rel="alternate" hreflang="mr-IN" href="' . $esc($mr) . '"/>'
                 . '<xhtml:link rel="alternate" hreflang="x-default" href="' . $esc($en) . '"/>';
         };
-        $rows = [
-            '  <url><loc>' . $esc($en) . '</loc>' . $alternate($en, $mr) . '<lastmod>' . $esc($modified) . '</lastmod><changefreq>daily</changefreq></url>',
-            '  <url><loc>' . $esc($mr) . '</loc>' . $alternate($en, $mr) . '<lastmod>' . $esc($modified) . '</lastmod><changefreq>daily</changefreq></url>',
-        ];
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\">\n" . implode("\n", $rows) . "\n</urlset>\n";
+        $rows = [];
+        $append = static function(string $path, string $date) use (&$rows, $alternate, $esc): void {
+            $en = apmc_absolute_url('/en/' . $path);
+            $mr = apmc_absolute_url('/mr/' . $path);
+            $rows[] = '  <url><loc>' . $esc($en) . '</loc>'
+                . $alternate($en, $mr) . '<lastmod>' . $esc($date)
+                . '</lastmod><changefreq>daily</changefreq></url>';
+            $rows[] = '  <url><loc>' . $esc($mr) . '</loc>'
+                . $alternate($en, $mr) . '<lastmod>' . $esc($date)
+                . '</lastmod><changefreq>daily</changefreq></url>';
+        };
+        $append('', $modified);
+        $append('mandis/', $modified);
+        // A finite source-backed sitemap: omit unreported mandis rather than
+        // creating thousands of indexable empty market pages.
+        $directory = new \KrushiPulse\Application\MarketDirectoryService($this->repo, new NationalMarketRepository());
+        $shown = 0;
+        foreach ($directory->all() as $market) {
+            $id = (string)($market['market_id'] ?? '');
+            if ($id === '' || (int)($market['records'] ?? 0) <= 0) continue;
+            $date = (string)($market['date'] ?? '');
+            $append('mandis/' . rawurlencode($id) . '/', preg_match('/^\d{4}-\d\d-\d\d$/', $date) ? $date : $modified);
+            if (++$shown >= 4000) break;
+        }
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            . "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\">\n"
+            . implode("\n", $rows) . "\n</urlset>\n";
     }
 
     public function robotsTxt(): string {
@@ -42,13 +69,16 @@ final class SeoService {
 Public, cached wholesale market-rate intelligence for Pune APMC markets and source feeds in English and Marathi.
 
 ## Primary pages
-- English: {$base}/?lang=en
-- Marathi: {$base}/?lang=mr
+- English: {$base}/en/
+- Marathi: {$base}/mr/
+- Mandi directory: {$base}/en/mandis/
+- Mandi-specific pages: {$base}/en/mandis/{market-id}/
 
 ## Machine-readable public endpoints
-- Latest snapshot: {$base}/api/latest
+- Latest snapshot: {$base}/api/v1/latest
 - Search/query: {$base}/api/query?q=tomato&lang=en&limit=20
-- Canonical market list: {$base}/api/markets
+- Canonical market list: {$base}/api/v1/markets
+- Market-specific rates: {$base}/api/v1/mandis/{market-id}/rates
 - Feed snapshot: {$base}/api/market?slug=<feed-slug>
 - Compact summary: {$base}/api/summary?lang=en
 - API discovery: {$base}/api/discover
@@ -146,6 +176,19 @@ TXT;
     }
 
     public function jsonLd(string $lang): array {
+        $route = (array)($GLOBALS['apmc_route'] ?? []);
+        if (($route['kind'] ?? '') === 'mandi' && isset($route['market_data']) && is_array($route['market_data'])) {
+            $market = $route['market_data'];
+            $marketName = (string)($lang === 'mr' ? ($market['name_mr'] ?? $market['name_en'] ?? '') : ($market['name_en'] ?? ''));
+            $canonical = $this->canonical($lang);
+            return ['@context' => 'https://schema.org', '@graph' => [
+                ['@type' => 'WebPage', '@id' => $canonical . '#webpage',
+                    'url' => $canonical, 'name' => $marketName . ' | KrushiPulse',
+                    'description' => 'Published mandi price information with original source dates and units.',
+                    'inLanguage' => $lang === 'mr' ? 'mr-IN' : 'en-IN',
+                    'isPartOf' => ['@id' => rtrim(apmc_absolute_url('/'), '/') . '/#website']],
+            ]];
+        }
         $data = $this->repo->latest();
         $meta = (array)($data['meta'] ?? []);
         $canonical = $this->canonical($lang);
