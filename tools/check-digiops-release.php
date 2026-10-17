@@ -17,6 +17,8 @@ $required = [
     'public/build/krushipulse.css', 'public/build/krushipulse.js',
     'public/build/commodity-icons.js',
     'public/build/nearest-mandi.js',
+    'public/build/intelligence.js', 'public/build/offline.js', 'public/sw.js',
+    'public/app.webmanifest', 'public/icons/krushipulse.svg',
     'private/app/bootstrap.php', 'private/app/NationalMarketRepository.php', 'private/app/views/home.php',
     'private/app/Http/RouteResolver.php', 'private/app/Http/PublicApiController.php',
     'private/app/Application/MarketDirectoryService.php', 'private/app/Application/MarketRatesService.php',
