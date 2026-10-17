@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v2.0.2
+# KrushiWorld KrushiPulse — APMC Rates v2.1.0
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -231,3 +231,7 @@ The Market column and favorites always resolve the physical APMC/AGMARKNET marke
 ## v2.0.2 — Full code/responsive visual audit
 
 Corrected an unqualified PHP exception catch in national API validation (bad market IDs now return 400), indexed the physical mandi directory for efficient row lookups, and guarded browser-local price thresholds from triggering on historical (>3 day old) reports. A headless Chrome regression job now captures English desktop (1440 px), Marathi tablet (768 px), Hindi mobile (390 px) and English narrow mobile (360 px) screenshots, and checks physical market names, UI interactions, no page-level horizontal overflow and mobile rates card fit. The mobile quotations view now displays all nine original data fields in accessible cards rather than requiring horizontal scrolling. The PWA service worker and asset version are bumped to 2.0.2 to invalidate old front-end cache. See `AUDIT_2026-10-17.md` for pre/post findings and production-only limitations.
+
+## v2.1.0 — Staging GitHub App authentication and local Super Admin handover
+
+Admin access now supports opt-in environment policies: `APMC_AUTH_MODE=legacy` by default retains the existing shared admin token; `staging` uses allowlisted GitHub App sign-in plus independent local MFA accounts, and `production` forces local password+TOTP (GitHub sessions/endpoints rejected server-side). The dashboard can create Super Admin/Admin/Operator/Viewer users, disable/re-enable permitted accounts, revoke sessions on disable, view security events, and disable staging GitHub sign-in only after a verified local Super Admin login. Local accounts have Argon2id password hashes, encrypted TOTP seeds, hashed one-use recovery codes, self-service password/recovery rotation and revocable opaque server-side sessions. A CLI-only helper provisions a separate production account without copying staging identity data. Existing collectors and market APIs remain unchanged. **No environment credentials are created by deployment and production remains legacy until an operator deliberately changes its configuration.** See [ADMIN_AUTH_HANDOVER.md](ADMIN_AUTH_HANDOVER.md).
