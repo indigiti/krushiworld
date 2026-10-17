@@ -1,0 +1,15 @@
+{
+  "description": "Confirmed postal codes of identified mandi offices; matches indicate markets at that PIN, not a PIN centroid or postal boundary.",
+  "markets": {
+    "main-market-yard": {
+      "pincode": "411037",
+      "source": "https://apmcpune.in/en/contact-en/contact-details-en",
+      "precision": "market_address"
+    },
+    "pimpri": {
+      "pincode": "411017",
+      "source": "https://apmcpune.in/en/market-en/sub-market-en",
+      "precision": "market_address"
+    }
+  }
+}
