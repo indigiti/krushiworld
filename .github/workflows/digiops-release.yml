@@ -35,6 +35,8 @@ jobs:
         run: php apmc-rates/tests/test_pretty_routes.php
       - name: SQLite price intelligence and comparability contracts
         run: php apmc-rates/tests/test_intelligence.php
+      - name: Phase 4 official MSP, profiles and explainable insight contracts
+        run: php apmc-rates/tests/test_phase4.php
       - name: Python unit tests
         run: python -m unittest discover -s apmc-rates/tests -p 'test_*.py' -v
       - name: JavaScript syntax checks
