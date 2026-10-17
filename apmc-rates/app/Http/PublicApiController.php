@@ -34,6 +34,23 @@ final class PublicApiController {
         $weather = new \KrushiPulse\Application\WeatherAdvisoryService();
         apmc_json_response(['ok'=>true,'data'=>$weather->latest()]);
     }
+    if ($api === 'v1-market-profile') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        $service = new \KrushiPulse\Application\MarketProfileService($marketDirectory);
+        $profile = $service->find((string)($route['market'] ?? ''));
+        if ($profile === null) apmc_json_response(['ok'=>false,'error'=>'Unknown mandi'],404);
+        apmc_json_response(['ok'=>true,'data'=>$profile]);
+    }
+    if ($api === 'v1-msp') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        $service = new \KrushiPulse\Application\MspReferenceService();
+        apmc_json_response(['ok'=>true,'data'=>$service->lookup($_GET)]);
+    }
+    if ($api === 'v1-insights') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        $service = new \KrushiPulse\Application\ExplainableInsightService(new \KrushiPulse\Application\PriceIntelligenceService());
+        apmc_json_response(['ok'=>true,'data'=>$service->explain($_GET)]);
+    }
     if (in_array($api, ['v1-history','v1-compare'], true)) {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
             apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
