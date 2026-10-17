@@ -68,6 +68,23 @@ final class AdminIdentity {
         $this->event($actor,'account_created',$id);
         return $id;
     }
+    public function changePassword(int $id,string $new): void {
+        if(strlen($new)<14 || strlen($new)>256)throw new RuntimeException('Password must be 14–256 characters');
+        $hash=password_hash($new,PASSWORD_ARGON2ID,['memory_cost'=>65536,'time_cost'=>3,'threads'=>1]);
+        if(!is_string($hash))throw new RuntimeException('Password hashing unavailable');
+        $this->exec('UPDATE users SET password_hash=? WHERE id=? AND password_hash IS NOT NULL',[$hash,$id]);
+        $this->sessionDestroyUser($id);
+        $this->event($id,'password_changed',$id);
+    }
+    public function replaceRecovery(int $id,array $codes): void {
+        $this->db->beginTransaction();
+        try {
+            $this->exec('DELETE FROM recovery WHERE user_id=?',[$id]);
+            $this->setRecovery($id,$codes);
+            $this->db->commit();
+        }catch(\Throwable $e){$this->db->rollBack();throw $e;}
+        $this->event($id,'recovery_rotated',$id);
+    }
     public function setRecovery(int $id,array $codes): void {
         $stmt=$this->db->prepare('INSERT INTO recovery(user_id,code_hash) VALUES(?,?)');
         foreach($codes as $code)$stmt->execute([$id,hash('sha256',strtoupper($code))]);
