@@ -20,6 +20,10 @@ for attempt in {1..35}; do
 done
 if [[ "$ready" != 1 ]]; then cat "$tmp/php.log"; exit 1; fi
 php -r '$a=json_decode(file_get_contents($argv[1]),true); if(!is_array($a) || ($a["ok"]??false)!==true || !isset($a["health"]["status"])) exit(1);' "$tmp/health.json"
+curl --fail --silent --show-error --max-time 15 "$url/?api=markets" > "$tmp/markets.json"
+php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || count($j["data"]["markets"]??[]) < 5 || !isset($j["data"]["national"]["status"])) exit(1);' "$tmp/markets.json"
+curl --fail --silent --show-error --max-time 15 "$url/?api=national&market=agmarknet-test" > "$tmp/national.json"
+php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || !is_array($j["data"]["records"]??null)) exit(1);' "$tmp/national.json"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=mr" > "$tmp/mr.html"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=en" > "$tmp/en.html"
 curl --fail --silent --show-error --max-time 15 "$url/?view=admin" > "$tmp/admin.html"
