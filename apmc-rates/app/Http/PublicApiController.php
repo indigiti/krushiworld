@@ -29,6 +29,15 @@ final class PublicApiController {
         MarketDirectoryService $marketDirectory,
         MarketRatesService $marketRates,
     ): never {
+    if (in_array($api, ['v1-history','v1-compare'], true)) {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
+            apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        }
+        $intelligence = new \KrushiPulse\Application\PriceIntelligenceService();
+        $result = $api === 'v1-history' ? $intelligence->history($_GET) : $intelligence->compare($_GET);
+        header('Cache-Control: public, max-age=240');
+        apmc_json_response(['ok'=>true,'data'=>$result]);
+    }
     if ($api === 'latest') apmc_json_response(['ok' => true, 'data' => $repo->latest(), 'fallback_due' => $refresh->serverFallbackDue()]);
     if ($api === 'query') apmc_json_response(['ok' => true, 'data' => $queryService->query($_GET)]);
     if ($api === 'summary') apmc_json_response(['ok' => true, 'data' => $queryService->summary((string)($_GET['lang'] ?? 'en'))]);
