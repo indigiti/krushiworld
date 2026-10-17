@@ -1,0 +1,20 @@
+{
+  "name": "KrushiPulse | KrushiWorld",
+  "short_name": "KrushiPulse",
+  "description": "Personalized, source-attributed agricultural mandi rates",
+  "id": "./",
+  "start_url": "./mr/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f8f1",
+  "theme_color": "#0a4430",
+  "lang": "mr",
+  "icons": [
+    {
+      "src": "icons/krushipulse.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
