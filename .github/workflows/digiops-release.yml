@@ -74,6 +74,8 @@ jobs:
         run: php tools/check-digiops-release.php
       - name: HTTP smoke test split Cloudways installation
         run: bash tools/smoke-digiops-release.sh
+      - name: Staging and production authentication mode HTTP smoke
+        run: bash tools/smoke-auth-handover.sh
       - name: Upload deployable DigiOps artifact
         uses: actions/upload-artifact@v4
         with:
