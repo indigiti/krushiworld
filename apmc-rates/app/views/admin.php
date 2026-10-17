@@ -14,7 +14,10 @@ $nonce = apmc_csp_nonce();
 $identityMode = apmc_auth()->enabled();
 $authUser = $identityMode ? apmc_auth()->user() : null;
 $authNotice = (string)($GLOBALS['kp_auth_notice'] ?? '');
+if ($authNotice === '' && ($_GET['auth_failed'] ?? '') === '1')
+    $authNotice='GitHub identity was not verified or was not on the authorized staging allowlist.';
 $authEnrollment = $GLOBALS['kp_auth_enrollment'] ?? null;
+$authRecovery = $GLOBALS['kp_auth_recovery'] ?? null;
 $githubEnabled = false;
 $authUsers = [];
 $authEvents = [];
