@@ -4,7 +4,7 @@ DirectoryIndex index.php
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+  Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=(self)"
 </IfModule>
 
 # First-party versioned and bilingual pretty routes; legacy query URLs remain supported.
