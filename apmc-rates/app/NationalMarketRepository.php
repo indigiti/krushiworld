@@ -13,13 +13,39 @@ final class NationalMarketRepository {
 
     public function state(): array {
         $data = apmc_json_read($this->snapshotPath(), []);
+        $health = apmc_json_read(APMC_STORAGE . '/national/health.json', []);
+        $records = (array)($data['records'] ?? []);
+        $updatedAt = $data['meta']['updated_at'] ?? null;
+        $latestReportDate = null;
+        foreach ($records as $row) {
+            $date = is_array($row) ? (string)($row['date'] ?? '') : '';
+            if (preg_match('/^\d{4}-\d{2}-\d{2}$/D', $date)
+                && ($latestReportDate === null || $date > $latestReportDate)) $latestReportDate = $date;
+        }
+        $hasData = count($records) > 0;
+        $configured = trim((string)getenv('APMC_DATA_GOV_IN_API_KEY')) !== '';
+        $dateAge = $latestReportDate === null ? null
+            : max(0, (int)floor((time() - (strtotime($latestReportDate . ' 23:59:59 UTC') ?: time())) / 86400));
+        $importAgeHours = is_string($updatedAt) && strtotime($updatedAt) !== false
+            ? max(0, round((time() - strtotime($updatedAt)) / 3600, 1)) : null;
+        $status = !$hasData
+            ? ($configured ? 'awaiting_import' : 'not_configured')
+            : (!$configured ? 'cached_unconfigured' : (($dateAge !== null && $dateAge > 3) || ($importAgeHours !== null && $importAgeHours > 18) ? 'stale' : 'ready'));
         return [
-            'status' => !trim((string)getenv('APMC_DATA_GOV_IN_API_KEY')) ? 'not_configured'
-                : (empty($data['records']) ? 'awaiting_import' : 'ready'),
-            'updated_at' => $data['meta']['updated_at'] ?? null,
+            'status' => $status,
+            'configured' => $configured,
+            'has_snapshot' => $hasData,
+            'updated_at' => $updatedAt,
+            'latest_report_date' => $latestReportDate,
+            'latest_report_age_days' => $dateAge,
+            'import_age_hours' => $importAgeHours,
             'source' => 'AGMARKNET / data.gov.in',
-            'record_count' => (int)($data['meta']['records'] ?? 0),
+            'record_count' => (int)($data['meta']['records'] ?? count($records)),
             'market_count' => count($this->directory()),
+            'last_attempt_at' => $health['last_attempt_at'] ?? null,
+            'last_success_at' => $health['last_success_at'] ?? $updatedAt,
+            'last_result' => $health['last_result'] ?? null,
+            // Do not leak configured API credentials, request URLs or raw errors.
         ];
     }
 
