@@ -66,3 +66,35 @@
 .kp-nearby-card>b{font-size:14px}
 .kp-nearby-card>small{line-height:1.5}
 @media(max-width:700px){.kp-phase1-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.kp-phase1-input{min-width:0}.kp-phase1-browse{grid-column:1/-1}.kp-phase1-search button{padding:0 12px}.kp-phase1-input span{font-size:11px}}
+
+
+/* KrushiPulse 1.13 — historical intelligence, comparison and farmer planning */
+.kp-intelligence,.kp-plan{scroll-margin-top:92px}
+.kp-insight-shell{background:var(--surface);border:1px solid var(--stroke);border-radius:20px;padding:22px;margin-top:15px}
+.kp-insight-shell h3{font-size:17px;color:var(--text);margin:0 0 10px}
+.kp-insight-selected{font-size:13px;font-weight:750;color:var(--primary2);margin:0 0 15px;line-height:1.6}
+.kp-insight-period{display:inline-flex;flex-wrap:wrap;gap:5px;padding:4px;border:1px solid var(--stroke);background:var(--field);border-radius:12px}
+.kp-insight-period button{font:inherit;font-size:12px;padding:8px 14px;background:transparent;color:var(--text);border-radius:9px;cursor:pointer}
+.kp-insight-period button[aria-pressed=true]{background:var(--primary2);color:#fff;font-weight:800}
+.kp-history-chart{width:100%;min-height:120px;overflow:hidden;max-width:880px;margin:18px auto 0;color:var(--text)}
+.kp-history-chart svg{display:block;width:100%;height:auto;max-height:340px;overflow:visible}
+.kp-analysis-note{margin:11px 0 0;font-size:12px;line-height:1.65;color:var(--sub)}
+.kp-compare-wrap{margin-top:20px;border-top:1px solid var(--stroke);padding-top:18px}
+.kp-compare-results{margin-top:14px;display:grid;gap:8px}
+.kp-comparison-row{display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(90px,1fr) minmax(85px,.75fr);align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--stroke);background:var(--field);border-radius:12px;font-size:12px}
+.kp-comparison-row strong{display:block;font-size:13px;overflow-wrap:anywhere}
+.kp-comparison-row small{display:block;color:var(--sub);font-size:10px;overflow-wrap:anywhere}
+.kp-comparison-row b{font-size:13px;color:var(--primary2)}
+.kp-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.kp-plan-grid>.kp-insight-shell{margin-top:0}
+.kp-utility-features{margin-top:16px}
+.kp-plan-fields{display:grid;gap:11px;margin:12px 0}
+.kp-plan-fields label{display:flex;flex-direction:column;gap:6px;color:var(--text);font-size:12px;font-weight:750}
+.kp-plan-fields input,.kp-plan-fields select{width:100%;max-width:100%;height:44px;border:1px solid var(--stroke);border-radius:10px;padding:7px 11px;background:var(--field);color:var(--text);font:inherit;font-size:14px}
+.kp-net-result{font-size:17px;color:var(--primary2);font-weight:850;line-height:1.5;margin:14px 0 0}
+.kp-saved-alerts{display:grid;gap:8px;margin-top:14px}
+.kp-alert-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 12px;border:1px solid var(--stroke);background:var(--field);border-radius:10px;font-size:12px;color:var(--text)}
+.kp-alert-remove{font:inherit;font-size:11px;font-weight:800;color:var(--primary2);border:1px solid var(--stroke);padding:7px 10px;border-radius:7px;background:var(--surface)}
+.kp-rate-insight{padding:7px 9px;border:1px solid var(--stroke);border-radius:8px;background:var(--field);color:var(--primary2);font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.kp-rate-insight:hover,.kp-rate-insight:focus-visible{border-color:var(--primary2);outline-offset:2px}
+@media(max-width:700px){.kp-plan-grid{grid-template-columns:1fr}.kp-insight-shell{padding:16px;border-radius:16px}.kp-comparison-row{grid-template-columns:minmax(90px,1.2fr) minmax(85px,1fr) minmax(80px,.7fr);gap:5px;padding:9px 7px}.kp-comparison-row b{font-size:11px}.kp-comparison-row>span{font-size:11px}.kp-net-result{font-size:16px}}
