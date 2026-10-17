@@ -17,7 +17,27 @@ function initPrefs(){try{const raw=JSON.parse(safeRead(storageKey)||'null');if(r
 function persist(){safeSave(storageKey,JSON.stringify(prefs));}
 function labels(group,key){let v=dict[group]?.[key];return v?.[lang]||v?.en||key||'';}
 function commodity(r){if(HI)return r?.name_hi||dict.commodities?.[r?.name_en]?.hi||dict.commodities?.[r?.name_mr]?.hi||r?.name_en||r?.name_mr||'';return (MR?r.name_mr:r.name_en)||(MR?r.name_en:r.name_mr)||'';}
-function marketName(r){const key=r?.name_en||r?.market_name_en||r?.name||r?.market_name||'';return r?.['name_'+lang]||r?.['market_name_'+lang]||labels('markets',key)||t('मंडी','Market');}
+// Keep commodity labels (name_en/name_mr/name_hi) separate from market labels.
+// Prefer the canonical market directory when an actual market_id is present.
+function marketName(r){
+ if(!r||typeof r!=='object')return t('मंडी उपलब्ध नाही','Market unavailable');
+ const field=(m,key)=>typeof m?.[key]==='string'?m[key].trim():'';
+ const marketId=field(r,'market_id')||field(r,'key')||field(r,'slug');
+ const directory=marketId?marketRows().find(m=>m.key===marketId):null;
+ const m=directory||r;
+ const directoryEntry=Boolean(directory)||(
+   !field(r,'commodity_key')&&!('average' in r)&&
+   (field(r,'market_id')||field(r,'slug'))&&
+   (field(r,'name_en')||field(r,'name'))
+ );
+ const sourceEnglish=field(m,'market_name_en')||field(m,'market_name')||
+   (directoryEntry?(field(m,'name_en')||field(m,'name')):'');
+ const sourceName=field(m,'market_name_'+lang)||
+   (directoryEntry?field(m,'name_'+lang):'')||
+   (HI?dict.markets?.[sourceEnglish]?.hi:MR?dict.markets?.[sourceEnglish]?.mr:'')||
+   sourceEnglish||field(m,'market_name_mr');
+ return sourceName||t('मंडी उपलब्ध नाही','Market unavailable');
+}
 function id(r){return String(r.commodity_key||r.name_en||r.name_mr||'').trim();}
 function amt(n){return n===undefined||n===null||n===''||!Number.isFinite(Number(n))?'—':'₹'+nf.format(Number(n));}
 function unit(n){return labels('units',String(n||''))||t('एकक','unit');}
