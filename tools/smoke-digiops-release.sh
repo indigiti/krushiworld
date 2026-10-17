@@ -50,6 +50,14 @@ if grep -q 'PHP Fatal error\|Uncaught Error' "$tmp/php.log"; then cat "$tmp/php.
 
 # Versioned API + multilingual pretty URLs work under /krushiworld prefix.
 curl --fail --silent --show-error --max-time 15 "$url/mr/" > "$tmp/mr-pretty.html"
+curl --fail --silent --show-error --max-time 15 "$url/hi/" > "$tmp/hi-pretty.html"
+curl --fail --silent --show-error --max-time 15 "$url/hi/mandis/" > "$tmp/hi-mandis.html"
+curl --fail --silent --show-error --max-time 15 "$url/hi/mandis/main-market-yard/" > "$tmp/hi-market.html"
+if ! grep -q 'lang="hi"' "$tmp/hi-pretty.html"; then echo 'Hindi html locale missing'; exit 1; fi
+if ! grep -q 'hreflang="hi-IN"' "$tmp/hi-market.html"; then echo 'Hindi market hreflang missing'; exit 1; fi
+if ! grep -q '/krushiworld/hi/mandis/main-market-yard/' "$tmp/hi-market.html"; then echo 'Hindi canonical mandi URL missing'; exit 1; fi
+if ! grep -q 'मेरी मंडी' "$tmp/hi-pretty.html"; then echo 'Hindi page translation missing'; exit 1; fi
+
 curl --fail --silent --show-error --max-time 15 "$url/en/mandis/" > "$tmp/mandis-pretty.html"
 curl --fail --silent --show-error --max-time 15 "$url/en/mandis/main-market-yard/" > "$tmp/market-pretty.html"
 curl --fail --silent --show-error --max-time 15 "$url/api/v1/markets" > "$tmp/v1-markets.json"
