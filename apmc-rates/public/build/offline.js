@@ -22,5 +22,23 @@ if('serviceWorker' in navigator&&window.isSecureContext){
  const scope=String(window.APMC_APP_BASE||'')+'/';
  window.addEventListener('load',()=>navigator.serviceWorker.register(scope+'sw.js',{scope}).catch(()=>{}),{once:true});
 }
-render();
+async function advisory(){
+ const node=el('kpWeatherStatus');if(!node)return;
+ try{
+  const response=await fetch(String(window.APMC_APP_BASE||'')+'/api/v1/intelligence/weather',{cache:'no-store'});
+  if(!response.ok)throw Error('weather unavailable');
+  const payload=await response.json(),item=payload.data;
+  if(!item?.available){
+   node.textContent=t('अधिकृत हवामान सेवा जोडलेली नाही किंवा अहवाल जुना आहे. IMD संकेतस्थळ तपासा.','Authorized weather feed unavailable or stale; consult the official IMD website.');
+   return;
+  }
+  node.textContent=item.location+' · '+item.summary+(item.warning?' · '+item.warning:'')
+    +' · '+t('प्रकाशन: ','Issued: ')+item.issued_at+' · '+t('स्रोत: ','Source: ')+item.source;
+  const link=el('kpWeatherSource');
+  if(link&&typeof item.source_url==='string'&&/^https:\/\/[a-z0-9.-]+(?:\/[^\\s]*)?$/i.test(item.source_url))link.href=item.source_url;
+ }catch(_){
+  node.textContent=t('हवामान स्रोत सध्या उपलब्ध नाही. IMD संकेतस्थळ तपासा.','Weather source currently unavailable; check IMD.');
+ }
+}
+advisory();render();
 })();
