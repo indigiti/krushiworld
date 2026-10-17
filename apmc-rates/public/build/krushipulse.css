@@ -98,3 +98,28 @@
 .kp-rate-insight{padding:7px 9px;border:1px solid var(--stroke);border-radius:8px;background:var(--field);color:var(--primary2);font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
 .kp-rate-insight:hover,.kp-rate-insight:focus-visible{border-color:var(--primary2);outline-offset:2px}
 @media(max-width:700px){.kp-plan-grid{grid-template-columns:1fr}.kp-insight-shell{padding:16px;border-radius:16px}.kp-comparison-row{grid-template-columns:minmax(90px,1.2fr) minmax(85px,1fr) minmax(80px,.7fr);gap:5px;padding:9px 7px}.kp-comparison-row b{font-size:11px}.kp-comparison-row>span{font-size:11px}.kp-net-result{font-size:16px}}
+
+
+/* KrushiPulse Phase 4: compact, accessible voice control and source-backed fact panels. */
+.kp-voice-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:43px;padding:0 13px;border-radius:11px;border:1px solid var(--stroke);background:var(--field);color:var(--primary2);font:inherit;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer}
+.kp-voice-btn:disabled{opacity:.55;cursor:not-allowed}
+.kp-voice-btn[aria-pressed=true]{border-color:var(--primary2);outline:2px solid var(--primary2);outline-offset:2px}
+.kp-phase4{scroll-margin-top:90px}
+.kp-phase4-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kp-phase4-card{padding:21px;background:var(--surface);border:1px solid var(--stroke);border-radius:20px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.kp-phase4-symbol{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:var(--field);font-size:21px}
+.kp-phase4-card h3{margin:4px 0 0;font-size:17px;line-height:1.35;color:var(--text)}
+.kp-phase4-card .kp-analysis-note{margin:0}
+.kp-phase4-label{font-weight:700;font-size:12px;color:var(--sub)}
+.kp-phase4-select{padding:9px;border:1px solid var(--stroke);border-radius:10px;background:var(--field);color:var(--text);font:inherit;max-width:180px}
+.kp-phase4-facts{display:flex;flex-direction:column;gap:8px;margin:8px 0 0}
+.kp-phase4-fact{display:flex;align-items:start;justify-content:space-between;gap:10px;border-bottom:1px solid var(--stroke);padding:8px 0;color:var(--text);font-size:12px}
+.kp-phase4-fact span{color:var(--sub);flex:1 1 40%;line-height:1.4}
+.kp-phase4-fact strong{flex:1 1 50%;text-align:right;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+.kp-phase4-facility{display:inline-flex;background:var(--field);color:var(--text);border-radius:8px;font-size:12px;font-weight:600;padding:7px 9px}
+.kp-phase4-source{font-size:12px;font-weight:750;color:var(--primary2);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.kp-phase4-note{color:var(--sub);font-size:11px;line-height:1.7;margin:auto 0 0;padding-top:9px}
+.kp-phase4-warning{color:#aa4c1a;font-size:12px;font-weight:800;line-height:1.6}
+.kp-phase4-voice-note{display:flex;gap:12px;align-items:start;margin-top:14px;border:1px solid var(--stroke);border-radius:13px;padding:12px 16px;background:var(--field);color:var(--sub);font-size:12px;line-height:1.6}
+@media(max-width:1080px){.kp-phase4-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kp-phase4-card:last-child{grid-column:1/-1}}
+@media(max-width:700px){.kp-phase4-grid{grid-template-columns:1fr}.kp-phase4-card:last-child{grid-column:auto}.kp-phase4-card{padding:16px;border-radius:16px}.kp-voice-btn{min-height:42px}.kp-phase4-card h3{font-size:16px}}
