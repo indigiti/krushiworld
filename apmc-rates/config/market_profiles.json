@@ -1,0 +1,83 @@
+{
+  "description": "Only market-specific facts supported by official Pune APMC pages. Hours vary by department; verify before visiting.",
+  "markets": {
+    "main-market-yard": {
+      "source_url": "https://apmcpune.in/en/market-en/main-market-yard-en",
+      "website_url": "https://apmcpune.in/en/market-en/main-market-yard-en",
+      "verified_at": "2026-10-17",
+      "phone": "02024262349",
+      "hours": "Department-specific; consult official auction timetable.",
+      "facilities": []
+    },
+    "manjari": {
+      "source_url": "https://apmcpune.in/en/market-en/sub-market-en/late-annasaheb-magar-manjari-sub-market-yard",
+      "website_url": "https://apmcpune.in/en/market-en/sub-market-en/late-annasaheb-magar-manjari-sub-market-yard",
+      "verified_at": "2026-10-17",
+      "hours": "Vegetable market: 10:00 AM–2:00 PM (published schedule).",
+      "facilities": [
+        {
+          "name": "Clean drinking water",
+          "verified": true
+        },
+        {
+          "name": "Toilets",
+          "verified": true
+        },
+        {
+          "name": "Parking",
+          "verified": true
+        },
+        {
+          "name": "Shelter",
+          "verified": true
+        },
+        {
+          "name": "Electronic scales",
+          "verified": true
+        }
+      ]
+    },
+    "moshi": {
+      "source_url": "https://apmcpune.in/en/market-en/sub-market-en/moshi-sub-market-yard-en",
+      "website_url": "https://apmcpune.in/en/market-en/sub-market-en/moshi-sub-market-yard-en",
+      "verified_at": "2026-10-17",
+      "hours": "Fruit/vegetable: 5:00 AM–12:00 PM; grain: 10:00 AM–5:00 PM; Wednesday weekly holiday (published).",
+      "facilities": [
+        {
+          "name": "Farmer accommodation",
+          "verified": true
+        },
+        {
+          "name": "Weighing platform",
+          "verified": true
+        },
+        {
+          "name": "Warehouses",
+          "verified": true
+        },
+        {
+          "name": "CCTV",
+          "verified": true
+        },
+        {
+          "name": "Parking",
+          "verified": true
+        }
+      ]
+    },
+    "pimpri": {
+      "source_url": "https://apmcpune.in/en/auction-timetable-en",
+      "website_url": "https://apmcpune.in/en/auction-timetable-en",
+      "verified_at": "2026-10-17",
+      "hours": "Vegetable: 5:00 AM–10:00 AM; grocery: 10:00 AM–5:00 PM; flower: 6:00 AM–12:00 PM (published).",
+      "facilities": []
+    },
+    "khadki": {
+      "source_url": "https://apmcpune.in/en/auction-timetable-en",
+      "website_url": "https://apmcpune.in/en/auction-timetable-en",
+      "verified_at": "2026-10-17",
+      "hours": "Vegetable: 6:00 AM–10:00 AM (published).",
+      "facilities": []
+    }
+  }
+}
