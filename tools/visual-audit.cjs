@@ -8,7 +8,7 @@ const {spawn}=require('node:child_process');
 const { chromium }=require('playwright-core');
 const output=process.env.VISUAL_AUDIT_OUTPUT||path.join(process.cwd(),'visual-audit-screenshots');
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'krushipulse-visual-'));
-const repo=path.resolve(__dirname,'../..'),port=17843;
+const repo=path.resolve(__dirname,'..'),port=17843;
 const address='http://127.0.0.1:'+port+'/krushiworld';
 let php=null,browser=null;
 const fixture={
