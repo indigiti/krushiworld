@@ -96,7 +96,8 @@ async function viewportAudit(page,label,locale,expectedMarket){
  const rows=await page.locator('#kpTableRows tr').count();
  check(rows===2,label+' did not show two fixture records (got '+rows+')');
  const cells=await page.locator('#kpTableRows tr').evaluateAll(rows=>rows.map(r=>({crop:r.cells[1]?.innerText,market:r.cells[2]?.innerText,date:r.cells[7]?.innerText})));
- check(cells.some(r=>r.crop.includes('Gahu')&&r.market.includes(expectedMarket)),label+' wheat market label incorrect: '+JSON.stringify(cells));
+ const wheatName=locale==='mr'?'गहू':locale==='hi'?'गेहूँ':'Gahu';
+ check(cells.some(r=>r.crop.includes(wheatName)&&r.market.includes(expectedMarket)),label+' wheat market label incorrect: '+JSON.stringify(cells));
  check(cells.every(r=>!r.market.includes('Gahu')&&!r.market.includes('Onion')&&!r.market.includes('प्याज')),label+' commodity leaked into market column');
  fs.mkdirSync(output,{recursive:true});
  await page.screenshot({path:path.join(output,label+'.png'),fullPage:true,animations:'disabled'});
