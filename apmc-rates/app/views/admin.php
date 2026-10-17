@@ -11,7 +11,25 @@ $defaultTokenInUse = $adminTokenValue === 'APMC-CHANGE-ME-9K7X2Q';
 $adminDisabled = $adminTokenValue === '' || $defaultTokenInUse;
 $i18nJson = json_encode(apmc_i18n(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP);
 $nonce = apmc_csp_nonce();
-$csrf = $authorized ? apmc_admin_csrf_token() : '';
+$identityMode = apmc_auth()->enabled();
+$authUser = $identityMode ? apmc_auth()->user() : null;
+$authNotice = (string)($GLOBALS['kp_auth_notice'] ?? '');
+$authEnrollment = $GLOBALS['kp_auth_enrollment'] ?? null;
+$githubEnabled = false;
+$authUsers = [];
+$authEvents = [];
+$localReady = false;
+if ($identityMode) {
+    try {
+        $githubEnabled = apmc_auth()->githubAllowed();
+        if ($authorized && ($authUser['role'] ?? '') === 'super_admin') {
+            $authUsers = apmc_auth()->store()->users();
+            $authEvents = apmc_auth()->store()->audit();
+            $localReady = apmc_auth()->store()->localReady();
+        }
+    } catch (Throwable $e) { $authNotice = 'Private identity storage is unavailable or not configured.'; }
+}
+$csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
 ?>
 <!doctype html>
 <html lang="en" data-lang="en">
@@ -55,7 +73,7 @@ $csrf = $authorized ? apmc_admin_csrf_token() : '';
       </button>
       <?php if ($authorized): ?>
         <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="inline">
-          <input type="hidden" name="admin_logout" value="1">
+          <?php if ($identityMode): ?><input type="hidden" name="auth_action" value="logout"><?php else: ?><input type="hidden" name="admin_logout" value="1"><?php endif; ?>
           <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
           <button type="submit" class="small-action" data-i18n="signOut">Sign out</button>
         </form>
