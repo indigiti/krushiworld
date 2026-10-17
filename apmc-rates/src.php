@@ -21,7 +21,7 @@ function apmc_date(?string $date): string {
 }
 function apmc_storage(): string {
     $override = getenv('APMC_DATA_DIR');
-    $directory = $override ?: dirname(__DIR__) . '/apmc-rates-data';
+    $directory = $override ?: dirname(__DIR__, 2) . '/krushiworld-apmc-data';
     if (!is_dir($directory) && !mkdir($directory, 0750, true) && !is_dir($directory)) throw new RuntimeException('Storage unavailable');
     return $directory;
 }
@@ -38,7 +38,7 @@ function apmc_fetch(string $category, string $date): string {
     return $html;
 }
 function apmc_parse(string $html): array {
-    if (!class_exists('DOMDocument')) throw new RuntimeException('PHP DOM extension is required to parse official tables');
+    if (!class_exists('DOMDocument') || !function_exists('mb_strtolower')) throw new RuntimeException('PHP DOM extension is required to parse official tables');
     $doc = new DOMDocument();
     $previous = libxml_use_internal_errors(true);
     $doc->loadHTML('<?xml encoding="utf-8"?>' . $html, LIBXML_NONET | LIBXML_NOERROR | LIBXML_NOWARNING);
@@ -58,8 +58,8 @@ function apmc_parse(string $html): array {
         foreach (array_slice($rows, 0, 6) as $i => $row) {
             $normalized = array_map(static fn($x) => mb_strtolower($x, 'UTF-8'), $row);
             foreach ($normalized as $j => $s) {
-                if (preg_match('/कमाल|maximum|max(?:imum)?\\s*(?:price|rate)/u', $s)) $index['max']=$j;
-                elseif (preg_match('/किमान|minimum|min(?:imum)?\\s*(?:price|rate)/u', $s)) $index['min']=$j;
+                if (preg_match('/कमाल|जास्तीत जास्त|maximum|max(?:imum)?\\s*(?:price|rate)/u', $s)) $index['max']=$j;
+                elseif (preg_match('/किमान|कमीत कमी|minimum|min(?:imum)?\\s*(?:price|rate)/u', $s)) $index['min']=$j;
                 elseif (preg_match('/सरासरी|सर्वसाधारण|modal|average|avg/u', $s)) $index['modal']=$j;
                 elseif (preg_match('/शेतमाल|मालाचे नाव|commodity|produce|item|वस्तू/u', $s)) $index['commodity']=$j;
                 elseif (preg_match('/आवक|arrival|quantity/u', $s)) $index['arrivals']=$j;
