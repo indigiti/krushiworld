@@ -23,7 +23,7 @@ function marketName(r){
  if(!r||typeof r!=='object')return t('मंडी उपलब्ध नाही','Market unavailable');
  const field=(m,key)=>typeof m?.[key]==='string'?m[key].trim():'';
  const marketId=field(r,'market_id')||field(r,'key')||field(r,'slug');
- const directory=marketId?marketRows().find(m=>m.key===marketId):null;
+ const directory=marketId?marketIndex().get(marketId):null;
  const m=directory||r;
  const directoryEntry=Boolean(directory)||(
    !field(r,'commodity_key')&&!('average' in r)&&
@@ -45,7 +45,23 @@ function regionName(group,name){return HI?(dict[group]?.[name]||name):name;}
 function trend(n){if(n===null||n===undefined||!Number.isFinite(Number(n)))return {s:'—',cls:'flat'};let x=Number(n);return {s:(x>0?'▲ ':x<0?'▼ ':'')+Math.abs(x).toFixed(1)+'%',cls:x>0?'up':x<0?'down':'flat'};}
 function iconFor(r){return typeof window.KrushiPulseCommodityIcon==='function'?window.KrushiPulseCommodityIcon(r):'🌱';}
 function records(){const pune=Array.isArray(state.data.records)?state.data.records:[];return state.nationalRecords.length?[...pune,...state.nationalRecords]:pune;}
-function marketRows(){const known=new Set(),list=[];for(const m of (state.marketDirectory.length?state.marketDirectory:(Array.isArray(state.data.markets)?state.data.markets:[]))){const key=String(m.market_id||m.slug||m.name||'');if(key&&!known.has(key)){known.add(key);list.push({...m,key});}}return list;}
+// Memoize the market directory: rate rows must not each rebuild/scan all mandis.
+let cachedMarketSource=null,cachedMarketRows=[],cachedMarketIndex=new Map();
+function marketRows(){
+ const source=state.marketDirectory.length?state.marketDirectory:(Array.isArray(state.data.markets)?state.data.markets:[]);
+ if(source!==cachedMarketSource){
+  cachedMarketSource=source;cachedMarketRows=[];cachedMarketIndex=new Map();
+  for(const m of source){
+   if(!m||typeof m!=='object')continue;
+   const key=String(m.market_id||m.slug||m.name||'');
+   if(key&&!cachedMarketIndex.has(key)){
+    const row={...m,key};cachedMarketRows.push(row);cachedMarketIndex.set(key,row);
+   }
+  }
+ }
+ return cachedMarketRows;
+}
+function marketIndex(){marketRows();return cachedMarketIndex;}
 function categoryRows(){return (Array.isArray(state.data.categories)?state.data.categories:[]).map(c=>typeof c==='string'?c:(c.name||c.slug||'')).filter(Boolean);}
 function matchesMarket(r,m){return m==='all'||[r.market_id,r.market_name,r.market_slug,r.feed_slug].includes(m);}
 function matching(){const q=state.search.trim().toLocaleLowerCase();return records().filter(r=>matchesMarket(r,state.market)&&(state.market!=='all'||((state.stateFilter==='all'||(r.state||'Maharashtra')===state.stateFilter)&&(state.districtFilter==='all'||(r.district||'Pune')===state.districtFilter)))&&(state.category==='all'||r.category===state.category)&&(!state.onlySaved||prefs.crops.includes(id(r)))&&(!q||[r.name_en,r.name_mr,r.name_hi,commodity(r),r.market_name,r.market_name_mr,r.market_name_hi,marketName(r),r.category,r.category_mr,labels('categories',r.category||'')].filter(Boolean).join(' ').toLocaleLowerCase().includes(q))).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.arrival||0)-Number(a.arrival||0));}
@@ -165,7 +181,7 @@ function renderTable(){const list=matching(),body=$('kpTableRows');body.replaceC
 $('kpTableEmpty').hidden=list.length>0;$('kpMore').hidden=list.length<=state.pageSize;setText('kpShowing',t('दाखवत आहे ','Showing ')+Math.min(state.pageSize,list.length)+' / '+list.length);setText('kpFilteredCount',list.length+' '+t('नोंदी','records'));}
 function renderData(){updateStatus();refreshPersonal();renderTable();if(typeof window.KrushiPulseIntelligenceUpdate==='function')window.KrushiPulseIntelligenceUpdate();}
 window.KrushiPulseAllRecords=()=>records().slice();
-window.KrushiPulseMarketNameFor=(id)=>{const m=marketRows().find(m=>m.key===id);return m?marketName(m):null;};
+window.KrushiPulseMarketNameFor=(id)=>{const m=marketIndex().get(id);return m?marketName(m):null;};
 window.KrushiPulseSavedPreferences=()=>({market:prefs.market,crops:prefs.crops.slice()});
 function cropChoices(){const root=$('kpCropChoices');root.replaceChildren();const map=new Map();for(const r of records()){const key=id(r);if(key&&!map.has(key))map.set(key,r);}for(const key of prefs.crops)if(!map.has(key))map.set(key,{commodity_key:key,name_en:key});const list=Array.from(map.values()).sort((a,b)=>Number(prefs.crops.includes(id(b)))-Number(prefs.crops.includes(id(a)))||commodity(a).localeCompare(commodity(b),MR?'mr':'en')).slice(0,160);if(!list.length)root.append(E('div','kp-notice',t('स्रोत डेटा उपलब्ध झाल्यानंतर येथे पिके दिसतील.','Crop choices will appear after source data is available.')));for(const r of list){const label=E('label','kp-crop-choice'),check=E('input');check.type='checkbox';check.value=id(r);check.checked=prefs.crops.includes(id(r));const symbol=E('span','kp-choice-emoji',iconFor(r));symbol.setAttribute('aria-hidden','true');label.append(check,symbol,E('span','',commodity(r)||id(r)));root.append(label);}}
 function openDrawer(){if(state.modalOpen)return;state.modalOpen=true;renderSelectors();cropChoices();$('kpOverlay').hidden=false;$('kpDrawer').inert=false;$('kpDrawer').classList.add('open');$('kpDrawer').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';$('kpCloseDrawer').focus();}
