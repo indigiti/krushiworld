@@ -1,4 +1,4 @@
-# KrushiWorld KrushiPulse — APMC Rates v2.0.0
+# KrushiWorld KrushiPulse — APMC Rates v2.0.1
 
 > National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
@@ -223,3 +223,7 @@ Configuration and operational cautions: [PHASES_2_3_OPERATIONS.md](PHASES_2_3_OP
 ## v2.0.0 — Phase 4: multilingual voice, evidence-based insights, MSP and mandi profiles
 
 The storefront now has an optional Marathi/Hindi/English voice-to-search interface with manual fallback and browser-provider audio privacy disclosure; deterministic explanation of real published market-rate movements (without forecasting or fabricated values); official PIB-sourced Kharif/Rabi 2026–27 MSP references with grade/season/quantity safeguards; and verified official Pune APMC market facilities and department-specific hours where independently documented. Public read-only APIs: `/api/v1/intelligence/insights`, `/api/v1/intelligence/msp`, and `/api/v1/mandis/{market}/profile`. These extend, not replace, the Phase 2/3 price history, alerts and offline application. See [PHASE_4_OPERATIONS.md](PHASE_4_OPERATIONS.md) for supported browser privacy and production verification.
+
+## v2.0.1 — Market label accuracy and cache refresh
+
+The Market column and favorites always resolve the physical APMC/AGMARKNET market from its canonical market ID and market-specific fields (never the crop's `name_en`). Pune snapshot normalization falls back to verified `market_id` where legacy feed slugs are unavailable. Production/source JavaScript parity, all 19 configured feeds across 5 locations, Hindi/Marathi/English labels, and the fallback for unknown market labels are covered by new CI tests. The PHP asset version and PWA service-worker cache were advanced to invalidate cached old JavaScript after deployment. See `tests/market-name.test.cjs` and `tests/test_market_names.php`.
