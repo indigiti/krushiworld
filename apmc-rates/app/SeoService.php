@@ -58,7 +58,7 @@ final class SeoService {
         $sitemap = apmc_absolute_url('/sitemap.xml');
         $base = apmc_app_base_path();
         $prefix = $base === '' ? '' : $base;
-        return "User-agent: *\nAllow: {$prefix}/\nDisallow: {$prefix}/config/\nDisallow: {$prefix}/storage/\nDisallow: {$prefix}/collector/\nDisallow: {$prefix}/*?view=admin\n\nSitemap: {$sitemap}\n";
+        return "User-agent: *\nAllow: {$prefix}/\nDisallow: {$prefix}/admin/\nDisallow: {$prefix}/config/\nDisallow: {$prefix}/storage/\nDisallow: {$prefix}/collector/\nDisallow: {$prefix}/*?view=admin\n\nSitemap: {$sitemap}\n";
     }
 
     public function llmsTxt(): string {
@@ -127,6 +127,142 @@ TXT;
             ],
             'servers' => [['url' => $server]],
             'paths' => [
+                '/api/v1/markets' => [
+                    'get' => [
+                        'operationId' => 'listMandisV1',
+                        'summary' => 'Complete known mandi directory including last-reported status',
+                        'responses' => ['200' => ['description' => 'Discovered markets and availability of national imports']],
+                    ],
+                ],
+                '/api/v1/mandis/{market}/rates' => [
+                    'get' => [
+                        'operationId' => 'getMandiRatesV1',
+                        'summary' => 'Latest published records for one existing mandi (Pune or AGMARKNET)',
+                        'parameters' => [['name' => 'market', 'in' => 'path', 'required' => true,
+                            'schema' => ['type' => 'string', 'pattern' => '^[a-z0-9-]{1,110}
+                    'get' => [
+                        'operationId' => 'getLatestSnapshot',
+                        'summary' => 'Get latest cached market snapshot',
+                        'responses' => ['200' => ['description' => 'Latest snapshot']],
+                    ],
+                ],
+                '/api/query' => [
+                    'get' => [
+                        'operationId' => 'queryMarketRates',
+                        'summary' => 'Search public market rates',
+                        'parameters' => [
+                            ['name' => 'q', 'in' => 'query', 'schema' => ['type' => 'string'], 'description' => 'Commodity, market or category text in English or Marathi'],
+                            ['name' => 'market', 'in' => 'query', 'schema' => ['type' => 'string'], 'description' => 'Canonical market_id (main-market-yard, manjari, moshi, pimpri, khadki) or a compatible market/feed label'],
+                            ['name' => 'category', 'in' => 'query', 'schema' => ['type' => 'string']],
+                            ['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr'], 'default' => 'en']],
+                            ['name' => 'limit', 'in' => 'query', 'schema' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 50, 'default' => 20]],
+                        ],
+                        'responses' => ['200' => ['description' => 'Matching market-rate records']],
+                    ],
+                ],
+                '/api/markets' => [
+                    'get' => [
+                        'operationId' => 'getCanonicalMarkets',
+                        'summary' => 'List canonical customer-facing markets',
+                        'responses' => ['200' => ['description' => 'Five deduplicated Pune APMC market locations with internal feed coverage']],
+                    ],
+                ],
+                '/api/summary' => [
+                    'get' => [
+                        'operationId' => 'getMarketSummary',
+                        'summary' => 'Get compact market status and pulse summary',
+                        'parameters' => [['name' => 'lang', 'in' => 'query', 'schema' => ['type' => 'string', 'enum' => ['en', 'mr'], 'default' => 'en']]],
+                        'responses' => ['200' => ['description' => 'Compact market summary']],
+                    ],
+                ],
+                '/api/market' => [
+                    'get' => [
+                        'operationId' => 'getMarketBySlug',
+                        'summary' => 'Get one internal source-feed snapshot',
+                        'parameters' => [['name' => 'slug', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'pattern' => '^[a-z0-9-]+$']]],
+                        'responses' => ['200' => ['description' => 'Market snapshot']],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function jsonLd(string $lang): array {
+        $route = (array)($GLOBALS['apmc_route'] ?? []);
+        if (($route['kind'] ?? '') === 'mandi' && isset($route['market_data']) && is_array($route['market_data'])) {
+            $market = $route['market_data'];
+            $marketName = (string)($lang === 'mr' ? ($market['name_mr'] ?? $market['name_en'] ?? '') : ($market['name_en'] ?? ''));
+            $canonical = $this->canonical($lang);
+            return ['@context' => 'https://schema.org', '@graph' => [
+                ['@type' => 'WebPage', '@id' => $canonical . '#webpage',
+                    'url' => $canonical, 'name' => $marketName . ' | KrushiPulse',
+                    'description' => 'Published mandi price information with original source dates and units.',
+                    'inLanguage' => $lang === 'mr' ? 'mr-IN' : 'en-IN',
+                    'isPartOf' => ['@id' => rtrim(apmc_absolute_url('/'), '/') . '/#website']],
+            ]];
+        }
+        $data = $this->repo->latest();
+        $meta = (array)($data['meta'] ?? []);
+        $canonical = $this->canonical($lang);
+        $base = rtrim(apmc_absolute_url('/'), '/');
+        $description = $lang === 'mr'
+            ? 'पुणे एपीएमसीमधील दैनंदिन घाऊक शेतमाल बाजारभाव, आवक आणि बाजार हालचालींची द्विभाषिक माहिती.'
+            : 'Bilingual daily wholesale commodity rates, arrivals and market movement intelligence for Pune APMC markets.';
+        return [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'WebSite',
+                    '@id' => $base . '/#website',
+                    'url' => $base . '/',
+                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी बाजार' : 'Pune APMC Market Intelligence',
+                    'description' => $description,
+                    'inLanguage' => ['en-IN', 'mr-IN'],
+                ],
+                [
+                    '@type' => 'WebPage',
+                    '@id' => $canonical . '#webpage',
+                    'url' => $canonical,
+                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी बाजारभाव' : 'Pune APMC Market Rates',
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $base . '/#website'],
+                    'inLanguage' => $lang === 'mr' ? 'mr-IN' : 'en-IN',
+                ],
+                [
+                    '@type' => 'Dataset',
+                    '@id' => $base . '/#dataset',
+                    'name' => $lang === 'mr' ? 'पुणे एपीएमसी दैनंदिन बाजारभाव डेटा' : 'Pune APMC Daily Market Rates Dataset',
+                    'description' => $description,
+                    'url' => $canonical,
+                    'inLanguage' => ['en-IN', 'mr-IN'],
+                    'dateModified' => $meta['serving_date'] ?? null,
+                    'isBasedOn' => (string)apmc_config('source_base', 'https://apmcpune.in'),
+                    'creator' => [
+                        '@type' => 'Organization',
+                        'name' => (string)apmc_config('site.publisher_name', 'Pune APMC Market Intelligence'),
+                    ],
+                    'provider' => [
+                        '@type' => 'Organization',
+                        'name' => 'Agricultural Produce Market Committee, Pune',
+                        'url' => (string)apmc_config('source_base', 'https://apmcpune.in'),
+                    ],
+                    'citation' => (string)apmc_config('source_base', 'https://apmcpune.in'),
+                    'distribution' => [
+                        ['@type' => 'DataDownload', 'encodingFormat' => 'application/json', 'contentUrl' => $base . '/api/latest'],
+                        ['@type' => 'DataDownload', 'encodingFormat' => 'application/json', 'contentUrl' => $base . '/api/query'],
+                    ],
+                ],
+            ],
+        ];
+    }
+}
+]]],
+                        'responses' => [
+                            '200' => ['description' => 'Source-attributed commodity rates; empty when no report is available'],
+                            '404' => ['description' => 'Unknown market identifier'],
+                        ],
+                    ],
+                ],
                 '/api/latest' => [
                     'get' => [
                         'operationId' => 'getLatestSnapshot',
