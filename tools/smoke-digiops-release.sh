@@ -28,15 +28,19 @@ curl --fail --silent --show-error --max-time 15 "$url/?lang=mr" > "$tmp/mr.html"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=en" > "$tmp/en.html"
 curl --fail --silent --show-error --max-time 15 "$url/?view=admin" > "$tmp/admin.html"
 curl --fail --silent --show-error --max-time 15 "$url/build/krushipulse.js" > "$tmp/krushipulse.js"
+curl --fail --silent --show-error --max-time 15 "$url/build/commodity-icons.js" > "$tmp/commodity-icons.js"
 curl --fail --silent --show-error --max-time 15 "$url/build/nearest-mandi.js" > "$tmp/nearest-mandi.js"
 for page in mr en; do
   if ! grep -q 'KrushiPulse' "$tmp/$page.html"; then cat "$tmp/php.log"; echo "Missing KrushiPulse in $page"; exit 1; fi
 done
+if ! grep -q '/krushiworld/build/commodity-icons.js' "$tmp/mr.html"; then
+  echo 'Commodity emoji resolver missing in rendered document'; exit 1
+fi
 if ! grep -q '/krushiworld/build/krushipulse.css' "$tmp/mr.html"; then
   cat "$tmp/php.log"; echo 'Incorrect asset URL for /krushiworld'; exit 1
 fi
 if ! grep -q 'APMC' "$tmp/admin.html"; then cat "$tmp/php.log"; echo 'Admin did not render'; exit 1; fi
-if [[ ! -s "$tmp/krushipulse.js" || ! -s "$tmp/nearest-mandi.js" ]]; then
+if [[ ! -s "$tmp/commodity-icons.js" || ! -s "$tmp/krushipulse.js" || ! -s "$tmp/nearest-mandi.js" ]]; then
   echo 'Missing frontend JS assets'; exit 1
 fi
 if [[ -e "$tmp/public_html/krushiworld/collector" || -e "$tmp/public_html/krushiworld/config" ]]; then
