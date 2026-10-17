@@ -25,6 +25,9 @@ require_once __DIR__ . '/Application/MarketDirectoryService.php';
 require_once __DIR__ . '/Application/MarketRatesService.php';
 require_once __DIR__ . '/Application/PriceIntelligenceService.php';
 require_once __DIR__ . '/Application/WeatherAdvisoryService.php';
+require_once __DIR__ . '/Application/MspReferenceService.php';
+require_once __DIR__ . '/Application/MarketProfileService.php';
+require_once __DIR__ . '/Application/ExplainableInsightService.php';
 require_once __DIR__ . '/Http/RouteResolver.php';
 require_once __DIR__ . '/Http/PublicApiController.php';
 
