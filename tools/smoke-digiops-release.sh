@@ -22,6 +22,8 @@ if [[ "$ready" != 1 ]]; then cat "$tmp/php.log"; exit 1; fi
 php -r '$a=json_decode(file_get_contents($argv[1]),true); if(!is_array($a) || ($a["ok"]??false)!==true || !isset($a["health"]["status"])) exit(1);' "$tmp/health.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=markets" > "$tmp/markets.json"
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || count($j["data"]["markets"]??[]) < 5 || !isset($j["data"]["national"]["status"])) exit(1);' "$tmp/markets.json"
+# Empty/offline national import must not invent geocoded mandis or PIN areas.
+php -r '$j=json_decode(file_get_contents($argv[1]),true);$d=$j["data"]??[];$c=$d["coverage"]??[];if(($c["with_coordinates"]??0)<5 || ($c["with_postal_reference"]??0)<2 || !array_key_exists("latest_report_date",$c) || !array_key_exists("latest_report_date",$d["national"]??[]))exit(1);$markets=array_column($d["markets"],null,"market_id");if(($markets["main-market-yard"]["pincode"]??"")!=="411037" || ($markets["pimpri"]["pincode"]??"")!=="411017")exit(1);' "$tmp/markets.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=national&market=agmarknet-test" > "$tmp/national.json"
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || !is_array($j["data"]["records"]??null)) exit(1);' "$tmp/national.json"
 curl --fail --silent --show-error --max-time 15 "$url/?lang=mr" > "$tmp/mr.html"
@@ -30,6 +32,8 @@ curl --fail --silent --show-error --max-time 15 "$url/?view=admin" > "$tmp/admin
 curl --fail --silent --show-error --max-time 15 "$url/build/krushipulse.js" > "$tmp/krushipulse.js"
 curl --fail --silent --show-error --max-time 15 "$url/build/commodity-icons.js" > "$tmp/commodity-icons.js"
 curl --fail --silent --show-error --max-time 15 "$url/build/nearest-mandi.js" > "$tmp/nearest-mandi.js"
+if ! grep -q 'kpPincodeSearch' "$tmp/mr.html"; then echo 'PIN lookup missing from storefront'; exit 1; fi
+
 for page in mr en; do
   if ! grep -q 'KrushiPulse' "$tmp/$page.html"; then cat "$tmp/php.log"; echo "Missing KrushiPulse in $page"; exit 1; fi
 done
