@@ -127,7 +127,8 @@ final class PublicApiController {
     }
 
     if (in_array($api, ['refresh', 'admin-action'], true)) {
-        if (!apmc_admin_authorized()) apmc_json_response(['ok' => false, 'error' => 'Unauthorized'], 403);
+        if (!apmc_admin_authorized() || (apmc_auth()->enabled() && !apmc_auth()->canOperate()))
+            apmc_json_response(['ok' => false, 'error' => 'Unauthorized'], 403);
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             apmc_json_response(['ok' => false, 'error' => 'POST required'], 405);
         }
