@@ -73,8 +73,16 @@ final class DataNormalizer {
         $record['market_name'] = $market['market_name_en'];
         $record['market_name_en'] = $market['market_name_en'];
         $record['market_name_mr'] = $market['market_name_mr'];
+        $marketLabels = (array)(apmc_i18n()['markets'] ?? []);
+        $marketNameHi = (string)($marketLabels[$market['market_name_en']]['hi'] ?? '');
+        if ($marketNameHi !== '') $record['market_name_hi'] = $marketNameHi;
         $record['name_en'] = $resolved['en'];
         $record['name_mr'] = $resolved['mr'];
+        // Hindi display label is additive: raw source names and stable commodity IDs
+        // remain unchanged, preserving history and user favorites across languages.
+        $commodityLabels = (array)(apmc_i18n()['commodities'] ?? []);
+        $nameHi = (string)($commodityLabels[$resolved['en']]['hi'] ?? $commodityLabels[$resolved['mr']]['hi'] ?? '');
+        if ($nameHi !== '') $record['name_hi'] = $nameHi;
         // Old cached APMC records also receive the verified emoji dictionary on read.
         // Unrecognized crops retain any existing source emoji for safe UI fallback.
         if (!empty($resolved['emoji'])) $record['emoji'] = (string)$resolved['emoji'];
