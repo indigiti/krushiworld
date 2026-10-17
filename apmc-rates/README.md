@@ -1,4 +1,6 @@
-# KrushiWorld KrushiPulse — APMC Rates v1.6.0
+# KrushiWorld KrushiPulse — APMC Rates v1.8.0
+
+> National mandi import setup: [NATIONAL_AGMARKNET.md](NATIONAL_AGMARKNET.md). The market selector lists all configured Pune locations and can expand to nationwide AGMARKNET reporting mandis after server-side API key configuration and successful ingestion.
 
 > For the KrushiWorld integration, read [KRUSHIWORLD_INTEGRATION.md](KRUSHIWORLD_INTEGRATION.md). The v1.6.0 public frontend is Marathi-first, green/orange and framework-free, while existing APMC collectors and APIs are retained.
 
