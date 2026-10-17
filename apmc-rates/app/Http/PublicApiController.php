@@ -29,6 +29,11 @@ final class PublicApiController {
         MarketDirectoryService $marketDirectory,
         MarketRatesService $marketRates,
     ): never {
+    if ($api === 'v1-weather') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        $weather = new \KrushiPulse\Application\WeatherAdvisoryService();
+        apmc_json_response(['ok'=>true,'data'=>$weather->latest()]);
+    }
     if (in_array($api, ['v1-history','v1-compare'], true)) {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
             apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
