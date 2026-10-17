@@ -26,13 +26,14 @@ final class RouteResolver {
             return ['kind' => 'mandi', 'lang' => $m[1], 'market' => $m[2]];
         }
         if (preg_match('~^/admin/?$~D', $path)) return ['kind' => 'admin'];
-        if (preg_match('~^/api/v1/intelligence/(history|compare|weather)/?$~D', $path, $m)) return ['kind' => 'api', 'api' => 'v1-' . $m[1]];
+        if (preg_match('~^/api/v1/intelligence/(history|compare|weather|insights|msp)/?$~D', $path, $m)) return ['kind' => 'api', 'api' => 'v1-' . $m[1]];
         if (preg_match('~^/api/v1/(latest|markets|query|summary|health|discover)/?$~D', $path, $m)) {
             return ['kind' => 'api', 'api' => $m[1]];
         }
         if (preg_match('~^/api/v1/mandis/([a-z0-9-]{1,110})/rates/?$~D', $path, $m)) {
             return ['kind' => 'api', 'api' => 'v1-mandi-rates', 'market' => $m[1]];
         }
+        if (preg_match('~^/api/v1/mandis/([a-z0-9-]{1,110})/profile/?$~D', $path, $m)) return ['kind'=>'api','api'=>'v1-market-profile','market'=>$m[1]];
         // Apache clean-URL aliases and their query-string equivalents are both supported.
         if (preg_match('~^/api/(latest|markets|query|summary|health|discover|market|national)/?$~D', $path, $m)) {
             return ['kind' => 'api', 'api' => $m[1]];
