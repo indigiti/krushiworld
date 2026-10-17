@@ -158,3 +158,9 @@
  .kp-table-bottom{padding:12px}
  .kp-icon-btn,.kp-settings-btn{min-height:44px!important}
 }
+
+
+/* Empty-data layouts keep warnings visible without oversized blank chart cards. */
+.kp-history-chart:empty{min-height:0;margin-top:4px}
+.kp-phase4-grid{align-items:start}
+.kp-phase4-grid>.kp-phase4-card{height:auto;align-self:start}
