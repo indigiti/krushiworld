@@ -7,8 +7,9 @@ namespace KrushiPulse\Application;
  * SQLite is private under storage/history; absence never fabricates historical rates.
  */
 final class PriceIntelligenceService {
+    public function __construct(private ?string $filePath = null) {}
     private function connection(): ?\SQLite3 {
-        $file = APMC_STORAGE . '/history/rates.sqlite';
+        $file = $this->filePath ?? APMC_STORAGE . '/history/rates.sqlite';
         if (!class_exists(\SQLite3::class) || !is_file($file)) return null;
         try {
             $db = new \SQLite3($file, SQLITE3_OPEN_READONLY);
