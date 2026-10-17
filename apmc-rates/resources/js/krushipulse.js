@@ -1,9 +1,10 @@
 /* KrushiPulse dashboard: verified API data; guest preferences persisted in localStorage. */
 (()=>{
 'use strict';
-const $=id=>document.getElementById(id), MR=document.documentElement.lang==='mr', lang=MR?'mr':'en';
-const t=(mr,en)=>MR?mr:en;
-const dict=window.APMC_I18N||{},nf=new Intl.NumberFormat('en-IN',{maximumFractionDigits:0});
+const $=id=>document.getElementById(id), lang=['en','mr','hi'].includes(document.documentElement.lang)?document.documentElement.lang:'mr', MR=lang==='mr',HI=lang==='hi';
+const dict=window.APMC_I18N||{};
+const t=(mr,en)=>HI?(dict.ui_hi?.[en]||en):(MR?mr:en);
+const nf=new Intl.NumberFormat('en-IN',{maximumFractionDigits:0});
 const storageKey='krushipulse.preferences.v1',themeKey='krushipulse.theme.v1';
 const pageRoute=window.APMC_ROUTE||{};
 const mandiLink=key=>String(window.APMC_APP_BASE||'')+'/'+lang+'/mandis/'+encodeURIComponent(key)+'/';
@@ -15,11 +16,12 @@ const safeSave=(key,value)=>{try{window.localStorage.setItem(key,value);return t
 function initPrefs(){try{const raw=JSON.parse(safeRead(storageKey)||'null');if(raw&&typeof raw==='object'){prefs.market=typeof raw.market==='string'?raw.market:'all';prefs.crops=Array.isArray(raw.crops)?raw.crops.filter(x=>typeof x==='string'&&x.length<200).slice(0,100):[];}}catch(_){}}
 function persist(){safeSave(storageKey,JSON.stringify(prefs));}
 function labels(group,key){let v=dict[group]?.[key];return v?.[lang]||v?.en||key||'';}
-function commodity(r){return (MR?r.name_mr:r.name_en)||(MR?r.name_en:r.name_mr)||'';}
-function marketName(r){return r?.['name_'+lang]||r?.['market_name_'+lang]||labels('markets',r?.name||r?.market_name||'')||t('मंडी','Market');}
+function commodity(r){if(HI)return r?.name_hi||dict.commodities?.[r?.name_en]?.hi||dict.commodities?.[r?.name_mr]?.hi||r?.name_en||r?.name_mr||'';return (MR?r.name_mr:r.name_en)||(MR?r.name_en:r.name_mr)||'';}
+function marketName(r){const key=r?.name_en||r?.market_name_en||r?.name||r?.market_name||'';return r?.['name_'+lang]||r?.['market_name_'+lang]||labels('markets',key)||t('मंडी','Market');}
 function id(r){return String(r.commodity_key||r.name_en||r.name_mr||'').trim();}
 function amt(n){return n===undefined||n===null||n===''||!Number.isFinite(Number(n))?'—':'₹'+nf.format(Number(n));}
 function unit(n){return labels('units',String(n||''))||t('एकक','unit');}
+function regionName(group,name){return HI?(dict[group]?.[name]||name):name;}
 function trend(n){if(n===null||n===undefined||!Number.isFinite(Number(n)))return {s:'—',cls:'flat'};let x=Number(n);return {s:(x>0?'▲ ':x<0?'▼ ':'')+Math.abs(x).toFixed(1)+'%',cls:x>0?'up':x<0?'down':'flat'};}
 function iconFor(r){return typeof window.KrushiPulseCommodityIcon==='function'?window.KrushiPulseCommodityIcon(r):'🌱';}
 function records(){const pune=Array.isArray(state.data.records)?state.data.records:[];return state.nationalRecords.length?[...pune,...state.nationalRecords]:pune;}
@@ -29,17 +31,17 @@ function matchesMarket(r,m){return m==='all'||[r.market_id,r.market_name,r.marke
 function matching(){const q=state.search.trim().toLocaleLowerCase();return records().filter(r=>matchesMarket(r,state.market)&&(state.market!=='all'||((state.stateFilter==='all'||(r.state||'Maharashtra')===state.stateFilter)&&(state.districtFilter==='all'||(r.district||'Pune')===state.districtFilter)))&&(state.category==='all'||r.category===state.category)&&(!state.onlySaved||prefs.crops.includes(id(r)))&&(!q||[r.name_en,r.name_mr,r.market_name,r.market_name_mr,r.category,r.category_mr].filter(Boolean).join(' ').toLocaleLowerCase().includes(q))).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.arrival||0)-Number(a.arrival||0));}
 function setText(id,val){const el=$(id);if(el)el.textContent=val??'';}
 function bind(name,value){document.querySelectorAll('[data-bind="'+name+'"]').forEach(el=>el.textContent=value??'');}
-function updateStatus(){const m=state.data.meta||{},exists=Number(m.records||records().length);bind('record-count',nf.format(exists));bind('market-count',String(marketRows().length));const d=/^\d{4}-\d\d-\d\d$/.test(m.serving_date||'')?new Intl.DateTimeFormat(MR?'mr-IN-u-nu-latn':'en-IN',{day:'numeric',month:'short',year:'numeric'}).format(new Date(m.serving_date+'T12:00:00')):t('अहवाल नाही','Not available');bind('report-date',d);bind('freshness',!exists?t('स्रोत प्रतीक्षेत','Awaiting source'):Number(m.markets_error||0)>0?t('काही स्रोत अनुपलब्ध','Some feeds unavailable'):Number(m.markets_stale||0)>0?t('काही अहवाल जुने','Some reports older'):t('प्रकाशित दर उपलब्ध','Published rates available'));setText('kpReportHint',t('अहवालाची मूळ तारीख दाखवलेली आहे','Each row shows its source date'));}
+function updateStatus(){const m=state.data.meta||{},exists=Number(m.records||records().length);bind('record-count',nf.format(exists));bind('market-count',String(marketRows().length));const d=/^\d{4}-\d\d-\d\d$/.test(m.serving_date||'')?new Intl.DateTimeFormat(MR?'mr-IN-u-nu-latn':HI?'hi-IN-u-nu-latn':'en-IN',{day:'numeric',month:'short',year:'numeric'}).format(new Date(m.serving_date+'T12:00:00')):t('अहवाल नाही','Not available');bind('report-date',d);bind('freshness',!exists?t('स्रोत प्रतीक्षेत','Awaiting source'):Number(m.markets_error||0)>0?t('काही स्रोत अनुपलब्ध','Some feeds unavailable'):Number(m.markets_stale||0)>0?t('काही अहवाल जुने','Some reports older'):t('प्रकाशित दर उपलब्ध','Published rates available'));setText('kpReportHint',t('अहवालाची मूळ तारीख दाखवलेली आहे','Each row shows its source date'));}
 function setSelectOptions(select,items,allLabel,fmt){select.replaceChildren();const all=E('option','',allLabel);all.value='all';select.append(all);for(const m of items){const item=E('option','',fmt(m));item.value=typeof m==='string'?m:m.key;select.append(item);}}
 function renderSelectors(){
   const markets=marketRows(),cats=categoryRows();
   const states=[...new Set(markets.map(m=>String(m.state||'Maharashtra')).filter(Boolean))].sort();
-  setSelectOptions($('kpState'),states,t('सर्व राज्ये','All states'),m=>m);
+  setSelectOptions($('kpState'),states,t('सर्व राज्ये','All states'),m=>regionName('states_hi',m));
   $('kpState').value=states.includes(state.stateFilter)?state.stateFilter:'all';
   const byState=markets.filter(m=>state.stateFilter==='all'||(m.state||'Maharashtra')===state.stateFilter);
   const districts=[...new Set(byState.map(m=>String(m.district||'Pune')).filter(Boolean))].sort();
   if(state.districtFilter!=='all'&&!districts.includes(state.districtFilter))state.districtFilter='all';
-  setSelectOptions($('kpDistrict'),districts,t('सर्व जिल्हे','All districts'),m=>m);
+  setSelectOptions($('kpDistrict'),districts,t('सर्व जिल्हे','All districts'),m=>regionName('districts_hi',m));
   $('kpDistrict').value=state.districtFilter;
   const scoped=byState.filter(m=>state.districtFilter==='all'||(m.district||'Pune')===state.districtFilter);
   setSelectOptions($('kpMarket'),scoped,t('सर्व मंड्या','All mandis'),m=>marketName(m)+(Number(m.records||0)>0?'':' · '+t('नवे दर नाहीत','No current report')));
@@ -107,7 +109,7 @@ function refreshPersonal(){const available=marketRows(),selected=available.find(
   if(prefs.crops.length>12)list.append(E('div','kp-notice',t('आणखी पिके तुमच्या पसंतीमध्ये जतन आहेत.','More crops are saved in your preferences.')));
 }
 function favButton(r){const key=id(r),saved=prefs.crops.includes(key),btn=E('button','kp-fav-button'+(saved?' saved':''),saved?'★':'☆');btn.type='button';btn.setAttribute('aria-label',saved?t('आवडते पीक काढा','Remove favorite crop'):t('पीक आवडते करा','Save favorite crop'));btn.setAttribute('aria-pressed',String(saved));btn.addEventListener('click',()=>{if(!key)return;prefs.crops=saved?prefs.crops.filter(k=>k!==key):[...prefs.crops,key].slice(0,100);persist();renderTable();refreshPersonal();});return btn;}
-function renderTable(){const list=matching(),body=$('kpTableRows');body.replaceChildren();for(const r of list.slice(0,state.pageSize)){const tr=E('tr'),star=E('td');star.append(favButton(r));tr.append(star);const crop=E('td'),name=E('div','kp-cell-crop');const details=E('div');details.append(E('b','',commodity(r)),E('small','',labels('categories',r.category||'')));const symbol=E('span','kp-crop-emoji',iconFor(r));symbol.setAttribute('aria-hidden','true');name.append(symbol,details);crop.append(name);const marketCell=E('td');const marketTitle=r.market_name_mr&&MR?r.market_name_mr:r.market_name_en||r.market_name||'—';const linkId=String(r.market_id||'');if(/^[a-z0-9-]{1,110}$/.test(linkId)){const a=E('a','kp-rate-market-link',marketTitle);a.href=mandiLink(linkId);marketCell.append(a);}else marketCell.textContent=marketTitle;tr.append(crop,marketCell);const p=E('td'),n=E('span','kp-price-value',amt(r.average));n.append(E('small','',unit(r.unit)));p.append(n);tr.append(p,E('td','',amt(r.min)),E('td','',amt(r.max)));const change=E('td'),delta=trend(r.change_pct);change.append(E('span','kp-trend '+delta.cls,delta.s));tr.append(change,E('td','',r.date||'—'));body.append(tr);}
+function renderTable(){const list=matching(),body=$('kpTableRows');body.replaceChildren();for(const r of list.slice(0,state.pageSize)){const tr=E('tr'),star=E('td');star.append(favButton(r));tr.append(star);const crop=E('td'),name=E('div','kp-cell-crop');const details=E('div');details.append(E('b','',commodity(r)),E('small','',labels('categories',r.category||'')));const symbol=E('span','kp-crop-emoji',iconFor(r));symbol.setAttribute('aria-hidden','true');name.append(symbol,details);crop.append(name);const marketCell=E('td');const marketTitle=marketName(r);const linkId=String(r.market_id||'');if(/^[a-z0-9-]{1,110}$/.test(linkId)){const a=E('a','kp-rate-market-link',marketTitle);a.href=mandiLink(linkId);marketCell.append(a);}else marketCell.textContent=marketTitle;tr.append(crop,marketCell);const p=E('td'),n=E('span','kp-price-value',amt(r.average));n.append(E('small','',unit(r.unit)));p.append(n);tr.append(p,E('td','',amt(r.min)),E('td','',amt(r.max)));const change=E('td'),delta=trend(r.change_pct);change.append(E('span','kp-trend '+delta.cls,delta.s));tr.append(change,E('td','',r.date||'—'));body.append(tr);}
 $('kpTableEmpty').hidden=list.length>0;$('kpMore').hidden=list.length<=state.pageSize;setText('kpShowing',t('दाखवत आहे ','Showing ')+Math.min(state.pageSize,list.length)+' / '+list.length);setText('kpFilteredCount',list.length+' '+t('नोंदी','records'));}
 function renderData(){updateStatus();refreshPersonal();renderTable();}
 function cropChoices(){const root=$('kpCropChoices');root.replaceChildren();const map=new Map();for(const r of records()){const key=id(r);if(key&&!map.has(key))map.set(key,r);}for(const key of prefs.crops)if(!map.has(key))map.set(key,{commodity_key:key,name_en:key});const list=Array.from(map.values()).sort((a,b)=>Number(prefs.crops.includes(id(b)))-Number(prefs.crops.includes(id(a)))||commodity(a).localeCompare(commodity(b),MR?'mr':'en')).slice(0,160);if(!list.length)root.append(E('div','kp-notice',t('स्रोत डेटा उपलब्ध झाल्यानंतर येथे पिके दिसतील.','Crop choices will appear after source data is available.')));for(const r of list){const label=E('label','kp-crop-choice'),check=E('input');check.type='checkbox';check.value=id(r);check.checked=prefs.crops.includes(id(r));const symbol=E('span','kp-choice-emoji',iconFor(r));symbol.setAttribute('aria-hidden','true');label.append(check,symbol,E('span','',commodity(r)||id(r)));root.append(label);}}
