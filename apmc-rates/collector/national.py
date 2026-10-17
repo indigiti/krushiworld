@@ -194,11 +194,18 @@ def run(force: bool = False) -> int:
         except BlockingIOError:
             return 0
         snapshot_file = DEST / "current.json"
+        attempt_file = DEST / "last_attempt.json"
         interval_hours = max(1, min(24, int(os.getenv("APMC_NATIONAL_INTERVAL_HOURS", "6"))))
+        if not force and attempt_file.exists():
+            from time import time
+            # Failed runs back off at least one hour to avoid API hammering.
+            if time() - attempt_file.stat().st_mtime < 3600:
+                return 0
         if not force and snapshot_file.exists():
             from time import time
             if time() - snapshot_file.stat().st_mtime < interval_hours * 3600:
                 return 0
+        write_atomic(attempt_file, {"attempted_at": datetime.now(timezone.utc).isoformat()})
         try:
             raw_rows = retrieve(key)
             older = load(DEST / "directory.json", {}).get("markets", [])
