@@ -80,7 +80,7 @@ final class PublicApiController {
         try {
             apmc_json_response(['ok' => true, 'data' =>
                 $national->marketRates($id, (int)($_GET['limit'] ?? 1500))]);
-        } catch (InvalidArgumentException $ex) {
+        } catch (\InvalidArgumentException $ex) {
             apmc_json_response(['ok' => false, 'error' => $ex->getMessage()], 400);
         }
     }
