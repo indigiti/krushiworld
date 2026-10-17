@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 define('APMC_ROOT', dirname(__DIR__));
 define('APMC_STORAGE', APMC_ROOT . '/storage');
-define('APMC_PUBLIC_DIR', APMC_ROOT . '/public');
+// DigiOps public entrypoints set this to public_html/krushiworld.\n// Keep the original single-folder module deployment fully supported.\nif (!defined('APMC_PUBLIC_DIR')) define('APMC_PUBLIC_DIR', APMC_ROOT . '/public');
 
 $config = require APMC_ROOT . '/config/app.php';
 $versionFile = APMC_ROOT . '/VERSION';
