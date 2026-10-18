@@ -272,6 +272,19 @@ final class NationalHttpCron {
                 @unlink($this->path('http-cron-rows.ndjson'));
                 $progress = []; $lastStep = 0;
             }
+            // Python and HTTP share a flock but may run sequentially. A newer
+            // completed Python import must supersede any older staged HTTP pages.
+            if ($progress && $started > 0) {
+                $completed = $this->read('verified.json');
+                $completedAt = strtotime((string)($completed['verified_at'] ?? '')) ?: 0;
+                if (($completed['verified'] ?? false) === true && $completedAt > $started
+                    && is_file($this->path('current.json')) && is_file($this->path('directory.json'))) {
+                    @unlink($this->path('http-cron-state.json'));
+                    @unlink($this->path('http-cron-rows.ndjson'));
+                    @unlink($this->path('refresh-request.json'));
+                    return ['status'=>'superseded','verified_at'=>$completed['verified_at']];
+                }
+            }
             if ($lastStep > 0 && $now >= $lastStep && $now - $lastStep < self::STEP_GAP) {
                 return ['status'=>'throttled','next_offset'=>(int)($progress['offset'] ?? 0)];
             }
