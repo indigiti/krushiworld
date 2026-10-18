@@ -39,6 +39,8 @@ jobs:
         run: php apmc-rates/tests/test_web_bootstrap.php
       - name: Direct KrushiPulse owner and private API key setup
         run: php apmc-rates/tests/test_direct_setup.php
+      - name: Temporary data.gov.in CSRF and session independence
+        run: php apmc-rates/tests/test_temp_setup_csrf.php
       - name: PHP pretty URL and layered service contracts
         run: php apmc-rates/tests/test_pretty_routes.php
       - name: SQLite price intelligence and comparability contracts
