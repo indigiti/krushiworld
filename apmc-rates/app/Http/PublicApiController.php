@@ -64,6 +64,9 @@ final class PublicApiController {
     if ($api === 'query') apmc_json_response(['ok' => true, 'data' => $queryService->query($_GET)]);
     if ($api === 'summary') apmc_json_response(['ok' => true, 'data' => $queryService->summary((string)($_GET['lang'] ?? 'en'))]);
     if ($api === 'markets') {
+        // Reads continue to serve the verified snapshot immediately.
+        // The scheduled Python worker consumes this low-cost visit hint.
+        (new \KrushiPulse\Application\NationalRefreshGate(APMC_STORAGE))->visit();
         apmc_json_response(['ok' => true, 'data' => $marketDirectory->summary()]);
     }
     if ($api === 'v1-mandi-rates') {

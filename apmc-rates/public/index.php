@@ -110,6 +110,9 @@ if ($api !== '') {
 header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Pragma: no-cache');
 
+// Visitor checks only enqueue a bounded national refresh hint, never import on a PHP request.
+(new \KrushiPulse\Application\NationalRefreshGate(APMC_STORAGE))->visit();
+
 // Demand-driven stale-while-revalidate. This never blocks page rendering.
 $refreshResult = $refresh->maybeTrigger();
 $data = $repo->latest();
