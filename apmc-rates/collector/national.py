@@ -184,9 +184,36 @@ def build(rows: list[dict], previous: list[dict]) -> tuple[dict, dict]:
     })
 
 
+def configured_api_key() -> str:
+    """Load the key for cron without exposing it through the public application.
+
+    An actual process environment variable always wins over the private file.
+    """
+    value = os.environ.get("APMC_DATA_GOV_IN_API_KEY", "").strip()
+    if value:
+        return value
+    path = ROOT / "storage" / "config" / "runtime.json"
+    if path.is_symlink():
+        raise RuntimeError("Unsafe private runtime configuration")
+    try:
+        if path.stat().st_mode & 0o007:
+            raise RuntimeError("Private runtime configuration must have mode 0600")
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return ""
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise RuntimeError("Private runtime configuration is invalid") from exc
+    key = data.get("APMC_DATA_GOV_IN_API_KEY") if isinstance(data, dict) else None
+    if key is None:
+        return ""
+    if not isinstance(key, str) or not re.fullmatch(r"[A-Za-z0-9._-]{16,256}", key):
+        raise RuntimeError("Private AGMARKNET key configuration is invalid")
+    return key.strip()
+
+
 def run(force: bool = False) -> int:
     """Import on the existing server cron. Never expose credentials in diagnostics."""
-    key = os.getenv("APMC_DATA_GOV_IN_API_KEY", "").strip()
+    key = configured_api_key()
     if not key:
         print("National AGMARKNET feed not configured (APMC_DATA_GOV_IN_API_KEY missing).")
         return 0

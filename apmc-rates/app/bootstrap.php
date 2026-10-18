@@ -7,6 +7,10 @@ define('APMC_STORAGE', APMC_ROOT . '/storage');
 // Keep the original single-folder module deployment fully supported.
 if (!defined('APMC_PUBLIC_DIR')) define('APMC_PUBLIC_DIR', APMC_ROOT . '/public');
 
+// Server-only optional persistent settings, never part of public/release files.
+require_once __DIR__ . '/PrivateRuntimeSettings.php';
+KrushiPulseRuntimeSettings::load(APMC_STORAGE . '/config/runtime.json');
+
 $config = require APMC_ROOT . '/config/app.php';
 $versionFile = APMC_ROOT . '/VERSION';
 if (is_file($versionFile)) {
