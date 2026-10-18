@@ -45,7 +45,7 @@ final class PrivateAppSettings {
     }
 
     public static function ensureAuthKey(string $storage): string {
-        $current = trim((string)(getenv('APMC_AUTH_KEY') ?: ''));
+        $current = trim((string)(\KrushiPulseRuntimeSettings::get('APMC_AUTH_KEY') ?: ''));
         if ($current !== '') {
             if (!preg_match('/^[a-f0-9]{64}$/iD',$current)) throw new RuntimeException('Invalid server auth key');
             return $current;
@@ -70,7 +70,7 @@ final class PrivateAppSettings {
     }
 
     public static function hasNationalKey(string $storage): bool {
-        if (trim((string)getenv('APMC_DATA_GOV_IN_API_KEY')) !== '') return true;
+        if (trim((string)\KrushiPulseRuntimeSettings::get('APMC_DATA_GOV_IN_API_KEY')) !== '') return true;
         $path=$storage.'/config/runtime.json';
         if (is_link($path) || !is_file($path)) return false;
         $mode=fileperms($path);

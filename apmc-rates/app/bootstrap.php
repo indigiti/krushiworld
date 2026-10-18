@@ -184,7 +184,7 @@ function apmc_request_is_https(): bool {
 }
 
 function apmc_origin(): string {
-    $configured = trim((string) (getenv('APMC_PUBLIC_ORIGIN') ?: apmc_config('site.origin', '')));
+    $configured = trim((string) (\KrushiPulseRuntimeSettings::get('APMC_PUBLIC_ORIGIN') ?: apmc_config('site.origin', '')));
     if ($configured !== '' && preg_match('#^https?://[a-z0-9.-]+(?::\\d+)?$#i', $configured)) return rtrim($configured, '/');
     $host = strtolower(trim((string)($_SERVER['HTTP_HOST'] ?? '')));
     if (!preg_match('/^[a-z0-9.-]+(?::\\d+)?$/i', $host)) return '';
@@ -207,13 +207,13 @@ function apmc_absolute_url(string $suffix = ''): string {
 }
 
 function apmc_brand_slot_settings(string $envPrefix, string $configRoot): array {
-    $enabledEnv = getenv($envPrefix . '_ENABLED');
+    $enabledEnv = \KrushiPulseRuntimeSettings::get($envPrefix . '_ENABLED');
     $enabled = $enabledEnv !== false && $enabledEnv !== ''
         ? filter_var($enabledEnv, FILTER_VALIDATE_BOOLEAN)
         : (bool) apmc_config($configRoot . '.enabled', false);
-    $name = trim((string)(getenv($envPrefix . '_NAME') ?: apmc_config($configRoot . '.name', '')));
-    $url = trim((string)(getenv($envPrefix . '_URL') ?: apmc_config($configRoot . '.url', '')));
-    $logo = trim((string)(getenv($envPrefix . '_LOGO') ?: apmc_config($configRoot . '.logo', '')));
+    $name = trim((string)(\KrushiPulseRuntimeSettings::get($envPrefix . '_NAME') ?: apmc_config($configRoot . '.name', '')));
+    $url = trim((string)(\KrushiPulseRuntimeSettings::get($envPrefix . '_URL') ?: apmc_config($configRoot . '.url', '')));
+    $logo = trim((string)(\KrushiPulseRuntimeSettings::get($envPrefix . '_LOGO') ?: apmc_config($configRoot . '.logo', '')));
 
     // Keep sponsor imagery local to avoid expanding img-src and leaking visitor requests
     // to arbitrary advertiser hosts. Only WebP assets are accepted.

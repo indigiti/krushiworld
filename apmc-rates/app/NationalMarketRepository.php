@@ -23,7 +23,7 @@ final class NationalMarketRepository {
                 && ($latestReportDate === null || $date > $latestReportDate)) $latestReportDate = $date;
         }
         $hasData = count($records) > 0;
-        $configured = trim((string)getenv('APMC_DATA_GOV_IN_API_KEY')) !== '';
+        $configured = trim((string)\KrushiPulseRuntimeSettings::get('APMC_DATA_GOV_IN_API_KEY')) !== '';
         $dateAge = $latestReportDate === null ? null
             : max(0, (int)floor((time() - (strtotime($latestReportDate . ' 23:59:59 UTC') ?: time())) / 86400));
         $importAgeHours = is_string($updatedAt) && strtotime($updatedAt) !== false

@@ -9,7 +9,7 @@ final class AdminAuth {
     private ?AdminIdentity $identity=null;
     public function __construct(?AdminIdentity $identity=null) {$this->identity=$identity;}
     public function mode(): string {
-        $configured = getenv('APMC_AUTH_MODE');
+        $configured = \KrushiPulseRuntimeSettings::get('APMC_AUTH_MODE');
         // Direct KrushiPulse onboarding on this designated HTTPS staging host only.
         // An explicitly configured mode (especially production/legacy) always wins.
         if (($configured === false || trim($configured)==='')
@@ -26,9 +26,9 @@ final class AdminAuth {
     }
     public function githubAllowed(): bool {
         return $this->mode()==='staging'
-            && (bool)preg_match('/^[a-zA-Z0-9._-]{5,150}$/D',(string)(getenv('APMC_GITHUB_CLIENT_ID')?:''))
-            && trim((string)getenv('APMC_GITHUB_CLIENT_SECRET'))!==''
-            && trim((string)getenv('APMC_GITHUB_ADMIN_IDS'))!==''
+            && (bool)preg_match('/^[a-zA-Z0-9._-]{5,150}$/D',(string)(\KrushiPulseRuntimeSettings::get('APMC_GITHUB_CLIENT_ID')?:''))
+            && trim((string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_CLIENT_SECRET'))!==''
+            && trim((string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_ADMIN_IDS'))!==''
             && $this->store()->providerEnabled();
     }
     public function browserSession(): void {
@@ -53,7 +53,7 @@ final class AdminAuth {
         try {
             $session=$this->store()->session($token);
             if ($session && $session['provider']==='github') {
-                $allowed=array_filter(array_map('trim',explode(',',(string)getenv('APMC_GITHUB_ADMIN_IDS'))),'ctype_digit');
+                $allowed=array_filter(array_map('trim',explode(',',(string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_ADMIN_IDS'))),'ctype_digit');
                 if ($this->mode()!=='staging' || !$this->githubAllowed()
                     || !in_array((string)$session['github_id'],$allowed,true)) return null;
             }
@@ -93,7 +93,7 @@ final class AdminAuth {
         $state=bin2hex(random_bytes(32));
         $verifier=rtrim(strtr(base64_encode(random_bytes(48)),'+/','-_'),'=');
         $_SESSION['kp_github_flow']=['hash'=>hash('sha256',$state),'verifier'=>$verifier,'created'=>time()];
-        $params=http_build_query(['client_id'=>(string)getenv('APMC_GITHUB_CLIENT_ID'),
+        $params=http_build_query(['client_id'=>(string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_CLIENT_ID'),
             'redirect_uri'=>$this->redirectUri(),'state'=>$state,'allow_signup'=>'false',
             'code_challenge'=>rtrim(strtr(base64_encode(hash('sha256',$verifier,true)),'+/','-_'),'='),
             'code_challenge_method'=>'S256'], '', '&', PHP_QUERY_RFC3986);
@@ -126,8 +126,8 @@ final class AdminAuth {
             || !preg_match('/^[a-zA-Z0-9_-]{1,400}$/D',$code))return false;
         try{
             $data=self::jsonCall('https://github.com/login/oauth/access_token',[
-                'client_id'=>(string)getenv('APMC_GITHUB_CLIENT_ID'),
-                'client_secret'=>(string)getenv('APMC_GITHUB_CLIENT_SECRET'),
+                'client_id'=>(string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_CLIENT_ID'),
+                'client_secret'=>(string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_CLIENT_SECRET'),
                 'code'=>$code,'redirect_uri'=>$this->redirectUri(),
                 'code_verifier'=>(string)$flow['verifier']
             ]);
@@ -136,7 +136,7 @@ final class AdminAuth {
             $profile=self::jsonCall('https://api.github.com/user',null,$token);
             $githubId=(string)($profile['id']??'');
             if(!ctype_digit($githubId))return false;
-            $allowed=array_filter(array_map('trim',explode(',',(string)getenv('APMC_GITHUB_ADMIN_IDS'))),'ctype_digit');
+            $allowed=array_filter(array_map('trim',explode(',',(string)\KrushiPulseRuntimeSettings::get('APMC_GITHUB_ADMIN_IDS'))),'ctype_digit');
             $user=$this->store()->githubBootstrap($githubId,$allowed);
             if(!$user)return false;
             $this->signIn((int)$user['id'],'github');return true;
@@ -149,7 +149,7 @@ final class AdminAuth {
         return $out;
     }
     private function key(): string {
-        $hex=trim((string)(getenv('APMC_AUTH_KEY')?:''));
+        $hex=trim((string)(\KrushiPulseRuntimeSettings::get('APMC_AUTH_KEY')?:''));
         if(!preg_match('/^[a-f0-9]{64}$/iD',$hex))throw new RuntimeException('Set a unique 32-byte APMC_AUTH_KEY (64 hex characters) in the server environment');
         return hex2bin($hex);
     }
