@@ -301,6 +301,13 @@ final class NationalHttpCron {
                 $this->write('http-cron-state.json',$progress);
             }
             $offset = (int)$progress['offset'];
+            // A previous HTTP call can finish staging then time out during
+            // verification. Resume publication; never refetch past total.
+            if ($offset > 0 && isset($progress['expected'])
+                && $progress['expected'] !== null
+                && $offset === (int)$progress['expected']) {
+                return $this->publish($progress, gmdate(DATE_ATOM,$now));
+            }
             $response = $this->fetch($key, $offset);
             $rows = $response['records'] ?? null;
             $total = $response['total'] ?? null;
