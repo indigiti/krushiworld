@@ -21,11 +21,11 @@ file_put_contents($path, json_encode([
 ]));
 chmod($path, 0600);
 KrushiPulseRuntimeSettings::load($path);
-check_setting(getenv('APMC_AUTH_MODE') === 'staging', 'private staging mode');
-check_setting(getenv('APMC_DATA_GOV_IN_API_KEY') === str_repeat('a', 40), 'server-only key');
+check_setting(KrushiPulseRuntimeSettings::get('APMC_AUTH_MODE') === 'staging', 'private staging mode');
+check_setting(KrushiPulseRuntimeSettings::get('APMC_DATA_GOV_IN_API_KEY') === str_repeat('a', 40), 'server-only key');
 putenv('APMC_AUTH_MODE=production');
 KrushiPulseRuntimeSettings::load($path);
-check_setting(getenv('APMC_AUTH_MODE') === 'production', 'server environment precedence');
+check_setting(KrushiPulseRuntimeSettings::get('APMC_AUTH_MODE') === 'production', 'server environment precedence');
 file_put_contents($path, '{"APMC_AUTH_MODE":"invalid"}'); chmod($path, 0600);
 $failed = false;
 try { KrushiPulseRuntimeSettings::load($path); } catch (RuntimeException) { $failed = true; }
