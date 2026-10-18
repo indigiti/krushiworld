@@ -30,6 +30,9 @@ final class NationalRefreshGate {
         if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
             return ['status'=>'storage_unavailable','queued'=>false];
         }
+        if (is_link($dir . '/visitor-gate.lock')) {
+            return ['status'=>'storage_unavailable','queued'=>false];
+        }
         $lock = @fopen($dir . '/visitor-gate.lock', 'c');
         if (!is_resource($lock)) return ['status'=>'storage_unavailable','queued'=>false];
         @chmod($dir . '/visitor-gate.lock', 0600);
@@ -51,6 +54,20 @@ final class NationalRefreshGate {
                 && is_file($snapshot) && filesize($snapshot) > 100
                 && is_file($directory) && filesize($directory) > 50) {
                 return ['status'=>'verified_fresh','queued'=>false];
+            }
+            // Backward compatibility: earlier releases wrote success health
+            // but did not yet have a verified.json marker.
+            if ($lastVerified === 0) {
+                $health = $this->json('health.json');
+                $lastSuccess = strtotime((string)($health['last_success_at'] ?? '')) ?: 0;
+                if (($health['last_result'] ?? '') === 'success'
+                    && (int)($health['records'] ?? 0) > 0
+                    && $lastSuccess > 0 && $lastSuccess <= $now
+                    && $now - $lastSuccess < max(3600, $this->intervalSeconds)
+                    && is_file($snapshot) && filesize($snapshot) > 100
+                    && is_file($directory) && filesize($directory) > 50) {
+                    return ['status'=>'legacy_fresh','queued'=>false];
+                }
             }
             $attempt = $this->json('last_attempt.json');
             $attemptedAt = strtotime((string)($attempt['attempted_at'] ?? '')) ?: 0;
