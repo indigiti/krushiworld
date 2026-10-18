@@ -9,7 +9,18 @@ declare(strict_types=1);
  * contents in an HTTP/API response or include this file in release artifacts.
  */
 final class KrushiPulseRuntimeSettings {
+    /** Validated values loaded privately for this PHP request. */
+    private static array $stored = [];
+
+    /** Process environment takes precedence; no putenv() is required on Cloudways. */
+    public static function get(string $key): string|false {
+        $environment = getenv($key);
+        if ($environment !== false && $environment !== '') return $environment;
+        return self::$stored[$key] ?? $environment;
+    }
+
     public static function load(string $path): void {
+        self::$stored = [];
         if (!file_exists($path) && !is_link($path)) return;
         if (is_link($path) || !is_file($path)) {
             throw new RuntimeException('Invalid private configuration file');
@@ -50,10 +61,8 @@ final class KrushiPulseRuntimeSettings {
                 throw new RuntimeException('Unsupported or invalid private configuration setting');
             }
         }
-        foreach ($data as $key => $value) {
-            if (getenv($key) === false || getenv($key) === '') {
-                putenv($key . '=' . $value);
-            }
-        }
+        // Never call putenv(): Cloudways may disable it for FPM.
+        // Do not copy secrets into $_ENV/$_SERVER, logs, HTTP responses or artifacts.
+        self::$stored = $data;
     }
 }
