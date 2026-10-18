@@ -13,7 +13,7 @@ assertRelease(($metadata['publicPath'] ?? '') === 'public_html/krushiworld/', 'P
 assertRelease(($metadata['privatePath'] ?? '') === 'private_html/krushiworld/', 'Private target');
 assertRelease(($metadata['persistentPaths'] ?? []) === ['storage/'], 'Storage persistence contract');
 $required = [
-    'public/index.php', 'public/api.php', 'public/.htaccess',
+    'public/index.php', 'public/api.php', 'public/setup-data-gov.php', 'public/.htaccess',
     'public/build/krushipulse.css', 'public/build/krushipulse.js',
     'public/build/commodity-icons.js',
     'public/build/nearest-mandi.js',
