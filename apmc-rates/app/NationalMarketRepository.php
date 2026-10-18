@@ -14,6 +14,12 @@ final class NationalMarketRepository {
     public function state(): array {
         $data = apmc_json_read($this->snapshotPath(), []);
         $health = apmc_json_read(APMC_STORAGE . '/national/health.json', []);
+        $refreshRequest = apmc_json_read(APMC_STORAGE . '/national/refresh-request.json', []);
+        $verifiedFlag = apmc_json_read(APMC_STORAGE . '/national/verified.json', []);
+        $requestAt = strtotime((string)($refreshRequest['requested_at'] ?? '')) ?: 0;
+        $refreshQueue = $requestAt > 0 && time() - $requestAt < 3600
+            ? 'pending_scheduler'
+            : (($verifiedFlag['verified'] ?? false) === true ? 'verified' : 'idle');
         $records = (array)($data['records'] ?? []);
         $updatedAt = $data['meta']['updated_at'] ?? null;
         $latestReportDate = null;
@@ -45,6 +51,9 @@ final class NationalMarketRepository {
             'last_attempt_at' => $health['last_attempt_at'] ?? null,
             'last_success_at' => $health['last_success_at'] ?? $updatedAt,
             'last_result' => $health['last_result'] ?? null,
+            'refresh_queue' => $refreshQueue,
+            'verified_at' => ($verifiedFlag['verified'] ?? false) === true
+                ? ($verifiedFlag['verified_at'] ?? null) : null,
             // Do not leak configured API credentials, request URLs or raw errors.
         ];
     }
