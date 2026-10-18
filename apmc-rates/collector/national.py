@@ -196,7 +196,7 @@ def configured_api_key() -> str:
     if path.is_symlink():
         raise RuntimeError("Unsafe private runtime configuration")
     try:
-        if path.stat().st_mode & 0o007:
+        if path.stat().st_mode & 0o077:
             raise RuntimeError("Private runtime configuration must have mode 0600")
         data = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:

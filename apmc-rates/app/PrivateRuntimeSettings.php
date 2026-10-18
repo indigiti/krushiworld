@@ -20,7 +20,7 @@ final class KrushiPulseRuntimeSettings {
             throw new RuntimeException('Private configuration must remain inside private storage');
         }
         $permissions = fileperms($path);
-        if ($permissions === false || ($permissions & 0007) !== 0) {
+        if ($permissions === false || ($permissions & 0077) !== 0) {
             throw new RuntimeException('Private configuration is accessible to other users; require chmod 600');
         }
         $raw = file_get_contents($path);
