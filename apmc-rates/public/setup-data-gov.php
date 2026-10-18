@@ -72,10 +72,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     } elseif ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 4096) {
         http_response_code(413);
         $error = 'Request too large.';
-    } elseif (!apmc_same_origin_request()
-        || !hash_equals((string)$_SESSION['data_gov_csrf'], (string)($_POST['_csrf'] ?? ''))) {
+    } elseif (!apmc_same_origin_request()) {
         http_response_code(403);
-        $error = 'Security verification failed. Reload the page.';
+        $error = 'Request origin did not match server settings. Open the staging setup page directly and retry.';
+    } elseif (!hash_equals((string)$_SESSION['data_gov_csrf'], (string)($_POST['_csrf'] ?? ''))) {
+        http_response_code(403);
+        $error = 'Browser session or form expired. Reload the setup page with first-party cookies enabled.';
     } elseif ((int)$_SESSION['attempts'] >= 5) {
         http_response_code(429);
         $error = 'Too many verification attempts from this browser. Try later.';
