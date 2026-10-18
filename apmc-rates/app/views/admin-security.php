@@ -29,7 +29,23 @@ if (!$identityMode || !$authorized) return;
     <article class="admin-card" style="margin-bottom:12px">
       <h3 class="font-bold">My local account security</h3>
       <p class="text-xs text-muted">Changing your password revokes all sessions. Recovery rotation invalidates all prior recovery codes. Both require a fresh authenticator code.</p>
-      <div class="grid gap-3 md:grid-cols-2">
+      <?php if (($authUser['role'] ?? '') === 'super_admin' && ($authUser['provider'] ?? '') === 'local' && $authUser['local_verified_at']): ?>
+    <article class="admin-card" style="margin-bottom:16px">
+      <h3 class="font-bold">India mandi data · data.gov.in API key</h3>
+      <p class="text-xs text-muted">Connect the official AGMARKNET feed directly from KrushiWorld. Your key is stored only in persistent private Cloudways storage; never shown in the browser again.</p>
+      <p class="text-xs text-muted">Status: <strong><?= \KrushiPulse\Security\PrivateAppSettings::hasNationalKey(APMC_STORAGE) ? 'API key configured' : 'API key not configured' ?></strong></p>
+      <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form" autocomplete="off">
+        <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+        <input type="hidden" name="auth_action" value="save_national_key">
+        <label>data.gov.in API key
+          <input type="password" name="national_api_key" required minlength="16" maxlength="256" autocomplete="off" spellcheck="false" placeholder="Paste your API key">
+        </label>
+        <button type="submit" class="admin-primary-action">Save API key securely</button>
+      </form>
+      <p class="text-xs text-muted">Existing rates are retained if an import fails. When scheduled collection is active, the key takes effect on the next run.</p>
+    </article>
+  <?php endif; ?>
+  <div class="grid gap-3 md:grid-cols-2">
         <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form">
           <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
           <input type="hidden" name="auth_action" value="change_password">

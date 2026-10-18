@@ -9,7 +9,14 @@ final class AdminAuth {
     private ?AdminIdentity $identity=null;
     public function __construct(?AdminIdentity $identity=null) {$this->identity=$identity;}
     public function mode(): string {
-        $mode=strtolower(trim((string)(getenv('APMC_AUTH_MODE') ?: 'legacy')));
+        $configured = getenv('APMC_AUTH_MODE');
+        // Direct KrushiPulse onboarding on this designated HTTPS staging host only.
+        // An explicitly configured mode (especially production/legacy) always wins.
+        if (($configured === false || trim($configured)==='')
+            && PHP_SAPI !== 'cli'
+            && strtolower((string)($_SERVER['HTTP_HOST'] ?? '')) === 'stage.digiti.in'
+            && apmc_request_is_https()) return 'staging';
+        $mode=strtolower(trim((string)($configured ?: 'legacy')));
         return in_array($mode,['legacy','staging','production'],true)?$mode:'disabled';
     }
     public function enabled(): bool { return $this->mode()!=='legacy'; }

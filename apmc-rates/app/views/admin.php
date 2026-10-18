@@ -104,7 +104,36 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
       <button class="admin-primary-action" type="submit">Sign in securely</button>
     </form>
     <p class="text-xs text-muted mt-3">Local accounts require an authenticator code on their first login. Recovery codes are single-use.</p>
-    <?php if (apmc_auth()->mode() === 'staging' && !$localReady): ?>
+    <?php if (apmc_auth()->mode() === 'staging' && !$localReady && \KrushiPulse\Security\OwnerSetup::eligible(apmc_auth())): ?>
+      <div class="admin-card" style="margin-top:20px;padding:18px;border:1px solid #526239">
+        <h3 class="font-bold">Activate KrushiPulse Admin</h3>
+        <p class="text-sm text-muted">First-time setup runs here in KrushiWorld. Use a temporary GitHub fine-grained token restricted to <strong>indigiti/krushiworld</strong> with <strong>Metadata: Read</strong>. The token must belong to an administrator of that repository. It is verified once over HTTPS and never saved.</p>
+        <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form" autocomplete="off">
+          <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+          <input type="hidden" name="auth_action" value="bootstrap_owner">
+          <label class="admin-token-field">One-time GitHub verification token
+            <input name="github_pat" type="password" required autocomplete="off" minlength="20" maxlength="512">
+          </label>
+          <label class="admin-token-field">New Super Admin username
+            <input name="username" type="text" minlength="3" maxlength="50" pattern="[A-Za-z0-9._-]+" required autocomplete="off">
+          </label>
+          <label class="admin-token-field">New password (14+ characters)
+            <input name="password" type="password" minlength="14" maxlength="256" required autocomplete="new-password">
+          </label>
+          <button type="submit" class="admin-primary-action">Verify GitHub and create Super Admin</button>
+        </form>
+        <?php if (is_array($authEnrollment)): ?>
+          <div class="admin-alert" role="status" style="margin-top:12px;padding:15px;border:1px solid #b8ca70">
+            <h4>Save these one-time MFA details now</h4>
+            <p>Enter this secret into your authenticator app, save recovery codes, then sign in using the login form above.</p>
+            <p>Authenticator secret: <code><?= apmc_escape((string)$authEnrollment['secret']) ?></code></p>
+            <p>Setup URI: <code style="overflow-wrap:anywhere"><?= apmc_escape((string)$authEnrollment['uri']) ?></code></p>
+            <p>Recovery codes:</p>
+            <pre style="white-space:pre-wrap"><?= apmc_escape(implode("\n",(array)$authEnrollment['recovery'])) ?></pre>
+          </div>
+        <?php endif; ?>
+      </div>
+    <?php elseif (false): ?>
       <div class="admin-card" style="margin-top:20px;padding:18px;border:1px solid #526239">
         <h3 class="font-bold">First-time setup via DigiOps</h3>
         <p class="text-sm text-muted">Open the protected DigiOps KrushiWorld setup page as a DigiOps administrator and generate a one-time setup code. No terminal or default password is required.</p>

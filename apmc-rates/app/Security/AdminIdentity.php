@@ -100,6 +100,9 @@ final class AdminIdentity {
     public function checkTotpReplay(int $id,int $step): bool {
         return $this->exec('UPDATE users SET last_totp_step=? WHERE id=? AND last_totp_step<?',[$step,$id,$step])===1;
     }
+    public function hasLocalAccounts(): bool {
+        return (int)$this->db->query('SELECT COUNT(*) FROM users WHERE password_hash IS NOT NULL')->fetchColumn() > 0;
+    }
     public function localReady(): bool {
         return (int)$this->db->query('SELECT COUNT(*) FROM users WHERE role="super_admin" AND status="active" AND local_verified_at IS NOT NULL AND password_hash IS NOT NULL AND totp_encrypted IS NOT NULL')->fetchColumn()>0;
     }

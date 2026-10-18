@@ -26,6 +26,17 @@ final class AdminHttp {
         }
         $action=(string)($_POST['auth_action']??'');
         try {
+            if($action==='bootstrap_owner') {
+                $GLOBALS['kp_auth_enrollment']=OwnerSetup::enroll(
+                    $auth,
+                    trim((string)($_POST['github_pat']??'')),
+                    trim((string)($_POST['username']??'')),
+                    (string)($_POST['password']??'')
+                );
+                header('Cache-Control: no-store');
+                $GLOBALS['kp_auth_notice']='Super Admin created pending MFA verification. Save the setup secret and recovery codes now; sign in above using your new account and authenticator.';
+                return;
+            }
             if($action==='bootstrap_local') {
                 $GLOBALS['kp_auth_enrollment']=WebBootstrap::enroll(
                     $auth,
@@ -63,6 +74,13 @@ final class AdminHttp {
                 http_response_code(403);throw new \RuntimeException('Super Admin authorization required');
             }
             $db=$auth->store();
+            if($action==='save_national_key') {
+                if (($actor['provider'] ?? '') !== 'local' || !$actor['local_verified_at'])
+                    throw new \RuntimeException('Verified local Super Admin required');
+                PrivateAppSettings::saveNationalKey(APMC_STORAGE, trim((string)($_POST['national_api_key']??'')));
+                $GLOBALS['kp_auth_notice']='data.gov.in key saved in private storage. The scheduled AGMARKNET collector will use it on its next run.';
+                return;
+            }
             if($action==='create_user'){
                 $GLOBALS['kp_auth_enrollment']=$auth->createUser(trim((string)($_POST['username']??'')),
                     (string)($_POST['password']??''),(string)($_POST['role']??'viewer'));

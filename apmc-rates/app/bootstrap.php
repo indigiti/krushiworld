@@ -39,6 +39,8 @@ require_once __DIR__ . '/Http/PublicApiController.php';
 require_once __DIR__ . '/Security/AdminIdentity.php';
 require_once __DIR__ . '/Security/AdminAuth.php';
 require_once __DIR__ . '/Security/AdminHttp.php';
+require_once __DIR__ . '/Security/PrivateAppSettings.php';
+require_once __DIR__ . '/Security/OwnerSetup.php';
 require_once __DIR__ . '/Security/WebBootstrap.php';
 
 function apmc_auth(): \KrushiPulse\Security\AdminAuth {
