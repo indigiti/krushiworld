@@ -102,6 +102,37 @@ final class NationalHttpCron {
         ];
     }
 
+    /**
+     * Safe classification based only on numeric upstream HTTP status.
+     * No remote response body, full URL, headers or credential is surfaced.
+     */
+    public static function classifyHttp(int $status): string {
+        if ($status === 401) return 'upstream_http_401';
+        if ($status === 403) return 'upstream_http_403';
+        if ($status === 404) return 'upstream_http_404';
+        if ($status === 408) return 'upstream_http_408';
+        if ($status === 429) return 'upstream_http_429';
+        if ($status >= 500 && $status <= 599) return 'upstream_http_5xx';
+        if ($status >= 300 && $status <= 399) return 'upstream_redirect_rejected';
+        if ($status >= 400 && $status <= 499) return 'upstream_http_4xx';
+        return 'upstream_unexpected_status';
+    }
+
+    /**
+     * cURL constants may be absent on Cloudways if the extension is disabled;
+     * numerical CURLcode values here are stable and never secret-bearing.
+     */
+    public static function classifyCurl(int $errno): string {
+        return match ($errno) {
+            6 => 'network_dns_failure',
+            7 => 'network_connect_failure',
+            28 => 'network_timeout',
+            35 => 'network_tls_failure',
+            51, 60 => 'network_certificate_failure',
+            default => 'network_transport_failure',
+        };
+    }
+
     /** Strictly one fixed HTTPS resource, one page, under a bounded timeout. */
     private function fetch(string $key, int $offset): array {
         if ($this->fetcher !== null) {
@@ -123,8 +154,15 @@ final class NationalHttpCron {
                 ]);
                 $body = curl_exec($handle);
                 $status = (int)curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                if (!is_string($body) || strlen($body) > self::MAX_RESPONSE_BYTES || $status !== 200) {
-                    throw new RuntimeException('official_feed_unavailable');
+                // HTTP status is authoritative if the remote server responded.
+                if ($status !== 200 && $status !== 0) {
+                    throw new RuntimeException(self::classifyHttp($status));
+                }
+                if (!is_string($body)) {
+                    throw new RuntimeException(self::classifyCurl((int)curl_errno($handle)));
+                }
+                if (strlen($body) > self::MAX_RESPONSE_BYTES) {
+                    throw new RuntimeException('upstream_response_too_large');
                 }
             } finally {
                 curl_close($handle);
@@ -135,14 +173,31 @@ final class NationalHttpCron {
                 'header'=>"Accept: application/json\r\nUser-Agent: KrushiPulse-AGMARKNET/1.0\r\n"
             ], 'ssl'=>['verify_peer'=>true,'verify_peer_name'=>true]]);
             $body = @file_get_contents($url, false, $context, 0, self::MAX_RESPONSE_BYTES + 1);
-            if (!is_string($body) || strlen($body) > self::MAX_RESPONSE_BYTES) {
-                throw new RuntimeException('official_feed_unavailable');
+            $status = 0;
+            if (isset($http_response_header) && is_array($http_response_header)) {
+                foreach ($http_response_header as $header) {
+                    if (preg_match('~^HTTP/\d(?:\.\d)?\s+(\d{3})\b~', (string)$header, $match)) {
+                        $status = (int)$match[1];
+                        break;
+                    }
+                }
+            }
+            if ($status !== 200 && $status !== 0) {
+                throw new RuntimeException(self::classifyHttp($status));
+            }
+            if (!is_string($body)) throw new RuntimeException('network_transport_failure');
+            if (strlen($body) > self::MAX_RESPONSE_BYTES) {
+                throw new RuntimeException('upstream_response_too_large');
             }
         } else {
             throw new RuntimeException('http_client_unavailable');
         }
+        if ($body === '') throw new RuntimeException('upstream_empty_response');
         $decoded = json_decode($body, true, 32);
-        if (!is_array($decoded)) throw new RuntimeException('invalid_source_response');
+        if (!is_array($decoded)) throw new RuntimeException('invalid_source_json');
+        if (!isset($decoded['records']) || !is_array($decoded['records'])) {
+            throw new RuntimeException('upstream_unexpected_schema');
+        }
         return $decoded;
     }
 
@@ -372,7 +427,13 @@ final class NationalHttpCron {
             $allowed = ['invalid_source_response','changing_source_total','incomplete_source_page',
                 'invalid_source_total','invalid_staged_state','invalid_staged_record','invalid_staged_price',
                 'invalid_staged_market','invalid_record_count','unexpected_record_drop','source_date_regressed',
-                'http_client_unavailable','official_feed_unavailable','storage_unavailable','too_many_records'];
+                'http_client_unavailable','official_feed_unavailable','storage_unavailable','too_many_records',
+                'upstream_http_401','upstream_http_403','upstream_http_404','upstream_http_408',
+                'upstream_http_429','upstream_http_5xx','upstream_http_4xx','upstream_redirect_rejected',
+                'upstream_unexpected_status','network_dns_failure','network_connect_failure',
+                'network_timeout','network_tls_failure','network_certificate_failure',
+                'network_transport_failure','upstream_response_too_large','upstream_empty_response',
+                'invalid_source_json','upstream_unexpected_schema'];
             $failure = in_array($reason,$allowed,true) ? $reason : 'collector_error';
             try {
                 $prior = $this->read('health.json');
