@@ -26,6 +26,16 @@ final class AdminHttp {
         }
         $action=(string)($_POST['auth_action']??'');
         try {
+            if($action==='bootstrap_local') {
+                $GLOBALS['kp_auth_enrollment']=WebBootstrap::enroll(
+                    $auth,
+                    trim((string)($_POST['setup_grant']??'')),
+                    trim((string)($_POST['username']??'')),
+                    (string)($_POST['password']??'')
+                );
+                $GLOBALS['kp_auth_notice']='Local Super Admin is pending first MFA login. Save the one-time setup key and recovery codes below. Then log in above with your authenticator code.';
+                return;
+            }
             if($action==='local_login'){
                 $ok=$auth->localLogin(
                     trim((string)($_POST['username']??'')),(string)($_POST['password']??''),

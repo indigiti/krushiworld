@@ -25,6 +25,7 @@ $localReady = false;
 if ($identityMode) {
     try {
         $githubEnabled = apmc_auth()->githubAllowed();
+        $localReady = apmc_auth()->store()->localReady();
         if ($authorized && ($authUser['role'] ?? '') === 'super_admin') {
             $authUsers = apmc_auth()->store()->users();
             $authEvents = apmc_auth()->store()->audit();
@@ -103,6 +104,37 @@ $csrf = $identityMode || $authorized ? apmc_admin_csrf_token() : '';
       <button class="admin-primary-action" type="submit">Sign in securely</button>
     </form>
     <p class="text-xs text-muted mt-3">Local accounts require an authenticator code on their first login. Recovery codes are single-use.</p>
+    <?php if (apmc_auth()->mode() === 'staging' && !$localReady): ?>
+      <div class="admin-card" style="margin-top:20px;padding:18px;border:1px solid #526239">
+        <h3 class="font-bold">First-time setup via DigiOps</h3>
+        <p class="text-sm text-muted">Open the protected DigiOps KrushiWorld setup page as a DigiOps administrator and generate a one-time setup code. No terminal or default password is required.</p>
+        <p class="text-xs text-muted">The setup code expires after 15 minutes, works only once, and cannot be issued from this public webpage.</p>
+        <form method="post" action="<?= apmc_escape($adminUrl) ?>" class="admin-login-form" autocomplete="off">
+          <input type="hidden" name="_csrf" value="<?= apmc_escape($csrf) ?>">
+          <input type="hidden" name="auth_action" value="bootstrap_local">
+          <label class="admin-token-field">DigiOps one-time setup code
+            <input type="password" name="setup_grant" required minlength="64" maxlength="64" pattern="[A-Fa-f0-9]{64}" autocomplete="off">
+          </label>
+          <label class="admin-token-field">New Super Admin username
+            <input name="username" type="text" minlength="3" maxlength="50" pattern="[A-Za-z0-9._-]+" required autocomplete="off">
+          </label>
+          <label class="admin-token-field">New password (14+ characters)
+            <input name="password" type="password" minlength="14" maxlength="256" required autocomplete="new-password">
+          </label>
+          <button type="submit" class="admin-primary-action">Create my Super Admin account</button>
+        </form>
+        <?php if (is_array($authEnrollment)): ?>
+          <div class="admin-alert" style="padding:15px;margin-top:12px;border:1px solid #b8ca70">
+            <h4>Save your authenticator details now</h4>
+            <p>This will not be shown again. Scan the URI with your authenticator or manually enter the key, then log in with username, password and a six-digit authenticator code.</p>
+            <p>Authenticator key: <code><?= apmc_escape((string)$authEnrollment['secret']) ?></code></p>
+            <p>Setup URI: <code style="overflow-wrap:anywhere"><?= apmc_escape((string)$authEnrollment['uri']) ?></code></p>
+            <p>One-time recovery codes:</p>
+            <pre style="white-space:pre-wrap"><?= apmc_escape(implode("\n",(array)$authEnrollment['recovery'])) ?></pre>
+          </div>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
   </section>
 <?php else: ?>
   <section class="admin-login-card">

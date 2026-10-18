@@ -35,6 +35,8 @@ jobs:
         run: php apmc-rates/tests/test_auth_handover.php
       - name: Private Cloudways configuration contract
         run: php apmc-rates/tests/test_private_runtime_settings.php
+      - name: One-time web Super Admin bootstrap contract
+        run: php apmc-rates/tests/test_web_bootstrap.php
       - name: PHP pretty URL and layered service contracts
         run: php apmc-rates/tests/test_pretty_routes.php
       - name: SQLite price intelligence and comparability contracts
