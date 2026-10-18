@@ -248,6 +248,9 @@ final class NationalHttpCron {
     /** Single page per call, globally rate-limited and locked across requests. */
     public function tick(?int $now = null): array {
         $now ??= time();
+        if ((string)getenv('APMC_DISABLE_NATIONAL_HTTP_CRON') === '1') {
+            return ['status'=>'disabled'];
+        }
         $key = trim((string)KrushiPulseRuntimeSettings::get('APMC_DATA_GOV_IN_API_KEY'));
         if ($key === '') return ['status'=>'not_configured'];
         $dir = $this->storage . '/national';
