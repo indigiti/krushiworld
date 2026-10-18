@@ -211,6 +211,45 @@ def configured_api_key() -> str:
     return key.strip()
 
 
+def verify_candidate(snapshot: dict, directory: dict, previous: dict) -> dict:
+    """Reject incomplete or internally inconsistent reports before publication."""
+    records = snapshot.get("records")
+    markets = directory.get("markets")
+    meta = snapshot.get("meta", {})
+    if not isinstance(records, list) or not records or not isinstance(markets, list) or not markets:
+        raise RuntimeError("invalid_candidate_structure")
+    if int(meta.get("records", -1)) != len(records):
+        raise RuntimeError("invalid_candidate_count")
+    market_ids = {m.get("market_id") for m in markets if isinstance(m, dict)}
+    if not market_ids or None in market_ids:
+        raise RuntimeError("invalid_candidate_markets")
+    seen = set()
+    latest = ""
+    for record in records:
+        if not isinstance(record, dict) or record.get("market_id") not in market_ids:
+            raise RuntimeError("invalid_candidate_reference")
+        date = iso_date(str(record.get("date", "")))
+        if not date or date != record.get("date"):
+            raise RuntimeError("invalid_candidate_date")
+        values = (record.get("min"), record.get("average"), record.get("max"))
+        if any(number(value) is None for value in values):
+            raise RuntimeError("invalid_candidate_price")
+        if not (values[0] <= values[1] <= values[2]):
+            raise RuntimeError("invalid_candidate_price")
+        identity = tuple(record.get(name) for name in ("market_id", "commodity_key", "variety", "grade", "date"))
+        if identity in seen:
+            raise RuntimeError("duplicate_candidate_record")
+        seen.add(identity)
+        if date > latest:
+            latest = date
+    previous_records = previous.get("records", []) if isinstance(previous, dict) else []
+    if isinstance(previous_records, list) and previous_records:
+        previous_latest = max(str(row.get("date", "")) for row in previous_records if isinstance(row, dict))
+        if latest < previous_latest:
+            raise RuntimeError("source_date_regressed")
+    return {"records": len(records), "markets": len(markets), "latest_report_date": latest}
+
+
 def run(force: bool = False) -> int:
     """Import on the existing server cron. Never expose credentials in diagnostics."""
     key = configured_api_key()
@@ -243,6 +282,7 @@ def run(force: bool = False) -> int:
             raw_rows = retrieve(key)
             older = load(DEST / "directory.json", {}).get("markets", [])
             snapshot, directory = build(raw_rows, older)
+            verified = verify_candidate(snapshot, directory, previous_snapshot)
             previous_count = int((previous_snapshot.get("meta") or {}).get("records", 0))
             new_count = int(snapshot["meta"]["records"])
             # Guard against silently replacing full national coverage with a
@@ -251,14 +291,27 @@ def run(force: bool = False) -> int:
                 raise RuntimeError("unexpected_record_drop")
             write_atomic(snapshot_file, snapshot)
             write_atomic(DEST / "directory.json", directory)
+            # A completed flag is never written before the verified files.
+            fingerprint = hashlib.sha256(
+                json.dumps(snapshot, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+            ).hexdigest()
+            write_atomic(DEST / "verified.json", {
+                "verified": True,
+                "verified_at": attempted,
+                "source": "AGMARKNET / data.gov.in",
+                "source_sha256": fingerprint,
+                **verified,
+            })
             write_atomic(health_file, {
                 "last_attempt_at": attempted,
                 "last_success_at": attempted,
                 "last_result": "success",
                 "records": new_count,
                 "markets": len(directory["markets"]),
+                "latest_report_date": verified["latest_report_date"],
             })
-            print(f"AGMARKNET: {new_count} reported prices, {len(directory['markets'])} known markets")
+            (DEST / "refresh-request.json").unlink(missing_ok=True)
+            print(f"AGMARKNET: {new_count} verified reported prices, {len(directory['markets'])} known markets")
             return 0
         except Exception as exc:
             # A public API key is a secret. HTTP errors may embed the request
@@ -271,6 +324,7 @@ def run(force: bool = False) -> int:
                 "last_result": "failed",
                 "failure_type": detail[:48],
             })
+            (DEST / "refresh-request.json").unlink(missing_ok=True)
             print("AGMARKNET refresh failed; last verified rates kept [" + detail + "]", file=sys.stderr)
             return 1
 
