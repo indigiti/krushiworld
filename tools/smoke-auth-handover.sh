@@ -12,7 +12,7 @@ cp -a "$root/release/private/." "$tmp/private_html/krushiworld/"
 start(){
  local mode="$1" port="$2"
  APMC_AUTH_MODE="$mode" APMC_ADMIN_TOKEN='test-legacy-token-do-not-use' APMC_DISABLE_WEB_FALLBACK=1 \
- php -S "127.0.0.1:$port" -t "$tmp/public_html" "$root/tools/php-dev-router.php" > "$tmp/php-$mode.log" 2>&1 &
+ php -d opcache.jit=0 -S "127.0.0.1:$port" -t "$tmp/public_html" "$root/tools/php-dev-router.php" > "$tmp/php-$mode.log" 2>&1 &
  pid="$!"
  local ready=0
  for i in {1..40}; do
@@ -22,7 +22,7 @@ start(){
  if [[ "$ready" != "1" ]];then cat "$tmp/php-$mode.log"; exit 1;fi
 }
 start staging 18742
-if ! grep -q 'Local administrator' "$tmp/staging.html" || grep -q 'Enter the configured admin token' "$tmp/staging.html";then
+if ! grep -q 'Admin authentication' "$tmp/staging.html" || ! grep -q 'name="auth_action" value="local_login"' "$tmp/staging.html" || ! grep -q 'Authenticator or recovery code' "$tmp/staging.html" || grep -q 'name="admin_login"' "$tmp/staging.html";then
  echo "Staging must show local MFA login, not the legacy token form";exit 1
 fi
 login_status="$(curl --silent --output "$tmp/legacy-staging.html" --write-out '%{http_code}' \
@@ -33,7 +33,7 @@ if [[ "$login_status" == "303" ]] || grep -q 'Sign out</button>' "$tmp/legacy-st
 fi
 kill "$pid" 2>/dev/null || true;wait "$pid" 2>/dev/null || true;pid=''
 start production 18743
-if ! grep -q 'Local administrator' "$tmp/production.html" || grep -q 'Enter the configured admin token' "$tmp/production.html";then
+if ! grep -q 'Admin authentication' "$tmp/production.html" || ! grep -q 'name="auth_action" value="local_login"' "$tmp/production.html" || ! grep -q 'Authenticator or recovery code' "$tmp/production.html" || grep -q 'name="admin_login"' "$tmp/production.html";then
  echo "Production login unexpectedly fell back to legacy token";exit 1
 fi
 github_status="$(curl --silent --output "$tmp/no-gh.html" --write-out '%{http_code}' \
