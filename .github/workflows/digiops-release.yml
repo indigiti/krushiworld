@@ -35,6 +35,8 @@ jobs:
         run: php apmc-rates/tests/test_auth_handover.php
       - name: Private Cloudways configuration contract
         run: php apmc-rates/tests/test_private_runtime_settings.php
+      - name: Cloudways PHP with putenv disabled
+        run: php -d disable_functions=putenv apmc-rates/tests/test_runtime_without_putenv.php
       - name: One-time web Super Admin bootstrap contract
         run: php apmc-rates/tests/test_web_bootstrap.php
       - name: Direct KrushiPulse owner and private API key setup

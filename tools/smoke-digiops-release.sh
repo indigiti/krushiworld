@@ -9,8 +9,12 @@ trap cleanup EXIT
 mkdir -p "$tmp/public_html/krushiworld" "$tmp/private_html/krushiworld/storage"
 cp -a "$root/release/public/." "$tmp/public_html/krushiworld/"
 cp -a "$root/release/private/." "$tmp/private_html/krushiworld/"
+# Mirror Cloudways: validated private config exists, but putenv() is disabled.
+mkdir -p "$tmp/private_html/krushiworld/storage/config"
+printf '%s\n' '{"APMC_DATA_GOV_IN_API_KEY":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}' > "$tmp/private_html/krushiworld/storage/config/runtime.json"
+chmod 600 "$tmp/private_html/krushiworld/storage/config/runtime.json"
 export APMC_DISABLE_WEB_FALLBACK=1
-php -d opcache.jit=0 -S 127.0.0.1:18739 -t "$tmp/public_html" "$root/tools/php-dev-router.php" > "$tmp/php.log" 2>&1 &
+php -d opcache.jit=0 -d disable_functions=putenv -S 127.0.0.1:18739 -t "$tmp/public_html" "$root/tools/php-dev-router.php" > "$tmp/php.log" 2>&1 &
 pid=$!
 url='http://127.0.0.1:18739/krushiworld'
 ready=0
@@ -22,6 +26,7 @@ if [[ "$ready" != 1 ]]; then cat "$tmp/php.log"; exit 1; fi
 php -r '$a=json_decode(file_get_contents($argv[1]),true); if(!is_array($a) || ($a["ok"]??false)!==true || !isset($a["health"]["status"])) exit(1);' "$tmp/health.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=markets" > "$tmp/markets.json"
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || count($j["data"]["markets"]??[]) < 5 || !isset($j["data"]["national"]["status"])) exit(1);' "$tmp/markets.json"
+php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["data"]["national"]["configured"]??false)!==true)exit(1);' "$tmp/markets.json"
 # Empty/offline national import must not invent geocoded mandis or PIN areas.
 php -r '$j=json_decode(file_get_contents($argv[1]),true);$d=$j["data"]??[];$c=$d["coverage"]??[];if(($c["with_coordinates"]??0)<5 || ($c["with_postal_reference"]??0)<2 || !array_key_exists("latest_report_date",$c) || !array_key_exists("latest_report_date",$d["national"]??[]))exit(1);$markets=array_column($d["markets"],null,"market_id");if(($markets["main-market-yard"]["pincode"]??"")!=="411037" || ($markets["pimpri"]["pincode"]??"")!=="411017")exit(1);' "$tmp/markets.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=national&market=agmarknet-test" > "$tmp/national.json"
