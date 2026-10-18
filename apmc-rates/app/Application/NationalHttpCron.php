@@ -28,7 +28,9 @@ final class NationalHttpCron {
     private function read(string $name): array {
         $path = $this->path($name);
         if (!is_file($path) || is_link($path)) return [];
-        $raw = @file_get_contents($path, false, null, 0, 65536);
+        $limit = $name === 'directory.json' ? 20971520 : 65536;
+        if ((int)@filesize($path) > $limit) return [];
+        $raw = @file_get_contents($path, false, null, 0, $limit + 1);
         $data = is_string($raw) ? json_decode($raw, true) : null;
         return is_array($data) ? $data : [];
     }
@@ -154,16 +156,10 @@ final class NationalHttpCron {
         @chmod($temp, 0600);
         $out = @fopen($temp, 'wb');
         if (!is_resource($out)) { fclose($source); @unlink($temp); throw new RuntimeException('storage_unavailable'); }
-        $old = $this->read('current.json');
-        $oldMeta = (array)($old['meta'] ?? []);
-        $oldCount = (int)($oldMeta['records'] ?? 0);
-        $previousLatest = null;
-        if ($oldCount > 0) {
-            foreach ((array)($old['records'] ?? []) as $item) {
-                $d = (string)($item['date'] ?? '');
-                if ($d > (string)$previousLatest) $previousLatest = $d;
-            }
-        }
+        $previous = $this->read('verified.json');
+        if (!$previous) $previous = $this->read('health.json');
+        $oldCount = (int)($previous['records'] ?? 0);
+        $previousLatest = $previous['latest_report_date'] ?? null;
         $count = 0; $latest = null; $markets = []; $seen = [];
         try {
             // Reserve space for metadata; rows are streamed into a second temporary file.
@@ -200,7 +196,7 @@ final class NationalHttpCron {
                 if ($markets[$id]['date'] === null || $date > $markets[$id]['date']) $markets[$id]['date'] = $date;
                 if ($count > self::MAX_ROWS) throw new RuntimeException('too_many_records');
             }
-            if ($count < 1 || $count !== (int)($progress['valid_rows'] ?? -1) - (int)($progress['duplicates'] ?? 0) && $count < 1) {
+            if ($count < 1 || $count > (int)($progress['valid_rows'] ?? -1)) {
                 throw new RuntimeException('invalid_record_count');
             }
             if ($oldCount >= 100 && $count < $oldCount * 0.25) throw new RuntimeException('unexpected_record_drop');

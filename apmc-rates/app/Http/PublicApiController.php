@@ -78,6 +78,18 @@ final class PublicApiController {
         if ($data === null) apmc_json_response(['ok' => false, 'error' => 'Unknown mandi'], 404);
         apmc_json_response(['ok' => true, 'data' => $data]);
     }
+    // Deliberately fixed-source, globally locked and rate-limited public URL.
+    // It never runs Python or accepts an outbound URL/API key from a visitor.
+    if ($api === 'national-cron') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
+            apmc_json_response(['ok'=>false,'error'=>'GET required'],405);
+        }
+        header('Cache-Control: no-store, private, max-age=0');
+        header('X-Robots-Tag: noindex, nofollow');
+        $result = (new \NationalHttpCron(APMC_STORAGE))->tick();
+        $failed = in_array($result['status'] ?? '', ['failed', 'storage_unavailable'], true);
+        apmc_json_response(['ok'=>!$failed,'runner'=>$result,'national'=>$national->state()],$failed?503:200);
+    }
     if ($api === 'national') {
         $id = (string)($_GET['market'] ?? '');
         try {

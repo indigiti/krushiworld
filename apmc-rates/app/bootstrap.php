@@ -29,6 +29,7 @@ require_once __DIR__ . '/SeoService.php';
 // HTTP routing -> application use cases -> existing read-only data repositories.
 require_once __DIR__ . '/Application/MarketDirectoryService.php';
 require_once __DIR__ . '/Application/NationalRefreshGate.php';
+require_once __DIR__ . '/Application/NationalHttpCron.php';
 require_once __DIR__ . '/Application/MarketRatesService.php';
 require_once __DIR__ . '/Application/PriceIntelligenceService.php';
 require_once __DIR__ . '/Application/WeatherAdvisoryService.php';
