@@ -98,9 +98,10 @@ final class OwnerSetup {
             // No network request, admin token, username or error detail is logged.
             if (!(($testVerifier ?? [self::class,'checkRepositoryAdmin'])($token)))
                 throw new RuntimeException('GitHub repository administration could not be verified');
-            $key = PrivateAppSettings::ensureAuthKey($storage);
-            if (getenv('APMC_AUTH_KEY') === false || getenv('APMC_AUTH_KEY') === '')
-                putenv('APMC_AUTH_KEY=' . $key);
+            PrivateAppSettings::ensureAuthKey($storage);
+            // Read the newly generated key into the validated in-request store.
+            // Cloudways FPM disables putenv(), so never mutate process environment.
+            \KrushiPulseRuntimeSettings::load($storage . '/config/runtime.json');
             $secret = AdminAuth::totpNew();
             $cipher = $auth->seal($secret);
             $codes = [];
