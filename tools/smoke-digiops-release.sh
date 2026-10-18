@@ -14,6 +14,7 @@ mkdir -p "$tmp/private_html/krushiworld/storage/config"
 printf '%s\n' '{"APMC_DATA_GOV_IN_API_KEY":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}' > "$tmp/private_html/krushiworld/storage/config/runtime.json"
 chmod 600 "$tmp/private_html/krushiworld/storage/config/runtime.json"
 export APMC_DISABLE_WEB_FALLBACK=1
+export APMC_DISABLE_NATIONAL_HTTP_CRON=1
 php -d opcache.jit=0 -d disable_functions=putenv -S 127.0.0.1:18739 -t "$tmp/public_html" "$root/tools/php-dev-router.php" > "$tmp/php.log" 2>&1 &
 pid=$!
 url='http://127.0.0.1:18739/krushiworld'
@@ -27,6 +28,10 @@ php -r '$a=json_decode(file_get_contents($argv[1]),true); if(!is_array($a) || ($
 curl --fail --silent --show-error --max-time 15 "$url/?api=markets" > "$tmp/markets.json"
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["ok"]??false)!==true || count($j["data"]["markets"]??[]) < 5 || !isset($j["data"]["national"]["status"])) exit(1);' "$tmp/markets.json"
 php -r '$j=json_decode(file_get_contents($argv[1]),true); if(($j["data"]["national"]["configured"]??false)!==true)exit(1);' "$tmp/markets.json"
+# HTTP cron must respond as a controlled endpoint, never fetch live data during CI.
+cron_status="$(curl --silent --show-error --output "$tmp/national-cron.json" --write-out '%{http_code}' --max-time 5 "$url/?api=national-cron")"
+if [[ "$cron_status" != 200 ]]; then echo "National HTTP cron route failed: $cron_status"; cat "$tmp/php.log"; exit 1; fi
+php -r '$j=json_decode(file_get_contents($argv[1]),true);if(($j["ok"]??false)!==true || ($j["runner"]["status"]??"")!=="disabled")exit(1);' "$tmp/national-cron.json"
 # Empty/offline national import must not invent geocoded mandis or PIN areas.
 php -r '$j=json_decode(file_get_contents($argv[1]),true);$d=$j["data"]??[];$c=$d["coverage"]??[];if(($c["with_coordinates"]??0)<5 || ($c["with_postal_reference"]??0)<2 || !array_key_exists("latest_report_date",$c) || !array_key_exists("latest_report_date",$d["national"]??[]))exit(1);$markets=array_column($d["markets"],null,"market_id");if(($markets["main-market-yard"]["pincode"]??"")!=="411037" || ($markets["pimpri"]["pincode"]??"")!=="411017")exit(1);' "$tmp/markets.json"
 curl --fail --silent --show-error --max-time 15 "$url/?api=national&market=agmarknet-test" > "$tmp/national.json"
