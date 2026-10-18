@@ -34,6 +34,8 @@ if (!defined('APMC_PUBLIC_DIR')) define('APMC_PUBLIC_DIR', __DIR__);
 require_once $bootstrap;
 
 use KrushiPulse\Security\OwnerSetup;
+use KrushiPulse\Security\TemporarySetupCsrf;
+require_once APMC_ROOT . '/app/Security/TemporarySetupCsrf.php';
 use KrushiPulse\Security\PrivateAppSettings;
 
 $storage = APMC_STORAGE;
@@ -46,6 +48,17 @@ if (!is_dir($storage) || is_link($storage)) {
     http_response_code(503);
     exit('Private storage is not available');
 }
+// Signed, short-lived cookie is independent of PHP session persistence.
+$csrfSecret = PrivateAppSettings::ensureAuthKey($storage);
+$csrfForm = TemporarySetupCsrf::mint($csrfSecret);
+setcookie(TemporarySetupCsrf::COOKIE, $csrfForm, [
+    'expires'=>time()+900,
+    'path'=>'/krushiworld/',
+    'secure'=>true,
+    'httponly'=>true,
+    'samesite'=>'Strict',
+]);
+header('Vary: Cookie');
 session_name('kp_data_gov_setup');
 session_set_cookie_params([
     'lifetime'=>0,
@@ -72,10 +85,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     } elseif ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 4096) {
         http_response_code(413);
         $error = 'Request too large.';
-    } elseif (!apmc_same_origin_request()) {
+    } elseif (!in_array(strtolower((string)($_SERVER['HTTP_SEC_FETCH_SITE'] ?? '')), ['', 'none', 'same-origin'], true)
+        || (isset($_SERVER['HTTP_ORIGIN']) && strtolower(rtrim(trim((string)$_SERVER['HTTP_ORIGIN']), '/')) !== 'https://stage.digiti.in')) {
         http_response_code(403);
         $error = 'Request origin did not match server settings. Open the staging setup page directly and retry.';
-    } elseif (!hash_equals((string)$_SESSION['data_gov_csrf'], (string)($_POST['_csrf'] ?? ''))) {
+    } elseif (!TemporarySetupCsrf::validate(
+        $_POST['_csrf'] ?? null,
+        $_COOKIE[TemporarySetupCsrf::COOKIE] ?? null,
+        $csrfSecret
+    )) {
         http_response_code(403);
         $error = 'Browser session or form expired. Reload the setup page with first-party cookies enabled.';
     } elseif ((int)$_SESSION['attempts'] >= 5) {
@@ -172,7 +190,7 @@ small{color:#64776b;line-height:1.6;display:block;margin-top:20px}
 <?php else: ?>
 <?php if ($error !== ''): ?><div class="message error" role="alert"><?= htmlspecialchars($error, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></div><?php endif; ?>
 <form method="post" action="/krushiworld/setup-data-gov.php" autocomplete="off">
-<input type="hidden" name="_csrf" value="<?= htmlspecialchars((string)$_SESSION['data_gov_csrf'], ENT_QUOTES, 'UTF-8') ?>">
+<input type="hidden" name="_csrf" value="<?= htmlspecialchars($csrfForm, ENT_QUOTES, 'UTF-8') ?>">
 <label for="github_token">GitHub repository-admin verification token</label>
 <input id="github_token" type="password" name="github_token" required minlength="20" maxlength="512" autocomplete="off" spellcheck="false" placeholder="Temporary GitHub fine-grained token">
 <label for="data_gov_key">data.gov.in API key</label>
