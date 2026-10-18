@@ -45,3 +45,16 @@ The PHP implementation uses \`storage/national/http-cron-state.json\`, \`http-cr
 **No Cloudways deployment is implied by this document**. Deploy a successful \`digiops-release\` artifact and ensure its private \`storage/\` directory is preserved.
 
 > The national portal may have many pages. One HTTP hit does not always finish the first full import. Keep scheduling requests until \`status: verified\`, then subsequent requests return \`fresh\` without refetching.
+
+## Safe failure diagnostics
+
+After this release, a failed HTTP cron request returns a specific sanitized `runner.reason`, and the markets status API shows `national.last_failure_type` for failed attempts. No API keys, upstream URLs, response bodies, or HTTP error text are included.
+
+- `upstream_http_401` or `upstream_http_403`: the upstream server rejects this request; check the API key/account and whether Cloudways IP is blocked. A 403 does not alone prove the key is invalid.
+- `upstream_http_429`: upstream quota or rate limiting.
+- `upstream_http_5xx`: upstream service error.
+- `network_dns_failure`, `network_connect_failure`, `network_timeout`: connectivity problems between Cloudways and data.gov.in.
+- `network_tls_failure`, `network_certificate_failure`: verify TLS/certificates; do not disable certificate verification.
+- `invalid_source_json` or `upstream_unexpected_schema`: data.gov.in returned an unexpected payload.
+
+Keep the normal one-hour retry cooldown; do not force repeated requests or expose the key in browser URLs.

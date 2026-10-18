@@ -41,6 +41,16 @@ $fetch=static function(int $offset,int $limit) use (&$seen):array {
     if ($offset===1000) return ['total'=>1001,'records'=>[fakeRow('Tomato')]];
     throw new RuntimeException('unexpected offset');
 };
+// Sanitized transport diagnostics must never return a secret or request URL.
+checkCron(NationalHttpCron::classifyHttp(401)==='upstream_http_401','401 classification');
+checkCron(NationalHttpCron::classifyHttp(403)==='upstream_http_403','403 classification');
+checkCron(NationalHttpCron::classifyHttp(429)==='upstream_http_429','429 classification');
+checkCron(NationalHttpCron::classifyHttp(503)==='upstream_http_5xx','5xx classification');
+checkCron(NationalHttpCron::classifyHttp(302)==='upstream_redirect_rejected','redirect classification');
+checkCron(NationalHttpCron::classifyCurl(6)==='network_dns_failure','DNS classification');
+checkCron(NationalHttpCron::classifyCurl(28)==='network_timeout','timeout classification');
+checkCron(NationalHttpCron::classifyCurl(60)==='network_certificate_failure','TLS certificate classification');
+checkCron(NationalHttpCron::classifyCurl(99)==='network_transport_failure','unexpected curl error redacted');
 $cron=new NationalHttpCron($root,$fetch);
 KrushiPulseRuntimeSettings::$apiKey='';
 checkCron($cron->tick($now)['status']==='not_configured','key absence');

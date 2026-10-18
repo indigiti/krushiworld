@@ -51,6 +51,9 @@ final class NationalMarketRepository {
             'last_attempt_at' => $health['last_attempt_at'] ?? null,
             'last_success_at' => $health['last_success_at'] ?? $updatedAt,
             'last_result' => $health['last_result'] ?? null,
+            'last_failure_type' => ($health['last_result'] ?? null) === 'failed'
+                && preg_match('/^[a-z0-9_]{1,48}$/D', (string)($health['failure_type'] ?? '')) === 1
+                ? (string)$health['failure_type'] : null,
             'refresh_queue' => $refreshQueue,
             'verified_at' => ($verifiedFlag['verified'] ?? false) === true
                 ? ($verifiedFlag['verified_at'] ?? null) : null,
